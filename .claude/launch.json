@@ -1,0 +1,22 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "spiel",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "server.mjs"
+      ],
+      "port": 8080
+    },
+    {
+      "name": "spiel-8123",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "server.mjs",
+        "8123"
+      ],
+      "port": 8123
+    }
+  ]
+}

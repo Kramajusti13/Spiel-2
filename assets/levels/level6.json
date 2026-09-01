@@ -1,0 +1,111 @@
+{
+  "name": "Urwald",
+  "tileSize": 32,
+  "width": 40,
+  "height": 30,
+  "legend": {
+    ".": {
+      "name": "grass",
+      "solid": false,
+      "color": "grass"
+    },
+    ",": {
+      "name": "grassDark",
+      "solid": false,
+      "color": "grassDark"
+    },
+    "=": {
+      "name": "path",
+      "solid": false,
+      "color": "path"
+    },
+    "T": {
+      "name": "tree",
+      "solid": true,
+      "color": "tree",
+      "topColor": "treeTop"
+    }
+  },
+  "playerStart": {
+    "x": 4,
+    "y": 25
+  },
+  "exit": {
+    "x": 35,
+    "y": 4
+  },
+  "spawns": [
+    {
+      "type": "gorilla",
+      "x": 12,
+      "y": 21
+    },
+    {
+      "type": "gorilla",
+      "x": 19,
+      "y": 20
+    },
+    {
+      "type": "gorilla",
+      "x": 24,
+      "y": 16
+    },
+    {
+      "type": "gorilla",
+      "x": 14,
+      "y": 12
+    },
+    {
+      "type": "gorilla",
+      "x": 22,
+      "y": 11
+    },
+    {
+      "type": "gorilla",
+      "x": 30,
+      "y": 15
+    },
+    {
+      "type": "gorilla",
+      "x": 27,
+      "y": 7
+    },
+    {
+      "type": "gorilla",
+      "x": 33,
+      "y": 12
+    }
+  ],
+  "tiles": [
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TT,.,,,,..,.,......,...,...,,,..,.,=.,TT",
+    "TT,.,..,.,.........,,,....,,,.....===.TT",
+    "TT.,...,...,.,.....,T..,.....,,,======TT",
+    "TT,.,...,,T.......TTTTT,..,...,======,TT",
+    "TT.,....TTTTT,...TTTTTTT.,,..=======,.TT",
+    "TT..,.,TTTTTTT,..,TTTTT,,,,.=======,..TT",
+    "TT....TTTTTTTTT,,.,,T,,,,.=======...,,TT",
+    "TT.....TTTTTTT.,...,,,.,.=======TT....TT",
+    "TT.,,,,.TTTTT......,.,,=======TTTTT...TT",
+    "TT,.,..,..T......,....======TTTTTT...,TT",
+    "TT.....,.,...,.,...,=======.TTTTT,,..,TT",
+    "TT..,..,,,..,,.,,T.======.,,,,T.,.,,,,TT",
+    "TT,,...,T.,,,,TTTT======,,,,.......,..TT",
+    "TT....TTTTT,,TTT======.,..,....,,...,,TT",
+    "TT...,TTTTT.,.T=======,,.,..T,,.....,.TT",
+    "TT,..TTTTTTT.=======,,.,.,TTTTT...,.,.TT",
+    "TT.,.,TTTTT,======.....,,.TTTTT.,,..,,TT",
+    "TT...,TTTT=======.,,.....TTTTTTT..T.,,TT",
+    "TT,,.,.,=======...,,...,..TTTTT..TTT,.TT",
+    "TT.,..,=======.,,.........TTTTT..TTT.,TT",
+    "TT,..=======.T.,.,,...,....,T...TTTTT.TT",
+    "TT.,=======TTTTT.,.,.,.,T.......,TTT,,TT",
+    "TT.======,TTTTTTT..,,TTTTTTT.,,.,TTT..TT",
+    "TT======...TTTTT....TTTTTTTTT,,.,.T...TT",
+    "TT.===...,...T,.....,TTTTTTT........,,TT",
+    "TT.,=,.,..,..,,.,..,....T.,,.,,,,,....TT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "name": "Sumpf",
+  "tileSize": 32,
+  "width": 40,
+  "height": 30,
+  "legend": {
+    "s": {
+      "name": "swampFloor",
+      "solid": false,
+      "color": "swampFloor"
+    },
+    "d": {
+      "name": "swampFloorDark",
+      "solid": false,
+      "color": "swampFloorDark"
+    },
+    "=": {
+      "name": "path",
+      "solid": false,
+      "color": "path"
+    },
+    "T": {
+      "name": "tree",
+      "solid": true,
+      "color": "tree",
+      "topColor": "treeTop"
+    },
+    "~": {
+      "name": "water",
+      "solid": true,
+      "color": "water",
+      "topColor": "waterTop"
+    },
+    "R": {
+      "name": "reed",
+      "solid": true,
+      "color": "reed",
+      "topColor": "reedTop"
+    }
+  },
+  "playerStart": {
+    "x": 5,
+    "y": 25
+  },
+  "exit": {
+    "x": 34,
+    "y": 4
+  },
+  "spawns": [
+    {
+      "type": "krokodil",
+      "x": 12,
+      "y": 26
+    },
+    {
+      "type": "krokodil",
+      "x": 22,
+      "y": 27
+    },
+    {
+      "type": "krokodil",
+      "x": 33,
+      "y": 27
+    },
+    {
+      "type": "krokodil",
+      "x": 8,
+      "y": 16
+    },
+    {
+      "type": "krokodil",
+      "x": 20,
+      "y": 13
+    },
+    {
+      "type": "krokodil",
+      "x": 32,
+      "y": 17
+    },
+    {
+      "type": "krokodil",
+      "x": 8,
+      "y": 4
+    },
+    {
+      "type": "krokodil",
+      "x": 19,
+      "y": 8
+    },
+    {
+      "type": "krokodil",
+      "x": 28,
+      "y": 4
+    }
+  ],
+  "tiles": [
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTdddsssssssssssssdssdssdsssssdsds=sddTT",
+    "TTdsdsssddssssdsdssddsssssdsdssds===ddTT",
+    "TTsssdssds~ssdssdssdss~dddsdsdss=====sTT",
+    "TTsdddss~~~~~ssdRss~~~~~~~sddsdds===ssTT",
+    "TTssdsd~~~~~~~RRRRRssd~ssddddsRdsd=sddTT",
+    "TTssddss~~~~~sddRdsdsdsdsdssRRRRRdssddTT",
+    "TTsssssdds~sdsssddsssssdssddddRddddsssTT",
+    "TTsssdssdsssdsdsddsssdssdsdddsddsdsdssTT",
+    "TT~~~~~~~~~~~~~~~~~~~~~~~~~====~~~~~~~TT",
+    "TT~~~~~~~~~~~~~~~~~~~~~~~~~====~~~~~~~TT",
+    "TTdsddsddddsddssdddssssdsssdsssdsssdssTT",
+    "TTdddsdRdsdd~sddssssssdssd~sdddsssdssdTT",
+    "TTsdsRRRRR~~~~~ddsdsRssss~~~ssddsRdsdsTT",
+    "TTddddsRs~~~~~~~sdRRRRRd~~~~~ssRRRRRdsTT",
+    "TTsdssdssd~~~~~sdddsRsddd~~~dsdddRdssdTT",
+    "TTsdsdsdddds~ssdddsddsddsd~ddsdddssdsdTT",
+    "TTsddssdssssddsssdsdsddsdddssdsddssssdTT",
+    "TT~~~~~~====~~~~~~~~~~~~~~~~~~~~~~~~~~TT",
+    "TT~~~~~~====~~~~~~~~~~~~~~~~~~~~~~~~~~TT",
+    "TTssdssssssssdsssdssdsdsdddddssddddsdsTT",
+    "TTsssddddssdsdddsddsdsRddddsdd~sdsssdsTT",
+    "TTdsd=sddsssssdd~ddsRRRRRsds~~~~~ddsdsTT",
+    "TTsd===dssddds~~~~~sdsRssss~~~~~~~ddssTT",
+    "TTd=====dddss~~~~~~~ddsssssd~~~~~sdssdTT",
+    "TTdd===ssdddss~~~~~dssddsssdds~ssssdsdTT",
+    "TTdsd=sddsdsdsss~ssdssssssdsddsdddssssTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ]
+}

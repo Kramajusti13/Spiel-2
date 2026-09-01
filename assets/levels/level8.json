@@ -1,0 +1,146 @@
+{
+  "name": "Wiese",
+  "tileSize": 32,
+  "width": 40,
+  "height": 30,
+  "legend": {
+    ".": {
+      "name": "grass",
+      "solid": false,
+      "color": "grass"
+    },
+    ",": {
+      "name": "grassDark",
+      "solid": false,
+      "color": "grassDark"
+    },
+    "=": {
+      "name": "path",
+      "solid": false,
+      "color": "path"
+    },
+    "T": {
+      "name": "tree",
+      "solid": true,
+      "color": "tree",
+      "topColor": "treeTop"
+    }
+  },
+  "playerStart": {
+    "x": 4,
+    "y": 15
+  },
+  "exit": {
+    "x": 35,
+    "y": 15
+  },
+  "spawns": [
+    {
+      "type": "giftpilz",
+      "x": 11,
+      "y": 12
+    },
+    {
+      "type": "giftpilz",
+      "x": 14,
+      "y": 19
+    },
+    {
+      "type": "giftpilz",
+      "x": 19,
+      "y": 10
+    },
+    {
+      "type": "giftpilz",
+      "x": 19,
+      "y": 21
+    },
+    {
+      "type": "giftpilz",
+      "x": 24,
+      "y": 13
+    },
+    {
+      "type": "giftpilz",
+      "x": 25,
+      "y": 19
+    },
+    {
+      "type": "giftpilz",
+      "x": 30,
+      "y": 12
+    },
+    {
+      "type": "giftpilz",
+      "x": 31,
+      "y": 18
+    },
+    {
+      "type": "gorilla",
+      "x": 9,
+      "y": 8
+    },
+    {
+      "type": "gorilla",
+      "x": 32,
+      "y": 8
+    },
+    {
+      "type": "gorilla",
+      "x": 9,
+      "y": 25
+    },
+    {
+      "type": "gorilla",
+      "x": 32,
+      "y": 25
+    },
+    {
+      "type": "frog",
+      "x": 16,
+      "y": 6
+    },
+    {
+      "type": "frog",
+      "x": 27,
+      "y": 25
+    },
+    {
+      "type": "frog",
+      "x": 22,
+      "y": 16
+    }
+  ],
+  "tiles": [
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TT,.,,.,,,.,,,.,.,...,,,..,.,..,..,,..TT",
+    "TT,,.,..,.,.,...,..,T..,.,.,,..,.,...,TT",
+    "TT,.,,.,..,,....,TTTTTTT,.,,.,.,..,,..TT",
+    "TT,,,,..,,.,T.,,,,,.T,..,....,.,,..,,,TT",
+    "TT.,,.,....TTT....,,,.,,,...,.,......,TT",
+    "TT....,,,.TTTTT.,...,...,,,T,,,..,,.,,TT",
+    "TT...,..,,,TTT.,,....,,..TTTTT,.,..,,.TT",
+    "TT,,,,...,..T,.,.,,.,,.....T,,,..,.,..TT",
+    "TT...,...,...,.....,..,,,,.,.,..,..,,.TT",
+    "TT.,..,..,.,,..,.,,..,,..,...,,,.,,.,,TT",
+    "TT,.,...,..,..,,....,.,....,,...,...,,TT",
+    "TT,.=.,,..,,....,...,....,,,.,.,,,.=..TT",
+    "TT.==================================,TT",
+    "TT====================================TT",
+    "TT.==================================,TT",
+    "TT..=,...,..,.,,..,,,,..,,..,...,,.=.,TT",
+    "TT.,..,.....,..,.,,..,.....,,,.,.,,...TT",
+    "TT.,,,,..,,,.....,..,.,...,,,...,,,..,TT",
+    "TT.,,...,.T.,,,,,..,.,,,.,,,,T......,.TT",
+    "TT..,.,,,TTT.,..,,,,.,,...,,TTT...,,..TT",
+    "TT,,..,.TTTTT,,,,,.,,..,...TTTTT,..,,,TT",
+    "TT,,,,,.,TTT..,....,.,..,,.,TTT.,.,.,.TT",
+    "TT....,..,T,.,,,.......,.,..,T,...,,,,TT",
+    "TT.,.,.,,..,,.,...,.T,,...,.,.,,......TT",
+    "TT..,..,,,..,...,TTTTTTT..,....,....,.TT",
+    "TT,..,.,.,...,,..,,,T,.,....,,..,,,..,TT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ]
+}

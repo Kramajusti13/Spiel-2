@@ -1,0 +1,88 @@
+{
+  "name": "Bosskammer der Titanoboa",
+  "tileSize": 32,
+  "width": 40,
+  "height": 30,
+  "legend": {
+    "s": {
+      "name": "swampFloor",
+      "solid": false,
+      "color": "swampFloor"
+    },
+    "d": {
+      "name": "swampFloorDark",
+      "solid": false,
+      "color": "swampFloorDark"
+    },
+    "=": {
+      "name": "path",
+      "solid": false,
+      "color": "path"
+    },
+    "T": {
+      "name": "tree",
+      "solid": true,
+      "color": "tree",
+      "topColor": "treeTop"
+    },
+    "~": {
+      "name": "water",
+      "solid": true,
+      "color": "water",
+      "topColor": "waterTop"
+    },
+    "R": {
+      "name": "reed",
+      "solid": true,
+      "color": "reed",
+      "topColor": "reedTop"
+    }
+  },
+  "playerStart": {
+    "x": 19,
+    "y": 26
+  },
+  "exit": {
+    "x": 19,
+    "y": 4
+  },
+  "spawns": [
+    {
+      "type": "titanoboa",
+      "x": 19,
+      "y": 14
+    }
+  ],
+  "tiles": [
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TT~~~ddssdsdddssss====ssdddssssddss~~~TT",
+    "TT~~~dssdsssdRsssd====dsdssddsssdsd~~~TT",
+    "TTdssdss~dddRRRsd=====sdsdssdds~sdssdsTT",
+    "TTsdss~~~~~dsRsdsd====dssssss~~~~~ddsdTT",
+    "TTdss~~~~~~~dddsssd=sssssdds~~~~~~~sssTT",
+    "TTddsd~~~~~ddsssdssdssssdssss~~~~~ssdsTT",
+    "TTssdssd~sdddssddddssddsddsdssd~sssssdTT",
+    "TTdsddsssssdsdsssssdssdsdsddddsssssddsTT",
+    "TTsddsdsssdssssssdddsdsdsssdsdssddssssTT",
+    "TTsssdsddsdsssddssdssdsdsdddddsssssdsdTT",
+    "TTddddsssssssdsssddssdssssdsddddddsssdTT",
+    "TTdddsRsdsdsdsddddsdsssddddsdssddRsdsdTT",
+    "TTsddRRRsssdddsssssddddssdssddssRRRsdsTT",
+    "TTsdddRdsssssssddssssdsssdsddsdssRsdsdTT",
+    "TTssddddssssssdddsssssddssddsdsddsddsdTT",
+    "TTsdssssddssdddsdsddsdssssdsdssdsssssdTT",
+    "TTssdsdddddsdsdsdsssdsdssssdssssddddddTT",
+    "TTdsddsssssddssddsdsddsddsssssddssddssTT",
+    "TTssssdssssssdsssssddddsdddsssddssssssTT",
+    "TTsdddss~sssdddsddssssdsssssdsd~ssdssdTT",
+    "TTdsss~~~~~ssdsssssddsdssdsss~~~~~ddddTT",
+    "TTsdd~~~~~~~ssssddddssssssds~~~~~~~dddTT",
+    "TTssdd~~~~~dsddddss=sssddsRdd~~~~~ddddTT",
+    "TTsssssd~ddssdsdsd====sdsRRRdsd~sssdddTT",
+    "TT~~~ssssdsdsssds=====sddsRsdsdssss~~~TT",
+    "TT~~~dddsdddssdsss====dsdsddsssddds~~~TT",
+    "TTTTTTTTTTTTTTTTTTT=TTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ]
+}

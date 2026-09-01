@@ -1,0 +1,143 @@
+{
+  "name": "Teich",
+  "tileSize": 32,
+  "width": 40,
+  "height": 30,
+  "legend": {
+    ".": {
+      "name": "grass",
+      "solid": false,
+      "color": "grass"
+    },
+    ",": {
+      "name": "grassDark",
+      "solid": false,
+      "color": "grassDark"
+    },
+    "=": {
+      "name": "path",
+      "solid": false,
+      "color": "path"
+    },
+    "T": {
+      "name": "tree",
+      "solid": true,
+      "color": "tree",
+      "topColor": "treeTop"
+    },
+    "~": {
+      "name": "water",
+      "solid": true,
+      "color": "water",
+      "topColor": "waterTop"
+    },
+    "R": {
+      "name": "reed",
+      "solid": true,
+      "color": "reed",
+      "topColor": "reedTop"
+    }
+  },
+  "playerStart": {
+    "x": 5,
+    "y": 25
+  },
+  "exit": {
+    "x": 34,
+    "y": 5
+  },
+  "spawns": [
+    {
+      "type": "frog",
+      "x": 11,
+      "y": 22
+    },
+    {
+      "type": "frog",
+      "x": 16,
+      "y": 24
+    },
+    {
+      "type": "frog",
+      "x": 25,
+      "y": 24
+    },
+    {
+      "type": "frog",
+      "x": 30,
+      "y": 22
+    },
+    {
+      "type": "frog",
+      "x": 6,
+      "y": 16
+    },
+    {
+      "type": "frog",
+      "x": 34,
+      "y": 13
+    },
+    {
+      "type": "frog",
+      "x": 20,
+      "y": 6
+    },
+    {
+      "type": "frog",
+      "x": 26,
+      "y": 8
+    },
+    {
+      "type": "gorilla",
+      "x": 6,
+      "y": 20
+    },
+    {
+      "type": "gorilla",
+      "x": 34,
+      "y": 24
+    },
+    {
+      "type": "gorilla",
+      "x": 13,
+      "y": 6
+    },
+    {
+      "type": "gorilla",
+      "x": 33,
+      "y": 10
+    }
+  ],
+  "tiles": [
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TT...,,.,,...,....,.....,..,.,,,..,,..TT",
+    "TT,...,,,.,,,......,.,,..........,=,.,TT",
+    "TT.,..,..,.,,.......,...,,,.,.,.,===..TT",
+    "TT,.,.,..T...,,...,,.....,,,....=====.TT",
+    "TT.,..,TTTTT,.,...,....,...,.....===..TT",
+    "TT...,,.,T..,,.,,...,,,..,.,,,.T,.=...TT",
+    "TT...,T,.,,.,.,.RR,===.RR,,,..TTT..,,,TT",
+    "TT,..TTT,,.,..,~~~~===~~~~R.,TTTTT,...TT",
+    "TT..TTTTT,.R,~~~~~~===~~~~~~RRTTT,...,TT",
+    "TT.,,TTT..R~~~~~~~~===~~~~~~~~RT..,,.,TT",
+    "TT.,,,T.,.R~~~~~~~~===~~~~~~~~R,....,.TT",
+    "TT,,...,.,~~~~~~~~~===~~~~~~~~~.,..,..TT",
+    "TT.,,,,...~~~~~~~~~===~~~~~~~~~R..,,.,TT",
+    "TT.,,,,..~~~~~~~~~~===~~~~~~~~~~R.....TT",
+    "TT...,.,,.~~~~~~~~~===~~~~~~~~~R.,,,..TT",
+    "TT....,...~~~~~~~~~===~~~~~~~~~,..,...TT",
+    "TT.,,..,.,,~~~~~~~~===~~~~~~~~,..T,...TT",
+    "TT..,....,R~~~~~~~~===~~~~~~~~.,TTT...TT",
+    "TT.,.,..,....~~~~~~===~~~~~~R..TTTTT.,TT",
+    "TT.,.,.,,.,..R,~~~~===~~~~R,,.,,TTT,,,TT",
+    "TT.,,.,,,,..,..,,,.===.R,..,....,T.,..TT",
+    "TT.,.=..,,,,.,.,...,,,,,.....,,,...,.,TT",
+    "TT.,===.,........,.,...,..,.....,..,,.TT",
+    "TT.=====.,,..,,.......,....,......,.,,TT",
+    "TT..===..,.,........,,.,......,,.,.,..TT",
+    "TT.,.=,,...,,.,,.,,,....,,......,,.,,.TT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+  ]
+}

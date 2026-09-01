@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Inline-Icon: haelt die Konsole frei von 404 fuer favicon.ico -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Crect width=%2716%27 height=%2716%27 fill=%27%2314131a%27/%3E%3Crect x=%277%27 y=%272%27 width=%272%27 height=%278%27 fill=%27%23d8d3c4%27/%3E%3Crect x=%275%27 y=%279%27 width=%276%27 height=%272%27 fill=%27%238a6f47%27/%3E%3Crect x=%277%27 y=%2711%27 width=%272%27 height=%273%27 fill=%27%238a6f47%27/%3E%3C/svg%3E">
+<title>Loot &amp; Blade — Prototyp</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #0d0c10;
+    color: #b9b3a4;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    overflow: hidden;
+  }
+  #wrap {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  canvas {
+    /* Pixel-Art scharf halten, auch wenn der Browser hochskaliert */
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    background: #14131a;
+    border: 2px solid #2a2731;
+    box-shadow: 0 0 40px #000a;
+    max-width: 100vw;
+    max-height: 88vh;
+    cursor: crosshair;
+    touch-action: none;
+  }
+  #hint { font-size: 13px; letter-spacing: .04em; opacity: .55; }
+  #hint b { color: #cbb87a; font-weight: 600; }
+  #fatal {
+    display: none;
+    max-width: 700px;
+    padding: 16px 20px;
+    border: 1px solid #6b2d2d;
+    background: #1b1114;
+    color: #e0b0b0;
+    font: 13px/1.5 ui-monospace, Consolas, monospace;
+    white-space: pre-wrap;
+  }
+</style>
+</head>
+<body>
+  <div id="wrap">
+    <canvas id="game" width="960" height="640"></canvas>
+    <div id="hint"><b>WASD</b> laufen &nbsp;·&nbsp; <b>Maus</b> zielen &nbsp;·&nbsp; <b>Linksklick</b> angreifen &nbsp;·&nbsp; <b>1/2</b> Waffe &nbsp;·&nbsp; <b>Rechtsklick</b> blocken &nbsp;·&nbsp; <b>Leertaste</b> Rolle &nbsp;·&nbsp; <b>TAB</b> Charakter &nbsp;·&nbsp; <b>E</b> Ausgang &nbsp;·&nbsp; <b>R</b> Trank &nbsp;·&nbsp; <b>M</b> Ton &nbsp;·&nbsp; <b>F1</b> Debug</div>
+    <pre id="fatal"></pre>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
