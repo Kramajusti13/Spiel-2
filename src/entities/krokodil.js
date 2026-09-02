@@ -79,6 +79,44 @@ function swimMove(entity, dx, dy, level) {
   return result;
 }
 
+/**
+ * "Sicht" auf die Karte, in der Wasser nicht mehr als Wand zaehlt. Wird der
+ * KI-Steuerung untergeschoben, damit die Pfadwahl (steer) auch DURCH Wasser
+ * fuehrt — sonst weicht das Krokodil dem Wasser aus, obwohl es hindurchkoennte.
+ */
+function swimView(level) {
+  const isSolidTile = (col, row) => {
+    if (col < 0 || row < 0 || col >= level.width || row >= level.height) return true;
+    const ch = level.rows[row][col];
+    const tile = level.legend[ch] ?? level.fallbackTile;
+    if (!tile.solid) return false;
+    return tile.name !== 'water';
+  };
+  const isBoxBlocked = (x, y, hw, hh) => {
+    const c0 = Math.floor((x - hw) / level.tileSize);
+    const c1 = Math.floor((x + hw - 0.001) / level.tileSize);
+    const r0 = Math.floor((y - hh) / level.tileSize);
+    const r1 = Math.floor((y + hh - 0.001) / level.tileSize);
+    for (let r = r0; r <= r1; r++) {
+      for (let c = c0; c <= c1; c++) if (isSolidTile(c, r)) return true;
+    }
+    return false;
+  };
+  const isPathClear = (x0, y0, x1, y1, hw, hh, maxDistance = Infinity) => {
+    const dx = x1 - x0, dy = y1 - y0;
+    const length = Math.hypot(dx, dy);
+    if (length > maxDistance) return false;
+    if (length < 1) return !isBoxBlocked(x0, y0, hw, hh);
+    const steps = Math.ceil(length / (level.tileSize / 2));
+    for (let i = 1; i <= steps; i++) {
+      const t = i / steps;
+      if (isBoxBlocked(x0 + dx * t, y0 + dy * t, hw, hh)) return false;
+    }
+    return true;
+  };
+  return { ...level, isSolidTile, isBoxBlocked, isPathClear };
+}
+
 export class Krokodil extends Enemy {
   constructor(x, y) {
     super('krokodil', x, y);
@@ -98,6 +136,14 @@ export class Krokodil extends Enemy {
   /** Steckt es gerade im Boden? Dann wird nur der Schatten gezeichnet. */
   get isSubmerged() {
     return this.state === 'submerged' || this.state === 'windup';
+  }
+
+  /**
+   * Pfadwahl mit "Wasser ist begehbar"-Sicht, damit das Krokodil dem Wasser
+   * nicht ausweicht, sondern zielstrebig hindurchschwimmt.
+   */
+  steer(target, level, dt) {
+    return super.steer(target, swimView(level), dt);
   }
 
   think(dt, game) {
