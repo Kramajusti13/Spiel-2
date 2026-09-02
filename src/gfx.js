@@ -128,6 +128,26 @@ export function spriteSize(key, placeholder, scale = 1) {
 /** Kachel zeichnen: gleiche Logik, aber auf der Ecke (x, y) statt mittig. */
 export function drawTile(ctx, key, x, y, size, color, opt = {}) {
   drawSprite(ctx, key, x + size / 2, y + size / 2, size, size, color, opt);
+  if (key === 'tile.water') drawWaterShimmer(ctx, x, y, size);
+}
+
+/**
+ * Leichter Wellen-Shimmer ueber der Wasser-Kachel. Kein neues Sprite: es sind
+ * nur zwei duenne, zeitabhaengig verschobene helle Linien und ein Alpha-Puls.
+ */
+function drawWaterShimmer(ctx, x, y, size) {
+  const t = (typeof performance !== 'undefined' ? performance.now() : Date.now()) / 1000;
+  // Positionsabhaengiger Offset, damit benachbarte Kacheln nicht synchron wabern.
+  const phase = t * 1.4 + (x * 0.017 + y * 0.013);
+  const puls = 0.5 + 0.5 * Math.sin(phase);
+  ctx.save();
+  ctx.globalAlpha = 0.10 + 0.10 * puls;
+  ctx.fillStyle = '#ffffff';
+  const off1 = ((phase * 6) % size + size) % size;
+  const off2 = ((phase * 4 + size / 2) % size + size) % size;
+  ctx.fillRect(x, y + off1, size, 1);
+  ctx.fillRect(x, y + off2, size, 1);
+  ctx.restore();
 }
 
 /** Rechteck ohne Sprite-Fallback (HUD, Balken, Debug). */
