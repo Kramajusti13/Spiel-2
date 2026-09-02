@@ -39,6 +39,20 @@ export class Titanoboa extends Enemy {
     this.targetY = y;
     /** true = die Haeutung ist gelaufen, Phase 2 kaempft offen. */
     this.hasShed = false;
+    // Titanoboa insgesamt staerker: mehr HP/Schaden/Tempo (Kopie des def,
+    // damit die Werte in config.js unberuehrt bleiben).
+    this.def = {
+      ...this.def,
+      maxHp: Math.round(this.def.maxHp * 1.4),
+      damage: Math.round(this.def.damage * 1.3),
+      speed: this.def.speed * 1.15,
+      swallowDamage: Math.round(this.def.swallowDamage * 1.2),
+      phase2DamageBonus: Math.round(this.def.phase2DamageBonus * 1.5),
+    };
+    this.maxHp = this.def.maxHp;
+    this.hp = this.maxHp;
+    /** Cooldown zwischen den schnellen Bissen waehrend der Haeutung. */
+    this.shedBiteTimer = 0;
     this.setState('stalk');
   }
 
@@ -52,7 +66,8 @@ export class Titanoboa extends Enemy {
    * Kampf von Phase 2. Abgetaucht (stalk/warn/lunge) geht jeder Treffer daneben.
    */
   get invulnerable() {
-    return this.state === 'stalk' || this.state === 'warn' || this.state === 'lunge';
+    return this.state === 'stalk' || this.state === 'warn' || this.state === 'lunge'
+      || this.state === 'shedding';
   }
 
   get isSubmerged() {
@@ -83,6 +98,26 @@ export class Titanoboa extends Enemy {
     }
 
     if (this.state === 'shedding') {
+      // Waehrend der Haeutung: immun (siehe invulnerable), sehr schnell und mit
+      // kurzem Angriffsmuster — jagt den Spieler und beisst in schnellen
+      // Intervallen, wechselt Winkel unvorhersehbar.
+      this.shedBiteTimer -= dt;
+      const heading = this.steer(player, game.level, dt);
+      const shedSpeed = this.def.speed * 1.9;
+      game.level.moveEntity(this,
+        Math.cos(heading) * shedSpeed * dt,
+        Math.sin(heading) * shedSpeed * dt);
+      this.facing = Math.atan2(player.y - this.y, player.x - this.x);
+      if (this.shedBiteTimer <= 0
+          && dist(this.x, this.y, player.x, player.y) <= this.def.biteRadius + 10) {
+        if (!player.dead) {
+          const angle = Math.atan2(player.y - this.y, player.x - this.x);
+          player.takeDamage(this.def.damage + this.damageBonus, angle, game);
+          game.shake(4, 0.15);
+        }
+        // Nachladen leicht variabel — macht das Muster unvorhersehbar.
+        this.shedBiteTimer = 0.35 + Math.random() * 0.25;
+      }
       if (this.stateTime >= this.def.sheddingTime) {
         this.hasShed = true;
         // Hitbox waechst mit — "groessere Trefferflaeche" ist woertlich gemeint.
