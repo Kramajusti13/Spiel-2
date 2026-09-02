@@ -186,21 +186,58 @@
     .dash-btn.pulse { animation: none; background: #3a3726; }
   }
 
-  /* --- Kacheln: Shop und Quests oben, Route unten ueber die ganze Breite --- */
+  /* --- Kacheln: Spielerbild in der Mitte, vier Kacheln ringfoermig drumherum --- */
   #dash-grid {
     flex: 1;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "shop quests" "route route";
+    grid-template-columns: 1fr 260px 1fr;
+    grid-template-areas:
+      "shop      character quests"
+      "shop      portrait  quests"
+      "route     route     route";
     gap: 14px;
     align-content: start;
   }
-  @media (max-width: 760px) {
-    #dash-grid { grid-template-columns: 1fr; grid-template-areas: "shop" "quests" "route"; }
+  @media (max-width: 900px) {
+    #dash-grid {
+      grid-template-columns: 1fr;
+      grid-template-areas: "character" "portrait" "shop" "quests" "route";
+    }
   }
   #tile-shop { grid-area: shop; }
   #tile-quests { grid-area: quests; }
   #tile-route { grid-area: route; }
+  #tile-character { grid-area: character; cursor: pointer; }
+  #tile-character:hover { border-color: #cbb87a; }
+  #tile-character.has-free { animation: dashPulse 1.4s ease-in-out infinite; border-color: #cbb87a; }
+  #dash-portrait {
+    grid-area: portrait;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 40%, #2a2735 0%, #14131a 70%);
+    border: 1px solid #3a3646;
+    border-radius: 6px;
+    min-height: 180px;
+    padding: 12px;
+  }
+  #dash-portrait .portrait-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #191720;
+    border: 2px solid #cbb87a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 84px;
+    line-height: 1;
+    color: #d8d3c4;
+    box-shadow: 0 0 24px rgba(203,184,122,0.18) inset;
+  }
+  #tile-character .tile-body { flex-direction: column; align-items: flex-start; gap: 6px; }
+  #tile-character .char-free { font-size: 12px; color: #8b8577; }
+  #tile-character.has-free .char-free { color: #cbb87a; }
 
   .tile {
     border: 1px solid #3a3646;
@@ -823,6 +860,18 @@
     </div>
 
     <div id="dash-grid">
+      <section class="tile" id="tile-character" role="button" tabindex="0" title="Charakter oeffnen">
+        <h2>Charakter</h2>
+        <p class="tile-note">Stufen, Skillpunkte, Statistik.</p>
+        <div class="tile-body">
+          <span class="char-free" data-role="char-free">keine freien Skillpunkte</span>
+        </div>
+      </section>
+
+      <div id="dash-portrait" aria-hidden="true">
+        <div class="portrait-circle">🗡️</div>
+      </div>
+
       <section class="tile" id="tile-shop">
         <h2>Shop</h2>
         <p class="tile-note">Ein Kauf ersetzt die bisherige Stufe — es gibt kein Inventar.</p>

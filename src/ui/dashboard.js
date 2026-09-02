@@ -21,6 +21,7 @@ import { isMaxLevel } from '../xp.js';
 import { ShopTile } from './shopTile.js';
 import { QuestTile } from './questTile.js';
 import { RouteTile } from './routeTile.js';
+import { CharacterTile } from './characterTile.js';
 import { LoadoutWindow } from './loadoutWindow.js';
 
 export class Dashboard {
@@ -57,6 +58,8 @@ export class Dashboard {
     this.shop = new ShopTile(game, this.el.shopList, this.el.shopMessage);
     this.quests = new QuestTile(game, this.el.questList, this.el.questMessage);
     this.route = new RouteTile(game, this);
+    // Neue Charakter-Kachel im Ring um das Spielerbild (Aufgabe 8).
+    this.character = new CharacterTile(game, document.getElementById('tile-character'));
     // Ausruestungswahl (Erweiterung 2, Abschnitt 4). Wie das Levelfenster ein
     // Fenster ueber dem Dashboard, kein eigenes Feld — es haengt deshalb an
     // this.modal und nicht am Spielzustand.
@@ -157,6 +160,7 @@ export class Dashboard {
     this.shop.refresh(dt);
     this.quests.refresh();
     this.route.refresh();
+    this.character.refresh();
     this.loadout.refresh();
   }
 }
