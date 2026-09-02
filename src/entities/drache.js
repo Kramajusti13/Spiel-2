@@ -2,14 +2,237 @@
  * drache.js  Boss, Luft (Etappe 1).
  *
  * "Fliegt und spuckt feuer auf den spieler, der drache landet nie und kann
- * nur mit fernangriffen getoetet werden"
+ * nur mit fernangriffen getoetet werden."
  *
- * Drei Besonderheiten, die einen bestehenden Gegner hat:
+ * Drei Besonderheiten, die keinen bestehenden Gegner hat:
  *
- *   1. FLIEDEN: keine Wand-Kollision. Der Drache bewegt sich frei ueber die
- *      Karte, clamped nur an die Levelgrenzen. Kein steer/Pathfinding netig.
+ *   1. FLIEGEN: keine Wand-Kollision. Der Drache bewegt sich frei ueber die
+ *      Karte, clamped nur an die Levelgrenzen. Kein steer/Pathfinding noetig.
  *
- *   2. FEUERATEM: 5 Feuerballe in einem Kegel. Jeder verrsacht direkten
+ *   2. FEUERATEM: 5 Feuerbaelle in einem Kegel. Jeder verursacht direkten
  *      Schaden und Verbrennung (BurnCloud).
  *
- *   3. NAHKAMPF-IMMUM%QPèM¡ÝÉÐÕ¹MÁÉÍÑ½ÍÌµ¡¸-%98M¡¸¸(¨9ÕÈ	½¸Õ¹Ý½É¹ÈMÁÈ¡É¹­µÁ¤ÑÉ¸¸U¹ÑÉÍ¡¥¸(¨Ý¥É´ÍÑ¹èMÁÈÕÌøàÀÁà¥ÍÐ¥¸]ÕÉ¡ÑÉ¥Ð¤°ÕÌ(¨ðàÀÁà¥¸MÑ½ÍÌ¡Ý¥É±½­¥ÉÐ¤¸(¨¼()¥µÁ½ÉÐì=1=IL°MAI%QLôÉ½´¸¸½½¹¥¹©Ìì)¥µÁ½ÉÐì¡ÍMÁÉ¥Ñ°ÉÝMÁÉ¥Ñ°ÍÁÉ¥ÑM¥éôÉ½´¸¸½à¹©Ìì)¥µÁ½ÉÐìÁ±åM½Õ¹ôÉ½´¸¸½Õ¥¼¹©Ìì)¥µÁ½ÉÐì±µÀ°Q½I°¥ÍÐôÉ½´¸¸½ÕÑ¥°¹©Ìì)¥µÁ½ÉÐì¹µäôÉ½´¸½¹µä¹©Ìì)¥µÁ½ÉÐì¥É±°ôÉ½´¸½¥É±°¹©Ìì((¼¨¨(¨	ÝÕ¹½¡¹]¹µ-½±±¥Í¥½¸èÈÉ¡±¥ÐÕÈ±±Ì¡¥¹Ý¸(¨9ÕÈ¥1Ù±É¹é¸¡±Ñ¸¥¡¸Õ¸(¨¼)Õ¹Ñ¥½¸±å5½Ù¡¹Ñ¥Ñä°à°ä°±Ù°¤ì(¹Ñ¥Ñä¹àô±µÀ¡¹Ñ¥Ñä¹à¬à°¹Ñ¥Ñä¹¡Ü°±Ù°¹Á¥á±]¥Ñ ´¹Ñ¥Ñä¹¡Ü¤ì(¹Ñ¥Ñä¹äô±µÀ¡¹Ñ¥Ñä¹ä¬ä°¹Ñ¥Ñä¹¡ °±Ù°¹Á¥á±!¥¡Ð´¹Ñ¥Ñä¹¡ ¤ì)ô()áÁ½ÉÐ±ÍÌÉ¡áÑ¹Ì¹µäì(½¹ÍÑÉÕÑ½È¡à°ä¤ì(ÍÕÁÈ É¡°à°ä¤ì(Ñ¡¥Ì¹¹¥µQ¥µô5Ñ ¹É¹½´ ¤¨Ìì(Ñ¡¥Ì¹Í½±½Èô=1=IL¹É¡üüÌÌÈÈì(Ñ¡¥Ì¹ÉÑ¡½½±½Ý¸ôÈ¸Àì(Ñ¡¥Ì¹ÍÑMÑÑ ¡Í¤ì(ô((¼¨¨(¨9ÕÈÉ¹­µÁµM¡¸¸9¡­µÁ¡M¡ÝÉÐ°MÁÉÍÑ½ÍÌ¤Ý¥É±½­¥ÉÐ¸(¨Ì¥ÍÐ-%8¥¹ÙÕ±¹É±µÑÑÈèÈÉ¡%MPÑÉÈ°¹ÕÈ¹¥¡Ð(¨µ¥Ð©È]¸M¼±¥Ð¥¸A¥°¹¥¡Ð¥¹Ì1ÉPÈÑÉ¥ÐÕ¹(¨µ¡ÐM¡¸¸(¨¼(Ñ­µ¡µ½Õ¹Ð°É½µ¹±°­¹½­¬°µ°É¥Ðô±Í°ÝÁ½¸ô¹Õ±°¤ì(¥¡Ñ¡¥Ì¹¤ÉÑÕÉ¸ì(½¹ÍÐÁ±åÈôµ¹Á±åÈì(½¹ÍÐô¥ÍÐ¡Ñ¡¥Ì¹à°Ñ¡¥Ì¹ä°Á±åÈ¹à°Á±åÈ¹ä¤ì(½¹ÍÐÑ¡ÉÍ¡½±ôÑ¡¥Ì¹¹µ±Q¡ÉÍ¡½±üüàÀì((¥¡ÝÁ½¸ôôôÍÝ½É¤ì(¼¼M¡ÝÉÐô9¡­µÁô­¥¸M¡¸¸(µ¹ÍÁÝ¹µ9ÕµÈ¡Ñ¡¥Ì¹à°Ñ¡¥Ì¹ä´Ñ¡¥Ì¹¡ ´Ø°-¥¸M¡¸°(=1=IL¹É¡¹ÐüüØØÀÀ¤ì(ÉÑÕÉ¸ì(ô(¥¡ÝÁ½¸ôôôÍÁÈðôÑ¡ÉÍ¡½±¤ì(¼¼MÁÉÍÑ½ÍÌô9¡­µÁô­¥¸M¡¸¸(µ¹ÍÁÝ¹µ9ÕµÈ¡Ñ¡¥Ì¹à°Ñ¡¥Ì¹ä´Ñ¡¥Ì¹¡ ´Ø°-¥¸M¡¸°(=1=IL¹É¡¹ÐüüØØÀÀ¤ì(ÉÑÕÉ¸ì(ô(¼¼	½¸Õ¹Ý½É¹ÈMÁÈôÉ¹­µÁôÙ½±±ÈM¡¸¸(ÍÕÁÈ¹Ñ­µ¡µ½Õ¹Ð°É½µ¹±°­¹½­¬°µ°É¥Ð°ÝÁ½¸¤ì(ô((Ñ¡¥¹¬¡Ð°µ¤ì(½¹ÍÐÁ±åÈôµ¹Á±åÈì(¥¡Á±åÈ¹¤ÉÑÕÉ¸ì(½¹ÍÐô¥ÍÐ¡Ñ¡¥Ì¹à°Ñ¡¥Ì¹ä°Á±åÈ¹à°Á±åÈ¹ä¤ì((Ñ¡¥Ì¹¥¹ô5Ñ ¹Ñ¸È¡Á±åÈ¹ä´Ñ¡¥Ì¹ä°Á±åÈ¹à´Ñ¡¥Ì¹à¤ì(Ñ¡¥Ì¹ÉÑ¡½½±½Ý¸ô5Ñ ¹µà À°Ñ¡¥Ì¹ÉÑ¡½½±½Ý¸´Ð¤ì((¼¼´´´ÕÉÑ´µiå­±ÕÌ´´´(¥¡Ñ¡¥Ì¹ÍÑÑôôôÉÑ¡]¥¹ÕÀ¤ì(Ñ¡¥Ì¹¥¹ôÑ¡¥Ì¹}ÑÕÉ¹Q½ÝÉÌ¡Á±åÈ°Ð°È¸À¤ì(¥¡Ñ¡¥Ì¹ÍÑÑQ¥µøôÑ¡¥Ì¹¹¥ÉÉÑ ¹Ý¥¹ÕÁQ¥µ¤ì(Ñ¡¥Ì¹ÉÑ¡¥É¡µ¤ì(Ñ¡¥Ì¹ÍÑMÑÑ ÉÑ¡MÑÉ¥­¤ì(ô(ÉÑÕÉ¸ì(ô(¥¡Ñ¡¥Ì¹ÍÑÑôôôÉÑ¡MÑÉ¥­¤ì(¥¡Ñ¡¥Ì¹ÍÑÑQ¥µøôÑ¡¥Ì¹¹¥ÉÉÑ ¹ÍÑÉ¥­Q¥µ¤Ñ¡¥Ì¹ÍÑMÑÑ ÉÑ¡I½ÙÈ¤ì(ÉÑÕÉ¸ì(ô(¥¡Ñ¡¥Ì¹ÍÑÑôôôÉÑ¡I½ÙÈ¤ì(¥¡Ñ¡¥Ì¹ÍÑÑQ¥µøôÑ¡¥Ì¹¹¥ÉÉÑ ¹É½ÙÉQ¥µ¤ì(Ñ¡¥Ì¹ÉÑ¡½½±½Ý¸ôÑ¡¥Ì¹¹¥ÉÉÑ ¹½½±½Ý¸ì(Ñ¡¥Ì¹ÍÑMÑÑ ¡Í¤ì(ô(ÉÑÕÉ¸ì(ô((¼¼´´´¹É¥ÍÝ¡°´´´(¥¡Ñ¡¥Ì¹ÍÑÑôôô¡Í¤ì(½¹ÍÐôÑ¡¥Ì¹¹¥ÉÉÑ ì(¥¡Ñ¡¥Ì¹ÉÑ¡½½±½Ý¸ðôÀðô¹µáI¹øôØÀ¤ì(Ñ¡¥Ì¹ÍÑMÑÑ ÉÑ¡]¥¹ÕÀ¤ì(ÉÑÕÉ¸ì(ô(ô((¼¼´´´	ÝÕ¹è¥É­ÐéÕ´MÁ¥±È±¥¸°­¥¹]¹µ-½±±¥Í¥½¸´´´(¼¼ÍÑ¹¡±Ñ¸è¹¥¡ÐÕ¸MÁ¥±ÈÉÕ±¥¸¸(½¹ÍÐÝ¹Ñ¥ÍÐôÄÔÀì(¥¡øÝ¹Ñ¥ÍÐ¬ÈÀ¤ì(½¹ÍÐÍÁôÑ¡¥Ì¹¹ÍÁ¨Ðì(±å5½Ù¡Ñ¡¥Ì°5Ñ ¹½Ì¡Ñ¡¥Ì¹¥¹¤¨ÍÁ°5Ñ ¹Í¥¸¡Ñ¡¥Ì¹¥¹¤¨ÍÁ°µ¹±Ù°¤ì(ô±Í¥¡ðÝ¹Ñ¥ÍÐ´ÈÀ¤ì(¼¼ÑÝÌéÕÉÕ­Ý¥¡¸¸(½¹ÍÐÍÁôÑ¡¥Ì¹¹ÍÁ¨À¸Ü¨Ðì(±å5½Ù¡Ñ¡¥Ì°µ5Ñ ¹½Ì¡Ñ¡¥Ì¹¥¹¤¨ÍÁ°µ5Ñ ¹Í¥¸¡Ñ¡¥Ì¹¥¹¤¨ÍÁ°µ¹±Ù°¤ì(ô(¼¼Í½¹ÍÐèÍ¡Ý¸ÕÍÑ¹¸(ô((¼¨¨ÔÕÉ±±¥¸¥¹´-°¸¨¼(ÉÑ¡¥É¡µ¤ì(½¹ÍÐôÑ¡¥Ì¹¹¥ÉÉÑ ì(½¹ÍÐÍÁÉôQ½I¡¹ÍÁÉ¤ì(½¹ÍÐÍôÑ¡¥Ì¹¥¹ì(½È¡±Ð¤ôÀì¤ð¹½Õ¹Ðì¤¬¬¤ì(½¹ÍÐÐô¹½Õ¹ÐôôôÄüÀè¡¤¼¡¹½Õ¹Ð´Ä¤¤´À¸Ôì(½¹ÍÐôÍ¬Ð¨ÍÁÉì(½¹ÍÐµàôÑ¡¥Ì¹à¬5Ñ ¹½Ì¡¤¨¡Ñ¡¥Ì¹¡Ü¬à¤ì(½¹ÍÐµäôÑ¡¥Ì¹ä¬5Ñ ¹Í¥¸¡¤¨¡Ñ¡¥Ì¹¡ ¬à¤ì(µ¹ÉÉ½ÝÌ¹ÁÕÍ ¡¹Ü¥É±°¡µà°µä°°¹µ°ì(ÍÁè¹ÍÁ°(µáI¹è¹µáI¹°(ô¤¤ì(ô(Á±åM½Õ¹ ÉÉ½Ý!¥Ð°ìÙ½±ÕµèÀ¸Ôô¤ì(µ¹Í¡­ Ð°À¸È¤ì(ô((¼¼´´´i¥¡¹¸´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´((ÉÜ¡Ñà¤ì(¥¡Ñ¡¥Ì¹¤ì(Ñ¡¥Ì¹ÉÝÑ ¡Ñà¤ì(ÉÑÕÉ¸ì(ô(¼¼M¡ÑÑ¸´	½¸PÈÉ¡±¥Ð°ÈÈM¡ÑÑ¸é¥Ð°Ý¼È¥ÍÐ¸(Ñà¹¥±±MÑå±ôÉ À°À°À°À¸ÈÀ¤ì(Ñà¹¥¹AÑ  ¤ì(Ñà¹±±¥ÁÍ¡5Ñ ¹É½Õ¹¡Ñ¡¥Ì¹à¤°5Ñ ¹É½Õ¹¡Ñ¡¥Ì¹ä¬Ñ¡¥Ì¹¡ ¬à¤°(Ñ¡¥Ì¹¡Ü¨À¸Ü°Ð°À°À°5Ñ ¹A$¨È¤ì(Ñà¹¥±° ¤ì((¥¡Ñ¡¥Ì¹ÍÑÑôôôÉÑ¡]¥¹ÕÀ¤Ñ¡¥Ì¹ÉÝ	ÉÑ¡Q±ÉÁ ¡Ñà¤ì(Ñ¡¥Ì¹ÉÝ	½ä¡Ñà¤ì(Ñ¡¥Ì¹ÉÝ!Á	È¡Ñà¤ì(ô((ÉÝ	ÉÑ¡Q±ÉÁ ¡Ñà¤ì(½¹ÍÐôÑ¡¥Ì¹¹¥ÉÉÑ ì(½¹ÍÐÀô±µÀ¡Ñ¡¥Ì¹ÍÑÑQ¥µ¼¹Ý¥¹ÕÁQ¥µ°À°Ä¤ì(½¹ÍÐÍÁÉôQ½I¡¹ÍÁÉ¤ì(½¹ÍÐ±¸ô¹µáI¹¨Àì(Ñà¹ÍÙ ¤ì(Ñà¹±½±±Á¡ôÀ¸ÄÔ¬À¸ÌÔ¨Àì(Ñà¹¥±±MÑå±ô=1=IL¹¥É±°üüØØÀÀì(Ñà¹ÑÉ¹Í±Ñ¡Ñ¡¥Ì¹à°Ñ¡¥Ì¹ä¤ì(Ñà¹É½ÑÑ¡Ñ¡¥Ì¹¥¹¤ì(Ñà¹¥¹AÑ  ¤ì(Ñà¹µ½ÙQ¼ À°À¤ì(Ñà¹É À°À°±¸°µÍÁÉ¼È°ÍÁÉ¼È¤ì(Ñà¹±½ÍAÑ  ¤ì(Ñà¹¥±° ¤ì(Ñà¹ÉÍÑ½É ¤ì(ô((ÉÝ	½ä¡Ñà¤ì(¥¡¡ÍMÁÉ¥Ñ¡Ñ¡¥Ì¹ÍÁÉ¥Ñ¤¤ì(½¹ÍÐÌôÑ¡¥Ì¹¹ÍÁÉ¥Ñì(½¹ÍÐÍ¥éôÍÁÉ¥ÑM¥é¡Ñ¡¥Ì¹ÍÁÉ¥Ñ°Ì°MAI%QL¹Í±ü¹mÑ¡¥Ì¹ÑåÁtüüÄ¤ì(½¹ÍÐÑ¥¹ÐôÑ¡¥Ì¹¡¥Ñ±Í øÀ(ü=1=IL¹¹µå!¥Ð(è¡Ñ¡¥Ì¹ÍÑÑôôôÉÑ¡]¥¹ÕÀñðÑ¡¥Ì¹ÍÑÑôôôÉÑ¡MÑÉ¥­¤(ü=1=IL¹¹µå]¥¹ÕÀè¹Õ±°ì(ÉÝMÁÉ¥Ñ¡Ñà°Ñ¡¥Ì¹ÍÁÉ¥Ñ°Ñ¡¥Ì¹à°Ñ¡¥Ì¹ä¬Ì¹½ÍÑd°Í¥é¹Ü°Í¥é¹ °(Ñ¡¥Ì¹Í½±½È°ìÑ¥¹Ð°Ñ¥¹Ñ±Á¡èÀ¸Øô¤ì(ÉÑÕÉ¸ì(ô(¼¼A±Ñé¡±ÑÈèÉ½ÍÍÈÉ¡µ¥Ð±Õ±¸¸(½¹ÍÐÌôÑ¡¥Ì¹¹ÍÁÉ¥Ñì(½¹ÍÐÉ½ÜôÄ¬¡Ñ¡¥Ì¹ÍÑÑôôôÉÑ¡]¥¹ÕÀüÀ¸Ä¨Ñ¡¥Ì¹Ý¥¹ÕÁAÉ½ÉÍÌèÀ¤ì(½¹ÍÐÜôÌ¹Ü¨É½Üì(½¹ÍÐ ôÌ¹ ¨É½Üì(½¹ÍÐäôÑ¡¥Ì¹ä¬Ì¹½ÍÑdì((±Ð¥±°ôÑ¡¥Ì¹Í½±½Èì(¥¡Ñ¡¥Ì¹ÍÑÑôôôÉÑ¡]¥¹ÕÀñðÑ¡¥Ì¹ÍÑÑôôôÉÑ¡MÑÉ¥­¤¥±°ô=1=IL¹¹µå]¥¹ÕÀì(¥¡Ñ¡¥Ì¹¡¥Ñ±Í øÀ¤¥±°ô=1=IL¹¹µå!¥Ðì((Ñà¹ÍÙ ¤ì(Ñà¹¥±±MÑå±ô¥±°ì(Ñà¹¥±±IÐ¡5Ñ ¹É½Õ¹¡Ñ¡¥Ì¹à´Ü¼È¤°5Ñ ¹É½Õ¹¡ä´ ¼È¤°5Ñ ¹É½Õ¹¡Ü¤°5Ñ ¹É½Õ¹¡ ¤¤ì(Ñà¹ÍÑÉ½­MÑå±ôÉ À°À°À°À¸ÔÔ¤ì(Ñà¹±¥¹]¥Ñ ôÈì(Ñà¹ÍÑÉ½­IÐ¡5Ñ ¹É½Õ¹¡Ñ¡¥Ì¹à´Ü¼È¤¬Ä°5Ñ ¹É½Õ¹¡ä´ ¼È¬Ä¤°(5Ñ ¹É½Õ¹¡Ü¤´È°5Ñ ¹É½Õ¹¡ ¤´È¤ì(¼¼±Õ°PÍ¡±¸±¹Í´¸(Ñà¹¥±±MÑå±ô=1=IL¹É¡¹ÐüüØØÀÀì(½¹ÍÐÝ¥¹±Àô5Ñ ¹Í¥¸¡Ñ¡¥Ì¹¹¥µQ¥µ¨à¤¨Ðì(Ñà¹¥±±IÐ¡5Ñ ¹É½Õ¹¡Ñ¡¥Ì¹à´Ü¼È´ÄÀ¤°5Ñ ¹É½Õ¹¡ä´ ¼Ì¬Ý¥¹±À¤°(ÄÀ°5Ñ ¹É½Õ¹¡ ¼È¤¤ì(Ñà¹¥±±IÐ¡5Ñ ¹É½Õ¹¡Ñ¡¥Ì¹à¬Ü¼È¤°5Ñ ¹É½Õ¹¡ä´ ¼Ì´Ý¥¹±À¤°(ÄÀ°5Ñ ¹É½Õ¹¡ ¼È¤¤ì(¼¼Õ¸¸(½¹ÍÐàô5Ñ ¹½Ì¡Ñ¡¥Ì¹¥¹¤¨Ôì(½¹ÍÐäô5Ñ ¹Í¥¸¡Ñ¡¥Ì¹¥¹¤¨Ìì(Ñà¹¥±±MÑå±ôÅÁÁì(Ñà¹¥±±IÐ¡5Ñ ¹É½Õ¹¡Ñ¡¥Ì¹à´à¬à¤°5Ñ ¹É½Õ¹¡ä´Ø¬ä¤°Ô°Ð¤ì(Ñà¹¥±±IÐ¡5Ñ ¹É½Õ¹¡Ñ¡¥Ì¹à¬Ì¬à¤°5Ñ ¹É½Õ¹¡ä´Ø¬ä¤°Ô°Ð¤ì(Ñà¹ÉÍÑ½É ¤ì(ô((ÉÝ!Á	È¡Ñà¤ì(ÍÕÁÈ¹ÉÝ!Á	È¡Ñà¤ì(¥¡Ñ¡¥Ì¹¤ÉÑÕÉ¸ì(Ñà¹ÍÙ ¤ì(Ñà¹¥±±MÑå±ô=1=IL¹É¡¹ÐüüØØÀÀì(Ñà¹½¹ÐôÄÁÁàM½U$°ÍåÍÑ´µÕ¤°Í¹ÌµÍÉ¥ì(Ñà¹ÑáÑ±¥¸ô¹ÑÈì(Ñà¹¥±±QáÐ 	½ÍÌ°5Ñ ¹É½Õ¹¡Ñ¡¥Ì¹à¤°5Ñ ¹É½Õ¹¡Ñ¡¥Ì¹ä´Ñ¡¥Ì¹¡ ´ÄØ¤¤ì(Ñà¹ÉÍÑ½É ¤ì(ô)ô(
+ *   3. NAHKAMPF-IMMUNITAET: Schwert und Speerstoss machen KEINEN Schaden.
+ *      Nur Bogen und geworfener Speer (Fernkampf) treffen. Unterschieden
+ *      wird am Abstand: Speer aus > 80 px ist ein Wurf (trifft), aus
+ *      < 80 px ein Stoss (wird blockiert).
+ */
+
+import { COLORS, SPRITES } from '../config.js';
+import { hasSprite, drawSprite, spriteSize } from '../gfx.js';
+import { playSound } from '../audio.js';
+import { clamp, degToRad, dist } from '../util.js';
+import { Enemy } from './enemy.js';
+import { Fireball } from './fireball.js';
+
+/**
+ * Bewegung ohne Wand-Kollision: der Drache fliegt ueber alles hinweg.
+ * Nur die Levelgrenzen halten ihn auf.
+ */
+function flyMove(entity, dx, dy, level) {
+  entity.x = clamp(entity.x + dx, entity.hw, level.pixelWidth - entity.hw);
+  entity.y = clamp(entity.y + dy, entity.hh, level.pixelHeight - entity.hh);
+}
+
+export class Drache extends Enemy {
+  constructor(x, y) {
+    super('drache', x, y);
+    this.animTime = Math.random() * 3;
+    this.baseColor = COLORS.drache ?? '#aa3322';
+    this.breathCooldown = 2.0;
+    this.setState('chase');
+  }
+
+  /**
+   * Nur Fernkampf-Schaden. Nahkampf (Schwert, Speerstoss) wird blockiert.
+   * Das ist KEIN invulnerable-Getter: der Drache IST treffbar, nur nicht
+   * mit jeder Waffe. So fliegt ein Pfeil nicht ins Leere  er trifft und
+   * macht Schaden.
+   */
+  takeDamage(amount, fromAngle, knockback, game, crit = false, weapon = null) {
+    if (this.dead) return;
+    const player = game.player;
+    const d = dist(this.x, this.y, player.x, player.y);
+    const threshold = this.def.meleeThreshold ?? 80;
+
+    if (weapon === 'sword') {
+      // Schwert = Nahkampf = kein Schaden.
+      game.spawnDamageNumber(this.x, this.y - this.hh - 6, 'Kein Schaden',
+        COLORS.dracheAccent ?? '#ff6600');
+      return;
+    }
+    if (weapon === 'spear' && d <= threshold) {
+      // Speerstoss = Nahkampf = kein Schaden.
+      game.spawnDamageNumber(this.x, this.y - this.hh - 6, 'Kein Schaden',
+        COLORS.dracheAccent ?? '#ff6600');
+      return;
+    }
+    // Bogen und geworfener Speer = Fernkampf = voller Schaden.
+    super.takeDamage(amount, fromAngle, knockback, game, crit, weapon);
+  }
+
+  think(dt, game) {
+    const player = game.player;
+    if (player.dead) return;
+    const d = dist(this.x, this.y, player.x, player.y);
+
+    this.facing = Math.atan2(player.y - this.y, player.x - this.x);
+    this.breathCooldown = Math.max(0, this.breathCooldown - dt);
+
+    // --- Feueratem-Zyklus ---
+    if (this.state === 'breathWindup') {
+      this.facing = this._turnTowards(player, dt, 2.0);
+      if (this.stateTime >= this.def.firebreath.windupTime) {
+        this.breatheFire(game);
+        this.setState('breathStrike');
+      }
+      return;
+    }
+    if (this.state === 'breathStrike') {
+      if (this.stateTime >= this.def.firebreath.strikeTime) this.setState('breathRecover');
+      return;
+    }
+    if (this.state === 'breathRecover') {
+      if (this.stateTime >= this.def.firebreath.recoverTime) {
+        this.breathCooldown = this.def.firebreath.cooldown;
+        this.setState('chase');
+      }
+      return;
+    }
+
+    // --- Angriffswahl ---
+    if (this.state === 'chase') {
+      const fb = this.def.firebreath;
+      if (this.breathCooldown <= 0 && d <= fb.maxRange && d >= 60) {
+        this.setState('breathWindup');
+        return;
+      }
+    }
+
+    // --- Bewegung: direkt zum Spieler fliegen, keine Wand-Kollision ---
+    // Abstand halten: nicht auf den Spieler drauf fliegen.
+    const wantDist = 150;
+    if (d > wantDist + 20) {
+      const speed = this.def.speed * dt;
+      flyMove(this, Math.cos(this.facing) * speed, Math.sin(this.facing) * speed, game.level);
+    } else if (d < wantDist - 20) {
+      // Etwas zurueckweichen.
+      const speed = this.def.speed * 0.7 * dt;
+      flyMove(this, -Math.cos(this.facing) * speed, -Math.sin(this.facing) * speed, game.level);
+    }
+    // sonst: schweben auf Abstand.
+  }
+
+  /** 5 Feuerbaelle in einem Kegel. */
+  breatheFire(game) {
+    const fb = this.def.firebreath;
+    const spread = degToRad(fb.spreadDeg);
+    const base = this.facing;
+    for (let i = 0; i < fb.count; i++) {
+      const t = fb.count === 1 ? 0 : (i / (fb.count - 1)) - 0.5;
+      const a = base + t * spread;
+      const mx = this.x + Math.cos(a) * (this.hw + 8);
+      const my = this.y + Math.sin(a) * (this.hh + 8);
+      game.arrows.push(new Fireball(mx, my, a, fb.damage, {
+        speed: fb.speed,
+        maxRange: fb.maxRange,
+      }));
+    }
+    playSound('arrowHit', { volume: 0.5 });
+    game.shake(4, 0.2);
+  }
+
+  // --- Zeichnen --------------------------------------------------------
+
+  draw(ctx) {
+    if (this.dead) {
+      this.drawDeath(ctx);
+      return;
+    }
+    // Schatten am Boden  der Drache fliegt, aber der Schatten zeigt, wo er ist.
+    ctx.fillStyle = 'rgba(0,0,0,0.20)';
+    ctx.beginPath();
+    ctx.ellipse(Math.round(this.x), Math.round(this.y + this.hh + 8),
+      this.hw * 0.7, 4, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (this.state === 'breathWindup') this.drawBreathTelegraph(ctx);
+    this.drawBody(ctx);
+    this.drawHpBar(ctx);
+  }
+
+  drawBreathTelegraph(ctx) {
+    const fb = this.def.firebreath;
+    const p = clamp(this.stateTime / fb.windupTime, 0, 1);
+    const spread = degToRad(fb.spreadDeg);
+    const len = fb.maxRange * p;
+    ctx.save();
+    ctx.globalAlpha = 0.15 + 0.35 * p;
+    ctx.fillStyle = COLORS.fireball ?? '#ff6600';
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.facing);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.arc(0, 0, len, -spread / 2, spread / 2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  drawBody(ctx) {
+    if (hasSprite(this.sprite)) {
+      const s = this.def.sprite;
+      const size = spriteSize(this.sprite, s, SPRITES.scale?.[this.type] ?? 1);
+      const tint = this.hitFlash > 0
+        ? COLORS.enemyHit
+        : (this.state === 'breathWindup' || this.state === 'breathStrike')
+          ? COLORS.enemyWindup : null;
+      drawSprite(ctx, this.sprite, this.x, this.y + s.offsetY, size.w, size.h,
+        this.baseColor, { tint, tintAlpha: 0.6 });
+      return;
+    }
+    // Platzhalter: grosser Drache mit Fluegeln.
+    const s = this.def.sprite;
+    const grow = 1 + (this.state === 'breathWindup' ? 0.1 * this.windupProgress : 0);
+    const w = s.w * grow;
+    const h = s.h * grow;
+    const cy = this.y + s.offsetY;
+
+    let fill = this.baseColor;
+    if (this.state === 'breathWindup' || this.state === 'breathStrike') fill = COLORS.enemyWindup;
+    if (this.hitFlash > 0) fill = COLORS.enemyHit;
+
+    ctx.save();
+    ctx.fillStyle = fill;
+    ctx.fillRect(Math.round(this.x - w / 2), Math.round(cy - h / 2), Math.round(w), Math.round(h));
+    ctx.strokeStyle = 'rgba(0,0,0,0.55)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(Math.round(this.x - w / 2) + 1, Math.round(cy - h / 2 + 1),
+      Math.round(w) - 2, Math.round(h) - 2);
+    // Fluegel  schlagen langsam.
+    ctx.fillStyle = COLORS.dracheAccent ?? '#ff6600';
+    const wingFlap = Math.sin(this.animTime * 8) * 4;
+    ctx.fillRect(Math.round(this.x - w / 2 - 10), Math.round(cy - h / 3 + wingFlap),
+      10, Math.round(h / 2));
+    ctx.fillRect(Math.round(this.x + w / 2), Math.round(cy - h / 3 - wingFlap),
+      10, Math.round(h / 2));
+    // Augen.
+    const ex = Math.cos(this.facing) * 5;
+    const ey = Math.sin(this.facing) * 3;
+    ctx.fillStyle = '#1a0a0a';
+    ctx.fillRect(Math.round(this.x - 8 + ex), Math.round(cy - 6 + ey), 5, 4);
+    ctx.fillRect(Math.round(this.x + 3 + ex), Math.round(cy - 6 + ey), 5, 4);
+    ctx.restore();
+  }
+
+  drawHpBar(ctx) {
+    super.drawHpBar(ctx);
+    if (this.dead) return;
+    ctx.save();
+    ctx.fillStyle = COLORS.dracheAccent ?? '#ff6600';
+    ctx.font = '10px "Segoe UI", system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Boss', Math.round(this.x), Math.round(this.y - this.hh - 16));
+    ctx.restore();
+  }
+}
