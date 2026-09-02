@@ -1,0 +1,9 @@
+[submodule "Game"]
+	path = Game
+	url = https://github.com/Kramajusti13/Game.git
+[submodule "Spiel 2"]
+	path = Spiel 2
+	url = https://github.com/Kramajusti13/Spiel-2.git
+[submodule "loot and blade"]
+	path = loot and blade
+	url = https://github.com/Kramajusti13/loot-and-blade.git
