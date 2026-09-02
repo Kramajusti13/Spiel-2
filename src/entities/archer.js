@@ -42,6 +42,12 @@ export class Archer extends Enemy {
 
     // --- Schusszyklus ---
     if (this.state === 'windup') {
+      // Verlaesst der Spieler die Reichweite waehrend des Zielens, wird der
+      // Schuss abgebrochen — kein Schuss ins Leere (VERBESSERUNGEN_1 Abschnitt 2).
+      if (d > this.def.range) {
+        this.setState('chase');
+        return;
+      }
       if (this.stateTime >= this.def.windupTime) {
         this.shoot(game);
         this.setState('strike');
@@ -58,7 +64,9 @@ export class Archer extends Enemy {
     }
 
     // Schussbereit, in Reichweite und freie Sicht? Dann zielen.
-    const inRange = d <= this.def.keepDistance + this.def.distanceTolerance * 2;
+    // Reichweite = die Angriffsreichweite aus config.js (VERBESSERUNGEN_1
+    // Abschnitt 2). Wer ausserhalb steht, wird nicht beschossen.
+    const inRange = d <= this.def.range;
     if (this.shootTimer <= 0 && inRange && this.hasLineOfSight) {
       this.setState('windup');
       return;

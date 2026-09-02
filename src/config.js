@@ -78,8 +78,8 @@ export const SWORD = {
   cooldown: 0.5,
   /** Dauer der sichtbaren Schwungbewegung. */
   swingTime: 0.18,
-  /** Reichweite ab Spielermitte. */
-  range: 46,
+  /** Reichweite ab Spielermitte (VERBESSERUNGEN_1 Abschnitt 2: 40 px = 1,25 Kacheln). */
+  range: 40,
   /** Oeffnungswinkel des Treffer-Kegels in Grad (symmetrisch um die Blickrichtung). */
   arc: 100,
   /** Rueckstoss auf getroffene Gegner. */
@@ -198,8 +198,12 @@ export const BOW = {
   arrowSpeed: 420,
   /** Flugzeit in Sekunden — daraus ergibt sich die Reichweite (420 * 1,4 = 588 px). */
   arrowLife: 1.4,
-  /** Maximale Flugstrecke in Pixeln. Bogen reicht weiter als der Speer. */
-  maxRange: 560,
+  /**
+   * Maximale Flugstrecke in Pixeln (VERBESSERUNGEN_1 Abschnitt 2: 480 = 15
+   * Kacheln). Bogen reicht bewusst weiter als jedes Gegner-Geschoss — sonst
+   * hat die Waffe keine Existenzberechtigung.
+   */
+  maxRange: 480,
   /** Startpunkt des Pfeils vor der Figur, damit er nicht in ihr steckt. */
   muzzleOffset: 12,
   knockback: 90,
@@ -237,10 +241,10 @@ export const SPEAR = {
   /** Dauer der sichtbaren Stossbewegung. */
   thrustTime: 0.2,
   /**
-   * Reichweite ab Spielermitte: das 1,5-fache des Schwerts (46 px), also
-   * "ca. 1,5 Kacheln statt 1" aus dem Dokument.
+   * Reichweite des Stosses ab Spielermitte (VERBESSERUNGEN_1 Abschnitt 2:
+   * 60 px = ~2 Kacheln).
    */
-  range: 70,
+  range: 60,
   /**
    * Oeffnungswinkel des Treffer-Kegels in Grad. Deutlich enger als der
    * Schwertschwung (100 Grad): ein Stoss geht geradeaus. Damit hat jede Waffe
@@ -259,8 +263,11 @@ export const SPEAR = {
   throwSpeed: 380,
   /** Flugzeit; 380 x 1,6 = 608 px, also "die volle Distanz". */
   throwLife: 1.6,
-  /** Maximale Flugstrecke in Pixeln. Bewusst kuerzer als der Bogen. */
-  throwMaxRange: 360,
+  /**
+   * Maximale Flugstrecke des Wurfs in Pixeln (VERBESSERUNGEN_1 Abschnitt 2:
+   * 320 = 10 Kacheln). Bewusst deutlich kuerzer als der Bogen (480).
+   */
+  throwMaxRange: 320,
   /** Startpunkt vor der Figur, damit der Speer nicht in ihr steckt. */
   muzzleOffset: 16,
   throwKnockback: 160,
@@ -519,15 +526,22 @@ export const ENEMIES = {
   /** Haelt Abstand und schiesst (Level 3). Braucht freie Sicht zum Spieler. */
   archer: {
     name: 'Bogenschuetze', maxHp: 25, damage: 12, defense: 0, speed: 70,
-    aggroRadius: 340, loseAggroRadius: 520,
+    /**
+     * Angriffsreichweite (VERBESSERUNGEN_1 Abschnitt 2: 352 px = 11 Kacheln).
+     * Wahrnehmung = 1,3 x Angriffsreichweite ~ 458 px; darunter beginnt er zu
+     * zielen, darueber nicht. loseAggroRadius bleibt darueber, damit er nicht
+     * am Rand oszilliert.
+     */
+    range: 352,
+    aggroRadius: 458, loseAggroRadius: 560,
     /** Wunschabstand; darunter weicht er zurueck, darueber rueckt er nach. */
     keepDistance: 200, distanceTolerance: 40,
     /** Seitliches Ausweichen, damit er kein stehendes Ziel ist. */
     strafeSpeedFactor: 0.55, strafeChangeTime: 1.4,
     shootInterval: 2.0, windupTime: 0.5, strikeTime: 0.1, recoverTime: 0.4,
     projectileSpeed: 300, arrowKnockback: 60,
-    /** Endliche Flugstrecke des Gegner-Pfeils in Pixeln. */
-    arrowMaxRange: 320,
+    /** Endliche Flugstrecke des Gegner-Pfeils = Angriffsreichweite. */
+    arrowMaxRange: 352,
     hitbox: { w: 20, h: 24 }, sprite: { w: 22, h: 26, offsetY: -2 },
     knockbackResist: 0.1, gold: { min: 12, max: 20 }, xp: 25,
   },
@@ -562,7 +576,12 @@ export const ENEMIES = {
    */
   gorilla: {
     name: 'Gorilla', maxHp: 100, damage: 30, defense: 0, speed: 60,
-    aggroRadius: 340, loseAggroRadius: 520,
+    /**
+     * Wurfreichweite (VERBESSERUNGEN_1 Abschnitt 2: 288 px = 9 Kacheln).
+     * Wahrnehmung = 1,3 x Angriffsreichweite ~ 374 px.
+     */
+    range: 288,
+    aggroRadius: 374, loseAggroRadius: 520,
     /** Wunschabstand aus dem Dokument: "Haelt 200 px Abstand". */
     keepDistance: 200, distanceTolerance: 40,
     /** Seitliches Ausweichen, damit er kein stehendes Ziel ist. */
@@ -574,6 +593,8 @@ export const ENEMIES = {
     /** "ca. 250 px/s" — langsam genug zum Ausweichen. */
     projectileSpeed: 250,
     stoneKnockback: 90,
+    /** Endliche Flugstrecke des Steins = Wurfreichweite. */
+    stoneMaxRange: 288,
     /**
      * Nahkampftreffer innerhalb dieser Distanz draengen ihn zurueck.
      * Gemessen wird der Abstand zum Spieler, nicht die Waffe: ein geworfener

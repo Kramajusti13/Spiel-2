@@ -59,6 +59,12 @@ export class Gorilla extends Enemy {
 
     // --- Wurfzyklus ---
     if (this.state === 'windup') {
+      // Verlaesst der Spieler die Reichweite waehrend des Ausholens, wird der
+      // Wurf abgebrochen — kein Schuss ins Leere (VERBESSERUNGEN_1 Abschnitt 2).
+      if (d > this.def.range) {
+        this.setState('chase');
+        return;
+      }
       // Die Ausholphase ist der Moment, in dem er stillsteht und angreifbar
       // ist — das ist der Preis fuer den Wurf.
       if (this.stateTime >= this.def.windupTime) {
@@ -77,7 +83,9 @@ export class Gorilla extends Enemy {
     }
 
     // Wurfbereit, in Reichweite und freie Sicht? Dann ausholen.
-    const inRange = d <= this.def.keepDistance + this.def.distanceTolerance * 2;
+    // Reichweite = die Angriffsreichweite aus config.js (VERBESSERUNGEN_1
+    // Abschnitt 2). Wer ausserhalb steht, wird nicht ins Leere beworfen.
+    const inRange = d <= this.def.range;
     if (this.throwTimer <= 0 && inRange && this.hasLineOfSight) {
       this.setState('windup');
       return;
@@ -125,6 +133,7 @@ export class Gorilla extends Enemy {
     game.spawnStone(mx, my, this.facing, this.def.damage, {
       speed: this.def.projectileSpeed,
       knockback: this.def.stoneKnockback,
+      maxRange: this.def.stoneMaxRange,
     });
   }
 

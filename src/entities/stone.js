@@ -34,6 +34,12 @@ export class Stone {
     this.damage = damage;
     this.speed = opt.speed ?? 250;
     this.knockback = opt.knockback ?? 90;
+    /**
+     * Endliche Reichweite (VERBESSERUNGEN_1 Abschnitt 2). Wird die Distanz
+     * ueberschritten, zerspringt der Stein sichtbar — nicht einfach ausblenden.
+     */
+    this.maxRange = opt.maxRange ?? Infinity;
+    this.traveled = 0;
 
     this.age = 0;
     this.spent = false;
@@ -61,10 +67,17 @@ export class Stone {
 
     const stepX = (Math.cos(this.angle) * this.speed * dt) / SUBSTEPS;
     const stepY = (Math.sin(this.angle) * this.speed * dt) / SUBSTEPS;
+    const stepLen = Math.hypot(stepX, stepY);
 
     for (let i = 0; i < SUBSTEPS; i++) {
       this.x += stepX;
       this.y += stepY;
+      this.traveled += stepLen;
+      if (this.traveled >= this.maxRange) {
+        // Reichweitenende: sichtbar zerspringen, nicht einfach ausblenden.
+        this.shatter();
+        return;
+      }
 
       if (game.level.isSolidAt(this.x, this.y)) {
         this.x -= stepX;
