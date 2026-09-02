@@ -111,6 +111,7 @@ export class Archer extends Enemy {
       friendly: false,
       speed: this.def.projectileSpeed,
       knockback: this.def.arrowKnockback,
+      maxRange: this.def.arrowMaxRange,
     });
   }
 

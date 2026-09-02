@@ -34,6 +34,9 @@ export class Arrow {
     this.knockback = opt.knockback ?? BOW.knockback;
     /** true = vom Spieler abgeschossen (trifft Gegner). */
     this.friendly = opt.friendly ?? true;
+    /** Endliche Reichweite: nach dieser Flugstrecke verschwindet der Pfeil. */
+    this.maxRange = opt.maxRange ?? BOW.maxRange;
+    this.traveled = 0;
 
     this.age = 0;
     this.spent = false;      // getroffen oder abgelaufen -> wird entfernt
@@ -58,9 +61,16 @@ export class Arrow {
     const stepX = (Math.cos(this.angle) * this.speed * dt) / SUBSTEPS;
     const stepY = (Math.sin(this.angle) * this.speed * dt) / SUBSTEPS;
 
+    const stepLen = Math.hypot(stepX, stepY);
+
     for (let i = 0; i < SUBSTEPS; i++) {
       this.x += stepX;
       this.y += stepY;
+      this.traveled += stepLen;
+      if (this.traveled >= this.maxRange) {
+        this.spent = true;
+        return;
+      }
 
       if (game.level.isSolidAt(this.x, this.y)) {
         // Ein Stueck zurueck, damit der Pfeil sichtbar in der Wand steckt.

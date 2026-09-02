@@ -35,6 +35,9 @@ export class ThrownSpear {
     this.angle = angle;
     this.damage = damage;
     this.speed = SPEAR.throwSpeed;
+    /** Endliche Reichweite: bewusst kuerzer als beim Bogen. */
+    this.maxRange = SPEAR.throwMaxRange;
+    this.traveled = 0;
 
     this.age = 0;
     this.spent = false;     // getroffen oder abgelaufen -> wird entfernt
@@ -59,9 +62,16 @@ export class ThrownSpear {
     const stepX = (Math.cos(this.angle) * this.speed * dt) / SUBSTEPS;
     const stepY = (Math.sin(this.angle) * this.speed * dt) / SUBSTEPS;
 
+    const stepLen = Math.hypot(stepX, stepY);
+
     for (let i = 0; i < SUBSTEPS; i++) {
       this.x += stepX;
       this.y += stepY;
+      this.traveled += stepLen;
+      if (this.traveled >= this.maxRange) {
+        this.spent = true;
+        return;
+      }
 
       if (game.level.isSolidAt(this.x, this.y)) {
         // Ein Stueck zurueck, damit der Speer sichtbar in der Wand steckt.

@@ -184,7 +184,7 @@ export function weaponInfo(progress, id) {
     const takt = BOW.cooldown / stufe.fireRateFactor;
     info.cooldown = takt;
     info.speedText = `1 Schuss / ${sekunden(takt)}`;
-    info.rangeText = kacheln(BOW.arrowSpeed * BOW.arrowLife);
+    info.rangeText = kacheln(BOW.maxRange);
     info.note = 'gefahrlos aus der Distanz, wenig Schaden';
   } else if (id === 'spear') {
     info.cooldown = SPEAR.cooldown;

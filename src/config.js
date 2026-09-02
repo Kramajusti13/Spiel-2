@@ -198,6 +198,8 @@ export const BOW = {
   arrowSpeed: 420,
   /** Flugzeit in Sekunden — daraus ergibt sich die Reichweite (420 * 1,4 = 588 px). */
   arrowLife: 1.4,
+  /** Maximale Flugstrecke in Pixeln. Bogen reicht weiter als der Speer. */
+  maxRange: 560,
   /** Startpunkt des Pfeils vor der Figur, damit er nicht in ihr steckt. */
   muzzleOffset: 12,
   knockback: 90,
@@ -257,6 +259,8 @@ export const SPEAR = {
   throwSpeed: 380,
   /** Flugzeit; 380 x 1,6 = 608 px, also "die volle Distanz". */
   throwLife: 1.6,
+  /** Maximale Flugstrecke in Pixeln. Bewusst kuerzer als der Bogen. */
+  throwMaxRange: 360,
   /** Startpunkt vor der Figur, damit der Speer nicht in ihr steckt. */
   muzzleOffset: 16,
   throwKnockback: 160,
@@ -522,6 +526,8 @@ export const ENEMIES = {
     strafeSpeedFactor: 0.55, strafeChangeTime: 1.4,
     shootInterval: 2.0, windupTime: 0.5, strikeTime: 0.1, recoverTime: 0.4,
     projectileSpeed: 300, arrowKnockback: 60,
+    /** Endliche Flugstrecke des Gegner-Pfeils in Pixeln. */
+    arrowMaxRange: 320,
     hitbox: { w: 20, h: 24 }, sprite: { w: 22, h: 26, offsetY: -2 },
     knockbackResist: 0.1, gold: { min: 12, max: 20 }, xp: 25,
   },
