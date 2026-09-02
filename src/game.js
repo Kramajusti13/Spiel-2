@@ -395,7 +395,11 @@ export class Game {
     // Vor der Freischaltung gibt es keine aktiven Quests — die Kachel zeigt
     // stattdessen den Hinweis (Abschnitt 8).
     if (!this.questsUnlocked) return [];
-    return activeQuests(this.claimedQuests).map((q) => questProgress(q, this));
+    // activeQuests liefert genau drei Eintraege (leicht/mittel/schwer);
+    // leere Klassen erscheinen als null und werden hier ausgefiltert.
+    return activeQuests(this.claimedQuests)
+      .filter((q) => q != null)
+      .map((q) => questProgress(q, this));
   }
 
   /**
@@ -456,6 +460,9 @@ export class Game {
     if (ok) {
       if (WEAPON_ORDER.includes(id)) this.takeNewWeapon(id, dabeiVorher);
       this.stats.goldSpent += goldBefore - this.gold;
+      // Kaufzaehler fuer Quest "Kaufe ein beliebiges Upgrade" (Abschnitt 8).
+      // Der Skill-Reset ist kein Upgrade — er zaehlt nicht mit.
+      if (id !== 'respec') this.stats.purchases += 1;
       playSound('buy');
       // Nach jedem Kauf speichern (Abschnitt 9).
       saveGame(this);
@@ -857,7 +864,7 @@ export class Game {
   // --- Ereignisse ---------------------------------------------------------
 
   onEnemyKilled(enemy) {
-    recordKill(this.stats, enemy.type, enemy.lastHitBy);
+    recordKill(this.stats, enemy.type, enemy.lastHitBy, enemy.difficulty ?? this.difficulty);
 
     // Hoehere Schwierigkeit bringt deutlich mehr Beute — genau das macht das
     // Wiederholen zur Entscheidung statt zur Pflicht (Abschnitt 4).

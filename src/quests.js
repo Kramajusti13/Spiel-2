@@ -14,7 +14,13 @@
 
 import { LEVELS, QUESTS, QUEST_SLOTS, QUESTS_UNLOCK_LEVEL } from './config.js';
 import { maxPotions } from './gear.js';
-import { clearsAtLeast, nightmareNoDeathCount } from './stats.js';
+import { clearsAtLeast, killsAtLeast, nightmareNoDeathCount } from './stats.js';
+
+/**
+ * Reihenfolge der Klassen fuer die Nachrueck-Logik (VERBESSERUNGEN_1
+ * Abschnitt 8): pro Klasse ist immer genau eine Quest aktiv.
+ */
+export const QUEST_TIERS = ['leicht', 'mittel', 'schwer'];
 
 /**
  * Den Zaehler einer Quest ablesen.
@@ -28,7 +34,10 @@ import { clearsAtLeast, nightmareNoDeathCount } from './stats.js';
  */
 export function counterValue(counter, game) {
   const stats = game.stats;
-  const [kind, arg] = String(counter).split(':');
+  const parts = String(counter).split(':');
+  const kind = parts[0];
+  const arg = parts[1];
+  const arg2 = parts[2];
 
   switch (kind) {
     case 'kills':
@@ -45,6 +54,17 @@ export function counterValue(counter, game) {
       return game.heroLevel;
     case 'nightmareNoDeath':
       return nightmareNoDeathCount(stats);
+    case 'killDiff':
+      // "Besiege den Ork-Haeuptling auf Schwer" (Abschnitt 8):
+      // killDiff:<typ>:<mindiff> — Kills auf mindiff oder hoeher.
+      return killsAtLeast(stats, arg, arg2);
+    case 'replay1to5': {
+      // "Spiele einen der Abschnitte 1-5 noch einmal durch": jeder Clear
+      // ueber den ersten hinaus zaehlt, addiert ueber die ersten 5 Level.
+      let sum = 0;
+      for (let i = 0; i < 5; i++) sum += Math.max(0, (stats.clearsByLevel[i] ?? 0) - 1);
+      return sum;
+    }
     default:
       console.warn(`Unbekannter Quest-Zaehler "${counter}" (siehe QUESTS in config.js).`);
       return 0;
@@ -84,19 +104,23 @@ export function questProgress(quest, game) {
 }
 
 /**
- * Die aktiven Quests: die ersten drei aus der Liste, deren Belohnung noch
- * nicht abgeholt ist. Dadurch rueckt beim Abholen automatisch die naechste
- * nach — ohne eigene Verwaltung, wer wann freigeschaltet wurde.
+ * Die aktiven Quests: pro Klasse (leicht/mittel/schwer) die naechste noch
+ * nicht abgeholte Quest. Ergebnis hat immer drei Eintraege — ist eine Klasse
+ * leer (alles geschafft), steht dort null (VERBESSERUNGEN_1 Abschnitt 8).
  *
  * @param {number[]} claimed Bereits abgeholte Quest-IDs
+ * @returns {Array<object|null>} in Reihenfolge leicht, mittel, schwer
  */
 export function activeQuests(claimed) {
-  return QUESTS.filter((q) => !claimed.includes(q.id)).slice(0, QUEST_SLOTS);
+  const claimedSet = new Set(claimed);
+  return QUEST_TIERS.map(
+    (tier) => QUESTS.find((q) => q.tier === tier && !claimedSet.has(q.id)) ?? null,
+  );
 }
 
-/** Alle Quests erledigt? Dann ist die Liste leer und das Feld meldet das. */
+/** Alle Quests erledigt? Alle Klassen haben keinen offenen Eintrag mehr. */
 export function allQuestsDone(claimed) {
-  return activeQuests(claimed).length === 0;
+  return activeQuests(claimed).every((q) => q === null);
 }
 
 /**
@@ -110,7 +134,7 @@ export function claimQuest(id, game) {
   if (!quest) return null;
   // Nur was gerade aktiv ist, laesst sich abholen — sonst koennte eine spaete
   // Quest an den drei Feldern vorbei kassiert werden.
-  if (!activeQuests(game.claimedQuests).some((q) => q.id === id)) return null;
+  if (!activeQuests(game.claimedQuests).some((q) => q && q.id === id)) return null;
   if (!questProgress(quest, game).done) return null;
 
   const r = quest.reward ?? {};

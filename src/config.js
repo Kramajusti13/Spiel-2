@@ -922,62 +922,72 @@ export const ENEMIES = {
  * noch nicht abgeholten Quests aktiv.
  */
 export const QUESTS = [
-  { id: 1, text: 'Besiege 15 Gorillas', counter: 'kills:gorilla', target: 15,
-    reward: { gold: 200, xp: 300 } },
-  { id: 2, text: 'Schaffe den Teich', counter: 'level:6', target: 1,
-    reward: { gold: 250, xp: 400 } },
-  { id: 3, text: 'Besiege 20 Froesche', counter: 'kills:frog', target: 20,
-    reward: { gold: 300, xp: 500 } },
-  { id: 4, text: 'Sammle 2.000 Gold', counter: 'stat:goldEarned', target: 2000,
-    reward: { gold: 400 } },
-  { id: 5, text: 'Besiege 25 Giftpilze', counter: 'kills:giftpilz', target: 25,
-    reward: { gold: 500, xp: 700 } },
-  { id: 6, text: 'Schaffe ein Level, ohne vergiftet zu werden',
+  // -------------------------------------------------------------------
+  // Leichte Quests (VERBESSERUNGEN_1 Abschnitt 8) — grosse Menge,
+  // schnell zu schaffen, kleine Belohnung.
+  // -------------------------------------------------------------------
+  { id: 101, text: 'Besiege 20 Schleims', counter: 'kills:slime', target: 20,
+    tier: 'leicht', reward: { gold: 60, xp: 100 } },
+  { id: 102, text: 'Besiege 15 Goblins', counter: 'kills:goblin', target: 15,
+    tier: 'leicht', reward: { gold: 80, xp: 120 } },
+  { id: 103, text: 'Sammle 300 Gold', counter: 'stat:goldEarned', target: 300,
+    tier: 'leicht', reward: { gold: 80, xp: 100 } },
+  { id: 104, text: 'Blocke 15 Angriffe', counter: 'stat:blocks', target: 15,
+    tier: 'leicht', reward: { gold: 70, xp: 120 } },
+  { id: 105, text: 'Besiege 10 Gegner mit dem Bogen', counter: 'weapon:bow', target: 10,
+    tier: 'leicht', reward: { gold: 90, xp: 150 } },
+  { id: 106, text: 'Spiele einen der Abschnitte 1-5 noch einmal durch',
+    shortText: 'Abschnitt 1-5 wiederholen', counter: 'replay1to5', target: 1,
+    tier: 'leicht', reward: { gold: 100, xp: 150 } },
+  { id: 107, text: 'Kaufe ein beliebiges Upgrade', counter: 'stat:purchases', target: 1,
+    tier: 'leicht', reward: { gold: 50, xp: 100 } },
+
+  // -------------------------------------------------------------------
+  // Mittlere Quests — ein bis zwei Level Arbeit.
+  // -------------------------------------------------------------------
+  { id: 201, text: 'Besiege 15 Gorillas', counter: 'kills:gorilla', target: 15,
+    tier: 'mittel', reward: { gold: 300, xp: 500 } },
+  { id: 202, text: 'Schaffe den Teich', counter: 'level:6', target: 1,
+    tier: 'mittel', reward: { gold: 350, xp: 600 } },
+  { id: 203, text: 'Besiege 20 Froesche', counter: 'kills:frog', target: 20,
+    tier: 'mittel', reward: { gold: 400, xp: 700 } },
+  { id: 204, text: 'Sammle 2.000 Gold', counter: 'stat:goldEarned', target: 2000,
+    tier: 'mittel', reward: { gold: 500, xp: 400 } },
+  { id: 205, text: 'Besiege 25 Giftpilze', counter: 'kills:giftpilz', target: 25,
+    tier: 'mittel', reward: { gold: 500, xp: 800 } },
+  { id: 206, text: 'Schaffe ein Level, ohne vergiftet zu werden',
     shortText: 'Level ohne Vergiftung', counter: 'stat:poisonFreeRuns', target: 1,
-    reward: { gold: 600, xp: 800 } },
-  { id: 7, text: 'Erreiche Stufe 12', counter: 'heroLevel', target: 12,
-    reward: { gold: 700, potions: 1 } },
-  { id: 8, text: 'Besiege 15 Krokodile', counter: 'kills:krokodil', target: 15,
-    reward: { gold: 800, xp: 900 } },
-  { id: 9, text: 'Besiege 20 Gegner mit dem Speer', counter: 'weapon:spear', target: 20,
-    reward: { gold: 600, xp: 800 } },
-  { id: 10, text: 'Blocke 30 Angriffe', counter: 'stat:blocks', target: 30,
-    reward: { gold: 500, xp: 600 } },
-  { id: 11, text: 'Schaffe ein Level auf Alptraum', counter: 'difficulty:nightmare', target: 1,
-    reward: { gold: 1000, xp: 1500 } },
-  { id: 12, text: 'Besiege die Titanoboa', counter: 'kills:titanoboa', target: 1,
-    reward: { gold: 1500, xp: 2000 } },
+    tier: 'mittel', reward: { gold: 600, xp: 900 } },
+  { id: 207, text: 'Besiege 20 Gegner mit dem Speer', counter: 'weapon:spear', target: 20,
+    tier: 'mittel', reward: { gold: 600, xp: 800 } },
+  { id: 208, text: 'Erreiche Stufe 12', counter: 'heroLevel', target: 12,
+    tier: 'mittel', reward: { gold: 700, potions: 1 } },
+
+  // -------------------------------------------------------------------
+  // Schwere Quests — Ziele fuer mehrere Sitzungen.
+  // -------------------------------------------------------------------
+  { id: 301, text: 'Besiege 15 Krokodile', counter: 'kills:krokodil', target: 15,
+    tier: 'schwer', reward: { gold: 1500, xp: 2000 } },
+  { id: 302, text: 'Schaffe ein Level auf Alptraum', counter: 'difficulty:nightmare',
+    target: 1, tier: 'schwer', reward: { gold: 1800, xp: 2500 } },
+  { id: 303, text: 'Besiege den Ork-Haeuptling auf Schwer',
+    counter: 'killDiff:orcChieftain:hard', target: 1,
+    tier: 'schwer', reward: { gold: 2000, xp: 3000 } },
+  { id: 304, text: 'Besiege die Titanoboa', counter: 'kills:titanoboa', target: 1,
+    tier: 'schwer', reward: { gold: 2500, xp: 3500 } },
+  { id: 305, text: 'Besiege die Titanoboa auf Alptraum',
+    counter: 'killDiff:titanoboa:nightmare', target: 1,
+    tier: 'schwer', reward: { gold: 3000, xp: 4000 } },
   {
-    id: 13,
+    id: 306,
     text: 'Schaffe alle Level auf Alptraum, jedes ohne zu sterben',
-    // Kurzform fuer die Fortschrittszeile: "Alptraum ohne Tod  7/10".
     shortText: 'Alptraum ohne Tod',
     counter: 'nightmareNoDeath',
-    // Jetzt ueber alle zehn Level. Quest 13 ist die fruehere Quest 11 und
-    // behaelt alle ihre Regeln: jeder Tod zaehlt (auch Wiederbelebung gegen
-    // Gold), der Fortschritt wird pro Level einzeln gespeichert, ein
-    // durchgehender Lauf ist nicht noetig.
+    // Jeder Tod zaehlt (auch Wiederbelebung gegen Gold), Fortschritt wird
+    // pro Level einzeln gespeichert; ein durchgehender Lauf ist nicht noetig.
     target: 10,
-    reward: { gold: 3000, xp: 5000, skillPoints: 5 },
+    tier: 'schwer', reward: { gold: 3000, xp: 5000, skillPoints: 5 },
   },
-  // Zusaetzliche Quests mit Kategorien (leicht/mittel/schwer).
-  // Leichte Quests geben absichtlich sehr wenig Gold/XP.
-  { id: 14, text: 'Besiege 10 Schleims', counter: 'kills:slime', target: 10,
-    tier: 'leicht', reward: { gold: 40, xp: 60 } },
-  { id: 15, text: 'Besiege 15 Goblins', counter: 'kills:goblin', target: 15,
-    tier: 'leicht', reward: { gold: 60, xp: 90 } },
-  { id: 16, text: 'Sammle 500 Gold', counter: 'stat:goldEarned', target: 500,
-    tier: 'leicht', reward: { gold: 50, xp: 50 } },
-  { id: 17, text: 'Besiege 20 gepanzerte Orks', counter: 'kills:armoredOrc', target: 20,
-    tier: 'mittel', reward: { gold: 450, xp: 600 } },
-  { id: 18, text: 'Besiege 25 Gegner mit dem Bogen', counter: 'weapon:bow', target: 25,
-    tier: 'mittel', reward: { gold: 500, xp: 700 } },
-  { id: 19, text: 'Blocke 60 Angriffe', counter: 'stat:blocks', target: 60,
-    tier: 'mittel', reward: { gold: 550, xp: 750 } },
-  { id: 20, text: 'Besiege 3 Level auf Alptraum', counter: 'difficulty:nightmare', target: 3,
-    tier: 'schwer', reward: { gold: 1800, xp: 2500, potions: 1 } },
-  { id: 21, text: 'Besiege den Ork-Haeuptling', counter: 'kills:orcChieftain', target: 1,
-    tier: 'schwer', reward: { gold: 1500, xp: 2000 } },
 ];
 
 /**

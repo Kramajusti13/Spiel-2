@@ -36,6 +36,13 @@ export function createStats() {
     killsByType: Object.fromEntries(Object.keys(ENEMIES).map((k) => [k, 0])),
     /** Waffe -> Anzahl. Zaehlt der letzte Treffer, der den Gegner faellt. */
     killsByWeapon: Object.fromEntries(WEAPONS.map((k) => [k, 0])),
+    /**
+     * Monstertyp -> Schwierigkeitsstufe -> Anzahl (VERBESSERUNGEN_1 Abschnitt 8).
+     * Traegt Quests wie "Besiege den Ork-Haeuptling auf Schwer" und "Besiege
+     * die Titanoboa auf Alptraum".
+     */
+    killsByTypeAndDifficulty: Object.fromEntries(Object.keys(ENEMIES).map((k) =>
+      [k, Object.fromEntries(DIFFICULTY_ORDER.map((d) => [d, 0]))])),
 
     // --- Gold ---
     /**
@@ -52,6 +59,8 @@ export function createStats() {
     deaths: 0,
     revives: 0,
     potionsUsed: 0,
+    /** Getaetigte Shop-Kaeufe (VERBESSERUNGEN_1 Abschnitt 8). */
+    purchases: 0,
 
     // --- Level ---
     /** Gestartete Durchgaenge. */
@@ -91,11 +100,26 @@ export function createStats() {
  * @param {object} stats
  * @param {string} type   Monstertyp
  * @param {string|null} weapon  Waffe des toedlichen Treffers
+ * @param {string} [difficulty] Schwierigkeitsstufe des Durchgangs
  */
-export function recordKill(stats, type, weapon) {
+export function recordKill(stats, type, weapon, difficulty = null) {
   stats.killsTotal += 1;
   if (type in stats.killsByType) stats.killsByType[type] += 1;
   if (weapon && weapon in stats.killsByWeapon) stats.killsByWeapon[weapon] += 1;
+  if (difficulty && stats.killsByTypeAndDifficulty[type]?.[difficulty] != null) {
+    stats.killsByTypeAndDifficulty[type][difficulty] += 1;
+  }
+}
+
+/**
+ * Kills eines Typs auf dieser Stufe ODER hoeher (analog zu clearsAtLeast).
+ * Ein Kill auf Alptraum zaehlt auch fuer "Besiege ... auf Schwer".
+ */
+export function killsAtLeast(stats, type, difficultyId) {
+  const from = DIFFICULTY_ORDER.indexOf(difficultyId);
+  const bucket = stats.killsByTypeAndDifficulty?.[type];
+  if (from < 0 || !bucket) return 0;
+  return DIFFICULTY_ORDER.slice(from).reduce((sum, d) => sum + (bucket[d] ?? 0), 0);
 }
 
 /**
@@ -125,8 +149,8 @@ export function sanitizeStats(raw) {
   const num = (v) => (Number.isFinite(v) && v > 0 ? Math.floor(v) : 0);
 
   for (const key of ['killsTotal', 'goldEarned', 'goldSpent', 'blocks', 'deaths',
-    'revives', 'potionsUsed', 'levelRuns', 'levelsCleared', 'cleanRuns',
-    'poisonFreeRuns']) {
+    'revives', 'potionsUsed', 'purchases', 'levelRuns', 'levelsCleared',
+    'cleanRuns', 'poisonFreeRuns']) {
     stats[key] = num(raw[key]);
   }
   stats.gameCompleted = raw.gameCompleted === true;
@@ -135,6 +159,12 @@ export function sanitizeStats(raw) {
   }
   for (const key of Object.keys(stats.killsByWeapon)) {
     stats.killsByWeapon[key] = num(raw.killsByWeapon?.[key]);
+  }
+  for (const type of Object.keys(stats.killsByTypeAndDifficulty)) {
+    const from = raw.killsByTypeAndDifficulty?.[type] ?? {};
+    for (const d of DIFFICULTY_ORDER) {
+      stats.killsByTypeAndDifficulty[type][d] = num(from[d]);
+    }
   }
   // Nur echte Listen uebernehmen: aus einem von Hand eingetragenen String
   // wuerde sonst zeichenweise ein Fortschritt entstehen.
