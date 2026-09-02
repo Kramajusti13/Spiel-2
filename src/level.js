@@ -85,6 +85,14 @@ export class Level {
     return this.isSolidTile(Math.floor(x / this.tileSize), Math.floor(y / this.tileSize));
   }
 
+  /** Ist der Weltpunkt (x, y) auf einem Wasser-Tile? (Projektile fliegen ggf. darueber.) */
+  isWaterAt(x, y) {
+    return this.tileAt(
+      Math.floor(x / this.tileSize),
+      Math.floor(y / this.tileSize)
+    ).name === 'water';
+  }
+
   /** Steckt eine mittig platzierte Box in einer Wand? (z. B. Spawn-Pruefung) */
   isBoxBlocked(x, y, hw, hh) {
     const c0 = Math.floor((x - hw) / this.tileSize);

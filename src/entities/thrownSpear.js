@@ -43,6 +43,8 @@ export class ThrownSpear {
     this.spent = false;     // getroffen oder abgelaufen -> wird entfernt
     this.stuckTimer = 0;    // steckt in einer Wand und verblasst
     this.sprite = 'spear';
+    /** Der geworfene Speer fliegt ueber Wasser (nur der Spieler wirft Speere). */
+    this.overWater = true;
   }
 
   update(dt, game) {
@@ -73,8 +75,10 @@ export class ThrownSpear {
         return;
       }
 
-      if (game.level.isSolidAt(this.x, this.y)) {
+      if (game.level.isSolidAt(this.x, this.y)
+        && !(this.overWater && game.level.isWaterAt(this.x, this.y))) {
         // Ein Stueck zurueck, damit der Speer sichtbar in der Wand steckt.
+        // Ueber Wasser fliegt der Speer weiter — nur echte Waende halten ihn auf.
         this.x -= stepX * 0.5;
         this.y -= stepY * 0.5;
         playSound('arrowHit', { volume: 0.6 });
