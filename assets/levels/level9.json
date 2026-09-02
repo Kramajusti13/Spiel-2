@@ -49,17 +49,12 @@
   "spawns": [
     {
       "type": "krokodil",
-      "x": 12,
+      "x": 14,
       "y": 26
     },
     {
       "type": "krokodil",
-      "x": 22,
-      "y": 27
-    },
-    {
-      "type": "krokodil",
-      "x": 33,
+      "x": 30,
       "y": 27
     },
     {
@@ -69,8 +64,8 @@
     },
     {
       "type": "krokodil",
-      "x": 20,
-      "y": 13
+      "x": 22,
+      "y": 14
     },
     {
       "type": "krokodil",
@@ -79,13 +74,8 @@
     },
     {
       "type": "krokodil",
-      "x": 8,
+      "x": 10,
       "y": 4
-    },
-    {
-      "type": "krokodil",
-      "x": 19,
-      "y": 8
     },
     {
       "type": "krokodil",

@@ -23,8 +23,61 @@
 
 import { COLORS } from '../config.js';
 import { hasSprite } from '../gfx.js';
-import { dist } from '../util.js';
+import { clamp, dist } from '../util.js';
 import { Enemy } from './enemy.js';
+
+/**
+ * Wie level.moveEntity, aber Wasser-Kacheln sind fuer das Krokodil begehbar
+ * — es kann darin schwimmen statt an der Wasserkante haengen zu bleiben.
+ */
+function swimMove(entity, dx, dy, level) {
+  const T = level.tileSize;
+  const blocked = (col, row) => {
+    const tile = level.tileAt(col, row);
+    if (!tile.solid) return false;
+    // Wasser gilt fuer das Krokodil als passierbar.
+    return tile.name !== 'water';
+  };
+  const result = { hitX: false, hitY: false };
+
+  if (dx !== 0) {
+    entity.x += dx;
+    const r0 = Math.floor((entity.y - entity.hh) / T);
+    const r1 = Math.floor((entity.y + entity.hh - 0.001) / T);
+    if (dx > 0) {
+      const col = Math.floor((entity.x + entity.hw - 0.001) / T);
+      for (let r = r0; r <= r1; r++) {
+        if (blocked(col, r)) { entity.x = col * T - entity.hw - 0.001; result.hitX = true; break; }
+      }
+    } else {
+      const col = Math.floor((entity.x - entity.hw) / T);
+      for (let r = r0; r <= r1; r++) {
+        if (blocked(col, r)) { entity.x = (col + 1) * T + entity.hw + 0.001; result.hitX = true; break; }
+      }
+    }
+  }
+
+  if (dy !== 0) {
+    entity.y += dy;
+    const c0 = Math.floor((entity.x - entity.hw) / T);
+    const c1 = Math.floor((entity.x + entity.hw - 0.001) / T);
+    if (dy > 0) {
+      const row = Math.floor((entity.y + entity.hh - 0.001) / T);
+      for (let c = c0; c <= c1; c++) {
+        if (blocked(c, row)) { entity.y = row * T - entity.hh - 0.001; result.hitY = true; break; }
+      }
+    } else {
+      const row = Math.floor((entity.y - entity.hh) / T);
+      for (let c = c0; c <= c1; c++) {
+        if (blocked(c, row)) { entity.y = (row + 1) * T + entity.hh + 0.001; result.hitY = true; break; }
+      }
+    }
+  }
+
+  entity.x = clamp(entity.x, entity.hw, level.pixelWidth - entity.hw);
+  entity.y = clamp(entity.y, entity.hh, level.pixelHeight - entity.hh);
+  return result;
+}
 
 export class Krokodil extends Enemy {
   constructor(x, y) {
@@ -66,9 +119,10 @@ export class Krokodil extends Enemy {
     // --- Abgetaucht: schnell hinterher, Schatten wandert mit ---
     if (this.state === 'submerged') {
       const heading = this.steer(player, game.level, dt);
-      game.level.moveEntity(this,
+      swimMove(this,
         Math.cos(heading) * this.def.submergedSpeed * dt,
-        Math.sin(heading) * this.def.submergedSpeed * dt);
+        Math.sin(heading) * this.def.submergedSpeed * dt,
+        game.level);
 
       // Nah genug ODER Tauchzeit um: herausspringen. Der zweite Teil ist
       // wichtig — ohne ihn bliebe ein Krokodil, das den Spieler nie erreicht,
@@ -98,9 +152,10 @@ export class Krokodil extends Enemy {
       // Es kriecht traege weiter, damit es kein Stillleben ist — aber langsam
       // genug, dass man es sicher trifft.
       const heading = this.steer(player, game.level, dt);
-      game.level.moveEntity(this,
+      swimMove(this,
         Math.cos(heading) * this.def.speed * dt,
-        Math.sin(heading) * this.def.speed * dt);
+        Math.sin(heading) * this.def.speed * dt,
+        game.level);
       if (this.stateTime >= this.def.surfaceTime) this.setState('submerged');
     }
   }
