@@ -822,7 +822,10 @@ export const ENEMIES = {
    * moeglich sein.
    */
   titanoboa: {
-    name: 'Titanoboa', maxHp: 500, damage: 50, defense: 0, speed: 70,
+    // Grundwerte laut VERBESSERUNGEN_1 Abschnitt 6.
+    // damage ist der Grundschaden des Bisses (60); Feger 70, Spucke 40
+    // stehen bei den Angriffen unten; Verschlingen 100 bleibt unveraendert.
+    name: 'Titanoboa', maxHp: 750, damage: 60, defense: 0, speed: 70,
     aggroRadius: 900, loseAggroRadius: 9999,
     isBoss: true,
     phases: 2,
@@ -850,20 +853,47 @@ export const ENEMIES = {
     shadowRadius: 30,
 
     // --- Phase 2: offener Kampf ---
-    /** Die Haeutung: Pause mit Animation, in der sie wehrlos ist. */
-    sheddingTime: 2.5,
-    /** "+20 Schaden auf alle Angriffe (Verschlingen: 120, Biss: 70)". */
+    /**
+     * Die Haeutung (VERBESSERUNGEN_1 Abschnitt 6): 3 Sekunden IMMUN,
+     * Bildschirm wackelt leicht, alte Haut platzt sichtbar ab.
+     */
+    sheddingTime: 3.0,
+    /** "+20 Schaden auf alle Angriffe (Feger 90, Biss 80, Spucke 60)". */
     phase2DamageBonus: 20,
-    /** "30 % schneller". */
+    /** "30 % schneller in Bewegung und Angriffsfolge". */
     phase2SpeedFactor: 1.3,
     /** "Groesser" — auch leichter zu treffen, das ist Absicht. */
     phase2SizeFactor: 1.35,
-    /** Nahkampfbiss, nur in Phase 2. Grundschaden 50, mit Bonus 70. */
-    biteRange: 62, biteRadius: 78,
+
+    // --- Angriffe nach Abstand (Abschnitt 6) ---
+    /** Schwanzfeger: unter 100 px, 360°-Radius 128 px, 70 Schaden. */
+    tailSweep: {
+      range: 100, radius: 128, damage: 70,
+      windupTime: 0.55, strikeTime: 0.2,
+    },
+    /** Biss: 100-350 px, kurzer Vorstoss, 60 Schaden (Grundschaden). */
+    bite: {
+      minRange: 100, maxRange: 350, radius: 78,
+      windupTime: 0.55, strikeTime: 0.15,
+    },
+    /** Giftspucke: ueber 350 px, 3 Geschosse, Reichweite 400, 40 pro Treffer. */
+    spit: {
+      minRange: 350, count: 3, spreadDeg: 22, speed: 280, maxRange: 400,
+      damage: 40, windupTime: 0.7, strikeTime: 0.2,
+    },
+    /**
+     * Pausen zwischen Angriffen: P1 2,0 s, P2 1,4 s (Abschnitt 6).
+     * Ersetzt das alte recoverTime — recoverTime bleibt fuer Ansteuerung
+     * bestehender Angriffe erhalten, laeuft aber im neuen Zyklus nicht mehr.
+     */
+    attackPauseP1: 2.0,
+    attackPauseP2: 1.4,
     windupTime: 0.6, strikeTime: 0.15, recoverTime: 0.9,
+    /** Der alte Biss-Bereich fuer Rueckwaertskompatibilitaet der Zeichnung. */
+    biteRange: 78, biteRadius: 78,
 
     hitbox: { w: 44, h: 40 }, sprite: { w: 48, h: 44, offsetY: -4 },
-    knockbackResist: 0.95, gold: { min: 300, max: 300 }, xp: 500,
+    knockbackResist: 0.95, gold: { min: 500, max: 500 }, xp: 800,
   },
 };
 

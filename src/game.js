@@ -16,6 +16,7 @@ import { Coin } from './entities/coin.js';
 import { Arrow } from './entities/arrow.js';
 import { ThrownSpear } from './entities/thrownSpear.js';
 import { Stone } from './entities/stone.js';
+import { PoisonSpit } from './entities/poisonSpit.js';
 import { PoisonCloud } from './entities/poisonCloud.js';
 import { drawHud, drawLevelIntro } from './hud.js';
 import { DeathScreen } from './ui/deathScreen.js';
@@ -932,6 +933,14 @@ export class Game {
    */
   spawnStone(x, y, angle, damage, opt = {}) {
     this.arrows.push(new Stone(x, y, angle, damage, opt));
+  }
+
+  /**
+   * Giftspucke der Titanoboa (VERBESSERUNGEN_1 Abschnitt 6). Liegt in
+   * derselben Liste wie Pfeile, Speere und Steine.
+   */
+  spawnPoisonSpit(x, y, angle, damage, opt = {}) {
+    this.arrows.push(new PoisonSpit(x, y, angle, damage, opt));
   }
 
   /** Giftwolke des Giftpilzes (Erweiterung 2, Abschnitt 1). */
