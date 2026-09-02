@@ -65,10 +65,17 @@ export class QuestTile {
     for (const { quest } of quests) {
       const row = document.createElement('div');
       row.className = 'quest-row';
+      if (quest.tier) row.dataset.tier = quest.tier;
 
       const text = document.createElement('span');
       text.className = 'quest-text';
-      text.textContent = quest.text;
+      if (quest.tier) {
+        const badge = document.createElement('span');
+        badge.className = `quest-tier tier-${quest.tier}`;
+        badge.textContent = quest.tier;
+        text.append(badge, ' ');
+      }
+      text.append(quest.text);
 
       const count = document.createElement('span');
       count.className = 'quest-count';

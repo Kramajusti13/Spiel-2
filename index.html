@@ -365,6 +365,23 @@
   }
   .quest-row:first-child { border-top: none; }
   .quest-text { grid-area: text; font-size: 13px; color: #d8d3c4; }
+  /* Klassen-Marke (VERBESSERUNGEN_1 Abschnitt 8): grün/gelb/rot. */
+  .quest-tier {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    margin-right: 6px;
+    border-radius: 3px;
+    border: 1px solid currentColor;
+    vertical-align: middle;
+    line-height: 1.4;
+  }
+  .quest-tier.tier-leicht { color: #7fb060; }
+  .quest-tier.tier-mittel { color: #d9b04a; }
+  .quest-tier.tier-schwer { color: #d9563f; }
   .quest-count {
     grid-area: count;
     font-size: 12px;
