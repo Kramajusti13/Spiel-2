@@ -853,6 +853,24 @@ export const QUESTS = [
     target: 10,
     reward: { gold: 3000, xp: 5000, skillPoints: 5 },
   },
+  // Zusaetzliche Quests mit Kategorien (leicht/mittel/schwer).
+  // Leichte Quests geben absichtlich sehr wenig Gold/XP.
+  { id: 14, text: 'Besiege 10 Schleims', counter: 'kills:slime', target: 10,
+    tier: 'leicht', reward: { gold: 40, xp: 60 } },
+  { id: 15, text: 'Besiege 15 Goblins', counter: 'kills:goblin', target: 15,
+    tier: 'leicht', reward: { gold: 60, xp: 90 } },
+  { id: 16, text: 'Sammle 500 Gold', counter: 'stat:goldEarned', target: 500,
+    tier: 'leicht', reward: { gold: 50, xp: 50 } },
+  { id: 17, text: 'Besiege 20 gepanzerte Orks', counter: 'kills:armoredOrc', target: 20,
+    tier: 'mittel', reward: { gold: 450, xp: 600 } },
+  { id: 18, text: 'Besiege 25 Gegner mit dem Bogen', counter: 'weapon:bow', target: 25,
+    tier: 'mittel', reward: { gold: 500, xp: 700 } },
+  { id: 19, text: 'Blocke 60 Angriffe', counter: 'stat:blocks', target: 60,
+    tier: 'mittel', reward: { gold: 550, xp: 750 } },
+  { id: 20, text: 'Besiege 3 Level auf Alptraum', counter: 'difficulty:nightmare', target: 3,
+    tier: 'schwer', reward: { gold: 1800, xp: 2500, potions: 1 } },
+  { id: 21, text: 'Besiege den Ork-Haeuptling', counter: 'kills:orcChieftain', target: 1,
+    tier: 'schwer', reward: { gold: 1500, xp: 2000 } },
 ];
 
 /**
