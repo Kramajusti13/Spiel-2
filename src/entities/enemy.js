@@ -76,6 +76,12 @@ export class Enemy {
     this.slotAngle = Math.random() * Math.PI * 2;
     /** Restliche Wartezeit vor dem naechsten Angriff (staggerAttacks). */
     this.staggerHold = 0;
+    /**
+     * Restzeit, in der der Angriff noch zurueckgehalten wird, weil der Spieler
+     * gerade ausweicht (punishDodge, Alptraum). Wird waehrend des Rollens jeden
+     * Frame auf dodgePunishDelay zurueckgesetzt und laeuft danach ab.
+     */
+    this.dodgeHold = 0;
   }
 
   /**
@@ -177,10 +183,24 @@ export class Enemy {
       default:
         // In Reichweite? Dann ausholen.
         if (d <= this.def.attackRange + player.hw) {
+          const beh = difficultyBehavior(this.difficulty);
+
+          // Ausweichrolle abwarten (VERBESSERUNGEN_1 Abschnitt 5, Alptraum):
+          // Solange der Spieler rollt, wird der Timer aufgefrischt; danach
+          // laeuft er ab. So faellt der Hieb genau in den Moment, in dem der
+          // Spieler aus der Rolle kommt und noch nicht wieder blockt.
+          if (beh.punishDodge && player.isRolling) {
+            this.dodgeHold = AI.hardBehavior.dodgePunishDelay;
+            return true;
+          }
+          if (this.dodgeHold > 0) {
+            this.dodgeHold -= dt;
+            return true;
+          }
+
           // Versetztes Angreifen (VERBESSERUNGEN_1 Abschnitt 5): auf Schwer
           // duerfen hoechstens N Gegner gleichzeitig in der Ausholphase sein;
           // die Ueberzaehligen warten kurz, damit nicht alle als Salve losgehen.
-          const beh = difficultyBehavior(this.difficulty);
           if (beh.staggerAttacks && this._tooManyAttacking(game)) {
             if (this.staggerHold <= 0) {
               const min = AI.hardBehavior.staggerDelayMin;

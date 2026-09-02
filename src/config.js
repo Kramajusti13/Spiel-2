@@ -509,6 +509,12 @@ export const AI = {
      * Muss > SHIELD.blockArc / 2 sein (60°), sonst laufen sie in den Block.
      */
     shieldSidestepDeg: 80,
+    /**
+     * Alptraum-Verhalten (punishDodge, VERBESSERUNGEN_1 Abschnitt 5):
+     * Ausweichrolle abwarten und 0,3 s nach dem Rollen-Ende zuschlagen —
+     * genau der Moment, in dem der Spieler noch nicht wieder blocken kann.
+     */
+    dodgePunishDelay: 0.3,
   },
 };
 
