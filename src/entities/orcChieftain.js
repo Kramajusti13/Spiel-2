@@ -21,11 +21,34 @@ import { Enemy } from './enemy.js';
 export class OrcChieftain extends Enemy {
   constructor(x, y) {
     super('orcChieftain', x, y);
+    // Ork-Haeuptling insgesamt staerker: mehr HP/Schaden/Tempo. Kopie des def,
+    // damit die Werte in config.js unberuehrt bleiben.
+    this.def = {
+      ...this.def,
+      maxHp: Math.round(this.def.maxHp * 1.35),
+      damage: Math.round(this.def.damage * 1.25),
+      speed: this.def.speed * 1.15,
+      recoverTime: this.def.recoverTime * 0.75,
+      charge: {
+        ...this.def.charge,
+        damage: Math.round(this.def.charge.damage * 1.2),
+        cooldown: this.def.charge.cooldown * 0.7,
+      },
+      slam: {
+        ...this.def.slam,
+        damage: Math.round(this.def.slam.damage * 1.2),
+        cooldown: this.def.slam.cooldown * 0.7,
+      },
+    };
+    this.maxHp = this.def.maxHp;
+    this.hp = this.maxHp;
     this.chargeCooldown = this.def.charge.cooldown * 0.5;
     this.slamCooldown = this.def.slam.cooldown * 0.5;
     this.chargeAngle = 0;
     this.chargeHit = false;
     this.lastPhase = 1;
+    /** Zaehlt, wie viele Hiebe in einer Kombo bereits gefallen sind. */
+    this.comboCount = 0;
   }
 
   /** 1, 2 oder 3 — haengt am verbleibenden Leben. */
@@ -181,13 +204,34 @@ export class OrcChieftain extends Enemy {
     return false;
   }
 
-  /** Phase 3 macht die Erholung nach dem Schwung kuerzer. */
+  /**
+   * Phase 3 macht die Erholung nach dem Schwung kuerzer. Ab Phase 2 kann er
+   * einen zweiten (in Phase 3 auch dritten) Hieb direkt anschliessen —
+   * kombinierte Attacke, wenn der Spieler noch in Reichweite ist.
+   */
   meleeCycle(dt, game) {
-    if (this.state === 'recover' && this.phase === 3) {
-      if (this.stateTime >= this.def.recoverTime * this.def.phase3RecoverFactor) {
+    if (this.state === 'recover') {
+      const shortened = this.phase === 3
+        ? this.def.recoverTime * this.def.phase3RecoverFactor
+        : this.def.recoverTime;
+      const player = game.player;
+      const d = dist(this.x, this.y, player.x, player.y);
+      const maxCombo = this.phase >= 3 ? 3 : this.phase === 2 ? 2 : 1;
+      // Kombo-Folgetreffer: schneller wieder ausholen statt zurueck in chase.
+      if (this.stateTime >= shortened * 0.55
+          && this.comboCount < maxCombo
+          && d <= this.def.attackRange + player.hw + 6) {
+        this.comboCount++;
+        this.setState('windup');
+        this.struck = false;
+        return true;
+      }
+      if (this.stateTime >= shortened) {
+        this.comboCount = 0;
         this.setState('chase');
         return true;
       }
+      return true;
     }
     return super.meleeCycle(dt, game);
   }
