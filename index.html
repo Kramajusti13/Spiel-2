@@ -186,40 +186,73 @@
     .dash-btn.pulse { animation: none; background: #3a3726; }
   }
 
-  /* --- Kacheln: Spielerbild in der Mitte, vier Kacheln ringfoermig drumherum --- */
+  /* --- 3x3-Raster (VERBESSERUNGEN_1 Abschnitt 1): Held mittig, 8 Kacheln aussen. --- */
   #dash-grid {
     flex: 1;
     display: grid;
-    grid-template-columns: 1fr 260px 1fr;
+    grid-template-columns: 1fr 1.4fr 1fr;
+    grid-template-rows: auto auto auto;
     grid-template-areas:
-      "shop      character quests"
-      "shop      portrait  quests"
-      "route     route     route";
+      "character quests    loadout"
+      "shop      portrait  smithy"
+      "stats     route     settings";
     gap: 14px;
     align-content: start;
   }
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     #dash-grid {
-      grid-template-columns: 1fr;
-      grid-template-areas: "character" "portrait" "shop" "quests" "route";
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "portrait  portrait"
+        "character loadout"
+        "quests    smithy"
+        "shop      stats"
+        "route     route"
+        "settings  settings";
     }
   }
-  #tile-shop { grid-area: shop; }
-  #tile-quests { grid-area: quests; }
-  #tile-route { grid-area: route; }
-  #tile-character { grid-area: character; cursor: pointer; }
-  #tile-character:hover { border-color: #cbb87a; }
-  #tile-character.has-free { animation: dashPulse 1.4s ease-in-out infinite; border-color: #cbb87a; }
+  #tile-character { grid-area: character; }
+  #tile-quests    { grid-area: quests; }
+  #tile-loadout   { grid-area: loadout; }
+  #tile-shop      { grid-area: shop; }
+  #tile-smithy    { grid-area: smithy; }
+  #tile-stats     { grid-area: stats; }
+  #tile-route     { grid-area: route; }
+  #tile-settings  { grid-area: settings; }
+
+  /* Kacheln, die als Kurzfassung nur einen Klick zum Oeffnen brauchen. */
+  #tile-character, #tile-loadout, #tile-smithy, #tile-stats, #tile-settings {
+    cursor: pointer;
+  }
+  #tile-character:hover, #tile-loadout:hover, #tile-smithy:hover,
+  #tile-stats:hover, #tile-settings:hover { border-color: #cbb87a; }
+
+  #tile-character.has-free {
+    animation: dashPulse 1.4s ease-in-out infinite; border-color: #cbb87a;
+  }
+  /* Kleiner Punkt auf der Shop-Kachel, wenn ein neu bezahlbares Upgrade da ist. */
+  #tile-shop.has-new h2::after {
+    content: "";
+    display: inline-block;
+    width: 8px; height: 8px;
+    margin-left: 8px;
+    border-radius: 50%;
+    background: #cbb87a;
+    vertical-align: middle;
+  }
+
   #dash-portrait {
     grid-area: portrait;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     background: radial-gradient(circle at 50% 40%, #2a2735 0%, #14131a 70%);
     border: 1px solid #3a3646;
     border-radius: 6px;
-    min-height: 180px;
-    padding: 12px;
+    min-height: 240px;
+    padding: 16px;
   }
   #dash-portrait .portrait-circle {
     width: 150px;
@@ -235,9 +268,66 @@
     color: #d8d3c4;
     box-shadow: 0 0 24px rgba(203,184,122,0.18) inset;
   }
-  #tile-character .tile-body { flex-direction: column; align-items: flex-start; gap: 6px; }
-  #tile-character .char-free { font-size: 12px; color: #8b8577; }
-  #tile-character.has-free .char-free { color: #cbb87a; }
+  #dash-portrait .portrait-name {
+    font-size: 15px; font-weight: 600; color: #d8d3c4; letter-spacing: .06em;
+  }
+  #dash-portrait .portrait-level { font-size: 12px; color: #8b8577; }
+  #dash-portrait .portrait-xp {
+    width: 80%; height: 6px; background: #1c1a20; border: 1px solid #0a090c;
+    border-radius: 2px; overflow: hidden;
+  }
+  #dash-portrait .portrait-xp-fill { display: block; height: 100%; width: 0; background: #5a7fb0; }
+  #dash-portrait .portrait-money {
+    display: flex; gap: 12px; font-size: 12px; color: #8b8577;
+    font-variant-numeric: tabular-nums;
+  }
+  #dash-portrait .portrait-gold { color: #d9b04a; }
+  #dash-portrait .portrait-sp.has-free { color: #cbb87a; }
+
+  #tile-character .tile-body,
+  #tile-loadout .tile-body,
+  #tile-smithy .tile-body,
+  #tile-stats .tile-body,
+  #tile-settings .tile-body {
+    flex-direction: column; align-items: flex-start; gap: 4px;
+  }
+  .tile-summary { font-size: 12px; color: #8b8577; }
+  .tile-summary.has-free { color: #cbb87a; }
+
+  /* Einfache Modals fuer Schmied/Statistik/Einstellungen. Aufbau kompatibel
+     zu character-window (siehe unten): festes Overlay, Panel mittig, Backdrop. */
+  #smithy-window, #stats-window, #settings-window {
+    display: none;
+    position: fixed; inset: 0; z-index: 20;
+    background: rgba(10,9,12,0.72);
+    align-items: center; justify-content: center;
+  }
+  body[data-modal="smithy"] #smithy-window,
+  body[data-modal="stats"] #stats-window,
+  body[data-modal="settings"] #settings-window { display: flex; }
+
+  .simple-panel {
+    width: min(90vw, 560px);
+    max-height: 84vh;
+    overflow: auto;
+    background: #14131a;
+    border: 1px solid #3a3646;
+    border-radius: 6px;
+    padding: 22px 26px;
+    color: #d8d3c4;
+  }
+  .simple-panel h2 { margin: 0 0 14px; font-size: 15px; letter-spacing: .18em; color: #d8d3c4; }
+  .simple-panel .row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; }
+  .simple-panel .row .k { color: #8b8577; }
+  .simple-panel .row .v { color: #d8d3c4; font-variant-numeric: tabular-nums; }
+  .simple-panel .foot {
+    display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;
+  }
+  .simple-panel .buy-row {
+    display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 8px 0;
+    border-top: 1px solid #221f2b; align-items: center;
+  }
+  .simple-panel .buy-row:first-of-type { border-top: none; }
 
   .tile {
     border: 1px solid #3a3646;
@@ -860,25 +950,12 @@
     </div>
 
     <div id="dash-grid">
+      <!-- Zeile 1 -->
       <section class="tile" id="tile-character" role="button" tabindex="0" title="Charakter oeffnen">
         <h2>Charakter</h2>
-        <p class="tile-note">Stufen, Skillpunkte, Statistik.</p>
+        <p class="tile-note">Werte, Skillpunkte, Skillbaum.</p>
         <div class="tile-body">
-          <span class="char-free" data-role="char-free">keine freien Skillpunkte</span>
-        </div>
-      </section>
-
-      <div id="dash-portrait" aria-hidden="true">
-        <div class="portrait-circle">🗡️</div>
-      </div>
-
-      <section class="tile" id="tile-shop">
-        <h2>Shop</h2>
-        <p class="tile-note">Ein Kauf ersetzt die bisherige Stufe — es gibt kein Inventar.</p>
-        <div id="dash-shop-list"></div>
-        <p id="dash-shop-message"></p>
-        <div id="dash-shop-foot">
-          <button class="dash-btn" id="shop-loadout" type="button">Ausruestung waehlen</button>
+          <span class="tile-summary" data-role="char-free">keine freien Skillpunkte</span>
         </div>
       </section>
 
@@ -889,8 +966,55 @@
         <p id="dash-quest-message"></p>
       </section>
 
+      <section class="tile" id="tile-loadout" role="button" tabindex="0" title="Ausruestung waehlen">
+        <h2>Ausruestung</h2>
+        <p class="tile-note">Zwei der drei Waffen kommen mit.</p>
+        <div class="tile-body">
+          <span class="tile-summary" data-role="loadout-summary">-</span>
+        </div>
+      </section>
+
+      <!-- Zeile 2: Shop | Held-Portrait | Schmied -->
+      <section class="tile" id="tile-shop">
+        <h2>Shop</h2>
+        <p class="tile-note">Ein Kauf ersetzt die bisherige Stufe — es gibt kein Inventar.</p>
+        <div id="dash-shop-list"></div>
+        <p id="dash-shop-message"></p>
+        <div id="dash-shop-foot">
+          <button class="dash-btn" id="shop-loadout" type="button">Ausruestung waehlen</button>
+        </div>
+      </section>
+
+      <div id="dash-portrait" aria-hidden="true">
+        <div class="portrait-circle">🗡️</div>
+        <span class="portrait-name">Held</span>
+        <span class="portrait-level" data-role="portrait-level">Stufe 1</span>
+        <span class="portrait-xp"><span class="portrait-xp-fill" data-role="portrait-xp-fill"></span></span>
+        <div class="portrait-money">
+          <span class="portrait-gold" data-role="portrait-gold">0 Gold</span>
+          <span class="portrait-sp" data-role="portrait-sp">0 SP</span>
+        </div>
+      </div>
+
+      <section class="tile" id="tile-smithy" role="button" tabindex="0" title="Schmied oeffnen">
+        <h2>Schmied</h2>
+        <p class="tile-note">Waffenschaerfung und Trankguertel.</p>
+        <div class="tile-body">
+          <span class="tile-summary" data-role="smithy-summary">-</span>
+        </div>
+      </section>
+
+      <!-- Zeile 3 -->
+      <section class="tile" id="tile-stats" role="button" tabindex="0" title="Statistiken oeffnen">
+        <h2>Statistiken</h2>
+        <p class="tile-note">Kills, Tode, Gold, Spielzeit.</p>
+        <div class="tile-body">
+          <span class="tile-summary" data-role="stats-summary">-</span>
+        </div>
+      </section>
+
       <section class="tile" id="tile-route">
-        <h2>Route</h2>
+        <h2>Pfad</h2>
         <p class="tile-note">Klick auf einen Knoten oeffnet das Auswahlfenster.</p>
         <div id="route-chain"></div>
         <div id="dash-play-row">
@@ -898,6 +1022,67 @@
         </div>
         <p id="dash-message"></p>
       </section>
+
+      <section class="tile" id="tile-settings" role="button" tabindex="0" title="Einstellungen oeffnen">
+        <h2>Einstellungen</h2>
+        <p class="tile-note">Ton, Steuerung, Neues Spiel.</p>
+        <div class="tile-body">
+          <span class="tile-summary" data-role="settings-summary">Ton an</span>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!--
+    Overlays fuer Schmied, Statistiken und Einstellungen (VERBESSERUNGEN_1
+    Abschnitt 1). Sichtbar geschaltet ueber body[data-modal="..."].
+  -->
+  <div id="smithy-window" role="dialog" aria-modal="true" aria-labelledby="smithy-title">
+    <div class="simple-panel">
+      <h2 id="smithy-title">SCHMIED</h2>
+      <p class="tile-note">Nur Waffenschaerfung und Trankguertel — der Rest liegt im Shop.</p>
+      <div id="smithy-list"></div>
+      <p id="smithy-message" class="tile-note"></p>
+      <div class="foot">
+        <button class="dash-btn" id="smithy-close" type="button">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="stats-window" role="dialog" aria-modal="true" aria-labelledby="stats-title">
+    <div class="simple-panel">
+      <h2 id="stats-title">STATISTIKEN</h2>
+      <div id="stats-body"></div>
+      <div class="foot">
+        <button class="dash-btn" id="stats-close" type="button">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="settings-window" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div class="simple-panel">
+      <h2 id="settings-title">EINSTELLUNGEN</h2>
+      <div class="row">
+        <span class="k">Ton</span>
+        <button class="dash-btn" id="settings-mute" type="button">-</button>
+      </div>
+      <div class="row">
+        <span class="k">Spielstand</span>
+        <button class="dash-btn" id="settings-save" type="button">Jetzt speichern</button>
+      </div>
+      <div class="row">
+        <span class="k">Neues Spiel</span>
+        <button class="dash-btn" id="settings-new" type="button">Zum Hauptmenue</button>
+      </div>
+      <h2 style="margin-top:16px">STEUERUNG</h2>
+      <p class="tile-note" style="line-height:1.7">
+        WASD laufen · Maus zielen · Linksklick angreifen · Rechtsklick blocken<br>
+        Leertaste rollen · 1/2 Waffe wechseln · F Speerwurf<br>
+        TAB Charakter · E Ausgang · R Trank · Esc Pause · M Ton
+      </p>
+      <div class="foot">
+        <button class="dash-btn" id="settings-close" type="button">Schliessen</button>
+      </div>
     </div>
   </div>
 

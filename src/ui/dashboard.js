@@ -22,6 +22,10 @@ import { ShopTile } from './shopTile.js';
 import { QuestTile } from './questTile.js';
 import { RouteTile } from './routeTile.js';
 import { CharacterTile } from './characterTile.js';
+import { LoadoutTile } from './loadoutTile.js';
+import { SmithyTile } from './smithyTile.js';
+import { StatsTile } from './statsTile.js';
+import { SettingsTile } from './settingsTile.js';
 import { LoadoutWindow } from './loadoutWindow.js';
 
 export class Dashboard {
@@ -58,12 +62,22 @@ export class Dashboard {
     this.shop = new ShopTile(game, this.el.shopList, this.el.shopMessage);
     this.quests = new QuestTile(game, this.el.questList, this.el.questMessage);
     this.route = new RouteTile(game, this);
-    // Neue Charakter-Kachel im Ring um das Spielerbild (Aufgabe 8).
     this.character = new CharacterTile(game, document.getElementById('tile-character'));
-    // Ausruestungswahl (Erweiterung 2, Abschnitt 4). Wie das Levelfenster ein
-    // Fenster ueber dem Dashboard, kein eigenes Feld — es haengt deshalb an
-    // this.modal und nicht am Spielzustand.
+    // Ausruestungsfenster (bestehend) — wird von der neuen Ausruestungs-Kachel
+    // geoeffnet, damit die Kachel selbst nur eine Kurzfassung zeigen muss.
     this.loadout = new LoadoutWindow(game, this);
+    // Vier neue Kacheln des 3x3-Rasters (VERBESSERUNGEN_1 Abschnitt 1).
+    this.loadoutTile = new LoadoutTile(game, this);
+    this.smithy = new SmithyTile(game);
+    this.statsTile = new StatsTile(game);
+    this.settingsTile = new SettingsTile(game);
+    // Portrait-Elemente fuer die Mitte des Rasters.
+    this.portrait = {
+      level: document.querySelector('[data-role="portrait-level"]'),
+      xpFill: document.querySelector('[data-role="portrait-xp-fill"]'),
+      gold: document.querySelector('[data-role="portrait-gold"]'),
+      sp: document.querySelector('[data-role="portrait-sp"]'),
+    };
     this.bind();
   }
 
@@ -145,6 +159,25 @@ export class Dashboard {
     this.el.xpFill.classList.toggle('flash', game.levelUpFlash > 0);
 
     this.set('message', this.el.message, 'textContent', this.message);
+
+    // Portrait in der Mitte des 3x3-Rasters (VERBESSERUNGEN_1 Abschnitt 1).
+    if (this.portrait.level) {
+      this.set('portraitLevel', this.portrait.level, 'textContent', `Stufe ${level}`);
+    }
+    if (this.portrait.xpFill && last.xpPct === pct) {
+      this.portrait.xpFill.style.width = pct;
+    } else if (this.portrait.xpFill) {
+      this.portrait.xpFill.style.width = pct;
+    }
+    if (this.portrait.gold) {
+      this.set('portraitGold', this.portrait.gold, 'textContent',
+        `${game.gold.toLocaleString('de-DE')} Gold`);
+    }
+    if (this.portrait.sp) {
+      this.set('portraitSp', this.portrait.sp, 'textContent',
+        `${free} SP${free === 1 ? '' : ''}`);
+      this.portrait.sp.classList.toggle('has-free', free > 0);
+    }
   }
 
   /** Schreibt nur, wenn sich der Wert geaendert hat. */
@@ -162,5 +195,13 @@ export class Dashboard {
     this.route.refresh();
     this.character.refresh();
     this.loadout.refresh();
+    this.loadoutTile.refresh();
+    this.smithy.refresh();
+    this.statsTile.refresh();
+    this.settingsTile.refresh();
+    // Kleiner Punkt auf der Shop-Kachel, wenn etwas neu bezahlbar geworden ist.
+    document.getElementById('tile-shop')?.classList.toggle(
+      'has-new', this.shop.hasNewAffordable?.() ?? false,
+    );
   }
 }

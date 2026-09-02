@@ -187,40 +187,73 @@
     .dash-btn.pulse { animation: none; background: #3a3726; }
   }
 
-  /* --- Kacheln: Spielerbild in der Mitte, vier Kacheln ringfoermig drumherum --- */
+  /* --- 3x3-Raster (VERBESSERUNGEN_1 Abschnitt 1): Held mittig, 8 Kacheln aussen. --- */
   #dash-grid {
     flex: 1;
     display: grid;
-    grid-template-columns: 1fr 260px 1fr;
+    grid-template-columns: 1fr 1.4fr 1fr;
+    grid-template-rows: auto auto auto;
     grid-template-areas:
-      "shop      character quests"
-      "shop      portrait  quests"
-      "route     route     route";
+      "character quests    loadout"
+      "shop      portrait  smithy"
+      "stats     route     settings";
     gap: 14px;
     align-content: start;
   }
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     #dash-grid {
-      grid-template-columns: 1fr;
-      grid-template-areas: "character" "portrait" "shop" "quests" "route";
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "portrait  portrait"
+        "character loadout"
+        "quests    smithy"
+        "shop      stats"
+        "route     route"
+        "settings  settings";
     }
   }
-  #tile-shop { grid-area: shop; }
-  #tile-quests { grid-area: quests; }
-  #tile-route { grid-area: route; }
-  #tile-character { grid-area: character; cursor: pointer; }
-  #tile-character:hover { border-color: #cbb87a; }
-  #tile-character.has-free { animation: dashPulse 1.4s ease-in-out infinite; border-color: #cbb87a; }
+  #tile-character { grid-area: character; }
+  #tile-quests    { grid-area: quests; }
+  #tile-loadout   { grid-area: loadout; }
+  #tile-shop      { grid-area: shop; }
+  #tile-smithy    { grid-area: smithy; }
+  #tile-stats     { grid-area: stats; }
+  #tile-route     { grid-area: route; }
+  #tile-settings  { grid-area: settings; }
+
+  /* Kacheln, die als Kurzfassung nur einen Klick zum Oeffnen brauchen. */
+  #tile-character, #tile-loadout, #tile-smithy, #tile-stats, #tile-settings {
+    cursor: pointer;
+  }
+  #tile-character:hover, #tile-loadout:hover, #tile-smithy:hover,
+  #tile-stats:hover, #tile-settings:hover { border-color: #cbb87a; }
+
+  #tile-character.has-free {
+    animation: dashPulse 1.4s ease-in-out infinite; border-color: #cbb87a;
+  }
+  /* Kleiner Punkt auf der Shop-Kachel, wenn ein neu bezahlbares Upgrade da ist. */
+  #tile-shop.has-new h2::after {
+    content: "";
+    display: inline-block;
+    width: 8px; height: 8px;
+    margin-left: 8px;
+    border-radius: 50%;
+    background: #cbb87a;
+    vertical-align: middle;
+  }
+
   #dash-portrait {
     grid-area: portrait;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     background: radial-gradient(circle at 50% 40%, #2a2735 0%, #14131a 70%);
     border: 1px solid #3a3646;
     border-radius: 6px;
-    min-height: 180px;
-    padding: 12px;
+    min-height: 240px;
+    padding: 16px;
   }
   #dash-portrait .portrait-circle {
     width: 150px;
@@ -236,9 +269,66 @@
     color: #d8d3c4;
     box-shadow: 0 0 24px rgba(203,184,122,0.18) inset;
   }
-  #tile-character .tile-body { flex-direction: column; align-items: flex-start; gap: 6px; }
-  #tile-character .char-free { font-size: 12px; color: #8b8577; }
-  #tile-character.has-free .char-free { color: #cbb87a; }
+  #dash-portrait .portrait-name {
+    font-size: 15px; font-weight: 600; color: #d8d3c4; letter-spacing: .06em;
+  }
+  #dash-portrait .portrait-level { font-size: 12px; color: #8b8577; }
+  #dash-portrait .portrait-xp {
+    width: 80%; height: 6px; background: #1c1a20; border: 1px solid #0a090c;
+    border-radius: 2px; overflow: hidden;
+  }
+  #dash-portrait .portrait-xp-fill { display: block; height: 100%; width: 0; background: #5a7fb0; }
+  #dash-portrait .portrait-money {
+    display: flex; gap: 12px; font-size: 12px; color: #8b8577;
+    font-variant-numeric: tabular-nums;
+  }
+  #dash-portrait .portrait-gold { color: #d9b04a; }
+  #dash-portrait .portrait-sp.has-free { color: #cbb87a; }
+
+  #tile-character .tile-body,
+  #tile-loadout .tile-body,
+  #tile-smithy .tile-body,
+  #tile-stats .tile-body,
+  #tile-settings .tile-body {
+    flex-direction: column; align-items: flex-start; gap: 4px;
+  }
+  .tile-summary { font-size: 12px; color: #8b8577; }
+  .tile-summary.has-free { color: #cbb87a; }
+
+  /* Einfache Modals fuer Schmied/Statistik/Einstellungen. Aufbau kompatibel
+     zu character-window (siehe unten): festes Overlay, Panel mittig, Backdrop. */
+  #smithy-window, #stats-window, #settings-window {
+    display: none;
+    position: fixed; inset: 0; z-index: 20;
+    background: rgba(10,9,12,0.72);
+    align-items: center; justify-content: center;
+  }
+  body[data-modal="smithy"] #smithy-window,
+  body[data-modal="stats"] #stats-window,
+  body[data-modal="settings"] #settings-window { display: flex; }
+
+  .simple-panel {
+    width: min(90vw, 560px);
+    max-height: 84vh;
+    overflow: auto;
+    background: #14131a;
+    border: 1px solid #3a3646;
+    border-radius: 6px;
+    padding: 22px 26px;
+    color: #d8d3c4;
+  }
+  .simple-panel h2 { margin: 0 0 14px; font-size: 15px; letter-spacing: .18em; color: #d8d3c4; }
+  .simple-panel .row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; }
+  .simple-panel .row .k { color: #8b8577; }
+  .simple-panel .row .v { color: #d8d3c4; font-variant-numeric: tabular-nums; }
+  .simple-panel .foot {
+    display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;
+  }
+  .simple-panel .buy-row {
+    display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 8px 0;
+    border-top: 1px solid #221f2b; align-items: center;
+  }
+  .simple-panel .buy-row:first-of-type { border-top: none; }
 
   .tile {
     border: 1px solid #3a3646;
@@ -861,25 +951,12 @@
     </div>
 
     <div id="dash-grid">
+      <!-- Zeile 1 -->
       <section class="tile" id="tile-character" role="button" tabindex="0" title="Charakter oeffnen">
         <h2>Charakter</h2>
-        <p class="tile-note">Stufen, Skillpunkte, Statistik.</p>
+        <p class="tile-note">Werte, Skillpunkte, Skillbaum.</p>
         <div class="tile-body">
-          <span class="char-free" data-role="char-free">keine freien Skillpunkte</span>
-        </div>
-      </section>
-
-      <div id="dash-portrait" aria-hidden="true">
-        <div class="portrait-circle">🗡️</div>
-      </div>
-
-      <section class="tile" id="tile-shop">
-        <h2>Shop</h2>
-        <p class="tile-note">Ein Kauf ersetzt die bisherige Stufe — es gibt kein Inventar.</p>
-        <div id="dash-shop-list"></div>
-        <p id="dash-shop-message"></p>
-        <div id="dash-shop-foot">
-          <button class="dash-btn" id="shop-loadout" type="button">Ausruestung waehlen</button>
+          <span class="tile-summary" data-role="char-free">keine freien Skillpunkte</span>
         </div>
       </section>
 
@@ -890,8 +967,55 @@
         <p id="dash-quest-message"></p>
       </section>
 
+      <section class="tile" id="tile-loadout" role="button" tabindex="0" title="Ausruestung waehlen">
+        <h2>Ausruestung</h2>
+        <p class="tile-note">Zwei der drei Waffen kommen mit.</p>
+        <div class="tile-body">
+          <span class="tile-summary" data-role="loadout-summary">-</span>
+        </div>
+      </section>
+
+      <!-- Zeile 2: Shop | Held-Portrait | Schmied -->
+      <section class="tile" id="tile-shop">
+        <h2>Shop</h2>
+        <p class="tile-note">Ein Kauf ersetzt die bisherige Stufe — es gibt kein Inventar.</p>
+        <div id="dash-shop-list"></div>
+        <p id="dash-shop-message"></p>
+        <div id="dash-shop-foot">
+          <button class="dash-btn" id="shop-loadout" type="button">Ausruestung waehlen</button>
+        </div>
+      </section>
+
+      <div id="dash-portrait" aria-hidden="true">
+        <div class="portrait-circle">🗡️</div>
+        <span class="portrait-name">Held</span>
+        <span class="portrait-level" data-role="portrait-level">Stufe 1</span>
+        <span class="portrait-xp"><span class="portrait-xp-fill" data-role="portrait-xp-fill"></span></span>
+        <div class="portrait-money">
+          <span class="portrait-gold" data-role="portrait-gold">0 Gold</span>
+          <span class="portrait-sp" data-role="portrait-sp">0 SP</span>
+        </div>
+      </div>
+
+      <section class="tile" id="tile-smithy" role="button" tabindex="0" title="Schmied oeffnen">
+        <h2>Schmied</h2>
+        <p class="tile-note">Waffenschaerfung und Trankguertel.</p>
+        <div class="tile-body">
+          <span class="tile-summary" data-role="smithy-summary">-</span>
+        </div>
+      </section>
+
+      <!-- Zeile 3 -->
+      <section class="tile" id="tile-stats" role="button" tabindex="0" title="Statistiken oeffnen">
+        <h2>Statistiken</h2>
+        <p class="tile-note">Kills, Tode, Gold, Spielzeit.</p>
+        <div class="tile-body">
+          <span class="tile-summary" data-role="stats-summary">-</span>
+        </div>
+      </section>
+
       <section class="tile" id="tile-route">
-        <h2>Route</h2>
+        <h2>Pfad</h2>
         <p class="tile-note">Klick auf einen Knoten oeffnet das Auswahlfenster.</p>
         <div id="route-chain"></div>
         <div id="dash-play-row">
@@ -899,6 +1023,67 @@
         </div>
         <p id="dash-message"></p>
       </section>
+
+      <section class="tile" id="tile-settings" role="button" tabindex="0" title="Einstellungen oeffnen">
+        <h2>Einstellungen</h2>
+        <p class="tile-note">Ton, Steuerung, Neues Spiel.</p>
+        <div class="tile-body">
+          <span class="tile-summary" data-role="settings-summary">Ton an</span>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!--
+    Overlays fuer Schmied, Statistiken und Einstellungen (VERBESSERUNGEN_1
+    Abschnitt 1). Sichtbar geschaltet ueber body[data-modal="..."].
+  -->
+  <div id="smithy-window" role="dialog" aria-modal="true" aria-labelledby="smithy-title">
+    <div class="simple-panel">
+      <h2 id="smithy-title">SCHMIED</h2>
+      <p class="tile-note">Nur Waffenschaerfung und Trankguertel — der Rest liegt im Shop.</p>
+      <div id="smithy-list"></div>
+      <p id="smithy-message" class="tile-note"></p>
+      <div class="foot">
+        <button class="dash-btn" id="smithy-close" type="button">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="stats-window" role="dialog" aria-modal="true" aria-labelledby="stats-title">
+    <div class="simple-panel">
+      <h2 id="stats-title">STATISTIKEN</h2>
+      <div id="stats-body"></div>
+      <div class="foot">
+        <button class="dash-btn" id="stats-close" type="button">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="settings-window" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div class="simple-panel">
+      <h2 id="settings-title">EINSTELLUNGEN</h2>
+      <div class="row">
+        <span class="k">Ton</span>
+        <button class="dash-btn" id="settings-mute" type="button">-</button>
+      </div>
+      <div class="row">
+        <span class="k">Spielstand</span>
+        <button class="dash-btn" id="settings-save" type="button">Jetzt speichern</button>
+      </div>
+      <div class="row">
+        <span class="k">Neues Spiel</span>
+        <button class="dash-btn" id="settings-new" type="button">Zum Hauptmenue</button>
+      </div>
+      <h2 style="margin-top:16px">STEUERUNG</h2>
+      <p class="tile-note" style="line-height:1.7">
+        WASD laufen · Maus zielen · Linksklick angreifen · Rechtsklick blocken<br>
+        Leertaste rollen · 1/2 Waffe wechseln · F Speerwurf<br>
+        TAB Charakter · E Ausgang · R Trank · Esc Pause · M Ton
+      </p>
+      <div class="foot">
+        <button class="dash-btn" id="settings-close" type="button">Schliessen</button>
+      </div>
     </div>
   </div>
 
@@ -7583,6 +7768,10 @@ const { ShopTile } = __req('src/ui/shopTile.js');
 const { QuestTile } = __req('src/ui/questTile.js');
 const { RouteTile } = __req('src/ui/routeTile.js');
 const { CharacterTile } = __req('src/ui/characterTile.js');
+const { LoadoutTile } = __req('src/ui/loadoutTile.js');
+const { SmithyTile } = __req('src/ui/smithyTile.js');
+const { StatsTile } = __req('src/ui/statsTile.js');
+const { SettingsTile } = __req('src/ui/settingsTile.js');
 const { LoadoutWindow } = __req('src/ui/loadoutWindow.js');
 
 class Dashboard {
@@ -7619,12 +7808,22 @@ class Dashboard {
     this.shop = new ShopTile(game, this.el.shopList, this.el.shopMessage);
     this.quests = new QuestTile(game, this.el.questList, this.el.questMessage);
     this.route = new RouteTile(game, this);
-    // Neue Charakter-Kachel im Ring um das Spielerbild (Aufgabe 8).
     this.character = new CharacterTile(game, document.getElementById('tile-character'));
-    // Ausruestungswahl (Erweiterung 2, Abschnitt 4). Wie das Levelfenster ein
-    // Fenster ueber dem Dashboard, kein eigenes Feld — es haengt deshalb an
-    // this.modal und nicht am Spielzustand.
+    // Ausruestungsfenster (bestehend) — wird von der neuen Ausruestungs-Kachel
+    // geoeffnet, damit die Kachel selbst nur eine Kurzfassung zeigen muss.
     this.loadout = new LoadoutWindow(game, this);
+    // Vier neue Kacheln des 3x3-Rasters (VERBESSERUNGEN_1 Abschnitt 1).
+    this.loadoutTile = new LoadoutTile(game, this);
+    this.smithy = new SmithyTile(game);
+    this.statsTile = new StatsTile(game);
+    this.settingsTile = new SettingsTile(game);
+    // Portrait-Elemente fuer die Mitte des Rasters.
+    this.portrait = {
+      level: document.querySelector('[data-role="portrait-level"]'),
+      xpFill: document.querySelector('[data-role="portrait-xp-fill"]'),
+      gold: document.querySelector('[data-role="portrait-gold"]'),
+      sp: document.querySelector('[data-role="portrait-sp"]'),
+    };
     this.bind();
   }
 
@@ -7706,6 +7905,25 @@ class Dashboard {
     this.el.xpFill.classList.toggle('flash', game.levelUpFlash > 0);
 
     this.set('message', this.el.message, 'textContent', this.message);
+
+    // Portrait in der Mitte des 3x3-Rasters (VERBESSERUNGEN_1 Abschnitt 1).
+    if (this.portrait.level) {
+      this.set('portraitLevel', this.portrait.level, 'textContent', `Stufe ${level}`);
+    }
+    if (this.portrait.xpFill && last.xpPct === pct) {
+      this.portrait.xpFill.style.width = pct;
+    } else if (this.portrait.xpFill) {
+      this.portrait.xpFill.style.width = pct;
+    }
+    if (this.portrait.gold) {
+      this.set('portraitGold', this.portrait.gold, 'textContent',
+        `${game.gold.toLocaleString('de-DE')} Gold`);
+    }
+    if (this.portrait.sp) {
+      this.set('portraitSp', this.portrait.sp, 'textContent',
+        `${free} SP${free === 1 ? '' : ''}`);
+      this.portrait.sp.classList.toggle('has-free', free > 0);
+    }
   }
 
   /** Schreibt nur, wenn sich der Wert geaendert hat. */
@@ -7723,6 +7941,14 @@ class Dashboard {
     this.route.refresh();
     this.character.refresh();
     this.loadout.refresh();
+    this.loadoutTile.refresh();
+    this.smithy.refresh();
+    this.statsTile.refresh();
+    this.settingsTile.refresh();
+    // Kleiner Punkt auf der Shop-Kachel, wenn etwas neu bezahlbar geworden ist.
+    document.getElementById('tile-shop')?.classList.toggle(
+      'has-new', this.shop.hasNewAffordable?.() ?? false,
+    );
   }
 }
 
@@ -12745,6 +12971,345 @@ class CharacterTile {
 
 __exports.CharacterTile = undefined;
 Object.assign(__exports, { CharacterTile });
+
+},
+'src/ui/loadoutTile.js': (__exports, __req) => {
+/**
+ * loadoutTile.js — die Ausruestungs-Kachel im Dashboard
+ * (VERBESSERUNGEN_1 Abschnitt 1).
+ *
+ * Kurzfassung ("Speer + Bogen dabei"). Klick oeffnet das bestehende
+ * LoadoutWindow — es liegt schon fertig da, hier steht nur die Anzeige.
+ */
+
+const { loadout, ownedWeapons } = __req('src/weapons.js');
+
+const NAMES = { sword: 'Schwert', spear: 'Speer', bow: 'Bogen' };
+
+class LoadoutTile {
+  /**
+   * @param {import('../game.js').Game} game
+   * @param {import('./dashboard.js').Dashboard} dashboard
+   */
+  constructor(game, dashboard) {
+    this.game = game;
+    this.dashboard = dashboard;
+    this.root = document.getElementById('tile-loadout');
+    this.summaryEl = this.root?.querySelector('[data-role="loadout-summary"]') ?? null;
+    this.lastSummary = null;
+
+    if (this.root) {
+      this.root.addEventListener('click', () => {
+        // Nur oeffnen, wenn ueberhaupt mehr als eine Waffe da ist — sonst
+        // gibt es nichts zu waehlen.
+        if (ownedWeapons(this.game.progress).length < 2) return;
+        this.dashboard.loadout?.open?.();
+      });
+    }
+  }
+
+  refresh() {
+    if (!this.summaryEl) return;
+    const owned = ownedWeapons(this.game.progress);
+    let text;
+    if (owned.length < 2) {
+      text = `${owned.length} von 3 Waffen (noch keine Wahl)`;
+    } else {
+      const dabei = loadout(this.game.progress).map((id) => NAMES[id] ?? id);
+      text = `${dabei.join(' + ')} dabei`;
+    }
+    if (text === this.lastSummary) return;
+    this.lastSummary = text;
+    this.summaryEl.textContent = text;
+  }
+}
+
+__exports.LoadoutTile = undefined;
+Object.assign(__exports, { LoadoutTile });
+
+},
+'src/ui/smithyTile.js': (__exports, __req) => {
+/**
+ * smithyTile.js — die Schmied-Kachel im Dashboard (VERBESSERUNGEN_1
+ * Abschnitt 1).
+ *
+ * Kurzfassung ("Waffenschaerfung + Trankguertel"). Klick oeffnet ein
+ * einfaches Overlay, in dem nur diese zwei Angebote stehen — die restlichen
+ * Kaeufe bleiben im Shop, damit die Schmied-Kachel wirklich schmal bleibt.
+ */
+
+const { smithOffer, nextBeltOffer, buy: buyOffer } = __req('src/shop.js');
+
+class SmithyTile {
+  /**
+   * @param {import('../game.js').Game} game
+   */
+  constructor(game) {
+    this.game = game;
+    this.root = document.getElementById('tile-smithy');
+    this.summaryEl = this.root?.querySelector('[data-role="smithy-summary"]');
+    this.window = document.getElementById('smithy-window');
+    this.listEl = document.getElementById('smithy-list');
+    this.msgEl = document.getElementById('smithy-message');
+    this.closeBtn = document.getElementById('smithy-close');
+    this.lastSummary = null;
+    this.message = '';
+
+    this.root?.addEventListener('click', () => this.open());
+    this.closeBtn?.addEventListener('click', () => this.close());
+    // Klick auf Backdrop schliesst.
+    this.window?.addEventListener('click', (e) => {
+      if (e.target === this.window) this.close();
+    });
+  }
+
+  open() {
+    document.body.dataset.modal = 'smithy';
+    this.message = '';
+    this.buildList();
+  }
+
+  close() {
+    if (document.body.dataset.modal === 'smithy') delete document.body.dataset.modal;
+  }
+
+  /**
+   * Zeigt Schmied + Trankguertel als kaufbare Zeilen. Fehlt eines (weil bereits
+   * maximal), steht dort eine kurze Meldung.
+   */
+  buildList() {
+    if (!this.listEl) return;
+    this.listEl.replaceChildren();
+
+    const offers = [smithOffer(this.game.progress), nextBeltOffer(this.game.progress)]
+      .filter(Boolean);
+
+    for (const offer of offers) {
+      const row = document.createElement('div');
+      row.className = 'buy-row';
+
+      const text = document.createElement('span');
+      text.innerHTML = `<b>${escape(offer.slot)}</b> — ${escape(offer.name)}<br>`
+        + `<span style="color:#8b8577; font-size:12px">${escape(offer.detail)}</span>`;
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'dash-btn';
+      if (offer.sold) {
+        btn.textContent = 'fertig';
+        btn.disabled = true;
+      } else {
+        btn.textContent = `${offer.price} G`;
+        btn.disabled = this.game.gold < offer.price;
+        btn.addEventListener('click', () => {
+          const ok = buyOffer(offer.id, this.game.progress, this.game);
+          if (ok) {
+            this.message = `${offer.name} gekauft`;
+          } else {
+            this.message = 'Nicht genug Gold';
+          }
+          this.buildList();
+          this.refresh();
+        });
+      }
+
+      row.append(text, btn);
+      this.listEl.append(row);
+    }
+
+    if (this.msgEl) this.msgEl.textContent = this.message;
+  }
+
+  refresh() {
+    if (!this.summaryEl) return;
+    const smith = smithOffer(this.game.progress);
+    const belt = nextBeltOffer(this.game.progress);
+    const kaufbar = [smith, belt].filter((o) => o && !o.sold).length;
+    const text = kaufbar === 0
+      ? 'nichts mehr zu tun'
+      : `${kaufbar} Verbesserung${kaufbar === 1 ? '' : 'en'} moeglich`;
+    if (text === this.lastSummary) return;
+    this.lastSummary = text;
+    this.summaryEl.textContent = text;
+    this.summaryEl.classList.toggle('has-free', kaufbar > 0);
+  }
+}
+
+function escape(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
+}
+
+__exports.SmithyTile = undefined;
+Object.assign(__exports, { SmithyTile });
+
+},
+'src/ui/statsTile.js': (__exports, __req) => {
+/**
+ * statsTile.js — die Statistik-Kachel im Dashboard (VERBESSERUNGEN_1
+ * Abschnitt 1).
+ *
+ * Kurzfassung ("237 Kills · 4 Tode"). Klick oeffnet ein Overlay mit einer
+ * ausfuehrlichen Liste (Kills nach Typ, Tode, Gold, Spielzeit).
+ */
+
+class StatsTile {
+  /**
+   * @param {import('../game.js').Game} game
+   */
+  constructor(game) {
+    this.game = game;
+    this.root = document.getElementById('tile-stats');
+    this.summaryEl = this.root?.querySelector('[data-role="stats-summary"]');
+    this.window = document.getElementById('stats-window');
+    this.body = document.getElementById('stats-body');
+    this.closeBtn = document.getElementById('stats-close');
+    this.lastSummary = null;
+
+    this.root?.addEventListener('click', () => this.open());
+    this.closeBtn?.addEventListener('click', () => this.close());
+    this.window?.addEventListener('click', (e) => {
+      if (e.target === this.window) this.close();
+    });
+  }
+
+  open() {
+    document.body.dataset.modal = 'stats';
+    this.build();
+  }
+
+  close() {
+    if (document.body.dataset.modal === 'stats') delete document.body.dataset.modal;
+  }
+
+  build() {
+    if (!this.body) return;
+    const s = this.game.stats;
+    const rows = [];
+    const push = (k, v) => rows.push([k, v]);
+
+    push('Kills insgesamt', num(s.killsTotal));
+    push('davon Bogen', num(s.killsByWeapon?.bow));
+    push('davon Speer', num(s.killsByWeapon?.spear));
+    push('davon Schwert', num(s.killsByWeapon?.sword));
+    push('Tode', num(s.deaths));
+    push('Wiederbelebungen', num(s.revives));
+    push('Traenke benutzt', num(s.potionsUsed));
+    push('Blocks', num(s.blocks));
+    push('Kaeufe', num(s.purchases));
+    push('Gold gesammelt', num(s.goldEarned).toLocaleString('de-DE'));
+    push('Gold ausgegeben', num(s.goldSpent).toLocaleString('de-DE'));
+    push('Level-Durchgaenge', num(s.levelsCleared));
+    push('davon ohne Tod', num(s.cleanRuns));
+
+    this.body.replaceChildren();
+    for (const [k, v] of rows) {
+      const row = document.createElement('div');
+      row.className = 'row';
+      const kEl = document.createElement('span');
+      kEl.className = 'k';
+      kEl.textContent = k;
+      const vEl = document.createElement('span');
+      vEl.className = 'v';
+      vEl.textContent = String(v);
+      row.append(kEl, vEl);
+      this.body.append(row);
+    }
+  }
+
+  refresh() {
+    if (!this.summaryEl) return;
+    const s = this.game.stats;
+    const text = `${num(s.killsTotal)} Kills · ${num(s.deaths)} Tode`;
+    if (text === this.lastSummary) return;
+    this.lastSummary = text;
+    this.summaryEl.textContent = text;
+  }
+}
+
+function num(v) {
+  return Number.isFinite(v) ? v : 0;
+}
+
+__exports.StatsTile = undefined;
+Object.assign(__exports, { StatsTile });
+
+},
+'src/ui/settingsTile.js': (__exports, __req) => {
+/**
+ * settingsTile.js — die Einstellungs-Kachel im Dashboard (VERBESSERUNGEN_1
+ * Abschnitt 1).
+ *
+ * Kurzfassung ("Ton an"). Klick oeffnet ein Overlay mit Ton-Toggle,
+ * Speichern, "Neues Spiel" (fuehrt zurueck ins Hauptmenue) und einer
+ * Steuerungsuebersicht.
+ */
+
+class SettingsTile {
+  /**
+   * @param {import('../game.js').Game} game
+   */
+  constructor(game) {
+    this.game = game;
+    this.root = document.getElementById('tile-settings');
+    this.summaryEl = this.root?.querySelector('[data-role="settings-summary"]');
+    this.window = document.getElementById('settings-window');
+    this.muteBtn = document.getElementById('settings-mute');
+    this.saveBtn = document.getElementById('settings-save');
+    this.newBtn = document.getElementById('settings-new');
+    this.closeBtn = document.getElementById('settings-close');
+    this.lastSummary = null;
+
+    this.root?.addEventListener('click', () => this.open());
+    this.closeBtn?.addEventListener('click', () => this.close());
+    this.window?.addEventListener('click', (e) => {
+      if (e.target === this.window) this.close();
+    });
+
+    this.muteBtn?.addEventListener('click', () => {
+      this.game.toggleMuted();
+      this.updateMuteBtn();
+      this.refresh();
+    });
+    this.saveBtn?.addEventListener('click', () => {
+      const ok = this.game.save?.();
+      if (this.saveBtn) this.saveBtn.textContent = ok ? 'Gespeichert' : 'Speichern fehlgeschlagen';
+      setTimeout(() => { if (this.saveBtn) this.saveBtn.textContent = 'Jetzt speichern'; }, 1400);
+    });
+    this.newBtn?.addEventListener('click', () => {
+      // Nicht sofort loeschen — zurueck ins Hauptmenue, dort gibt es die
+      // Sicherheitsabfrage. Sonst waere ein Fehlklick Stunden Spielzeit.
+      this.close();
+      this.game.toMainMenu?.();
+    });
+  }
+
+  updateMuteBtn() {
+    if (!this.muteBtn) return;
+    this.muteBtn.textContent = this.game.muted ? 'Aus (M)' : 'An (M)';
+  }
+
+  open() {
+    document.body.dataset.modal = 'settings';
+    this.updateMuteBtn();
+  }
+
+  close() {
+    if (document.body.dataset.modal === 'settings') delete document.body.dataset.modal;
+  }
+
+  refresh() {
+    if (!this.summaryEl) return;
+    const text = this.game.muted ? 'Ton aus' : 'Ton an';
+    if (text === this.lastSummary) return;
+    this.lastSummary = text;
+    this.summaryEl.textContent = text;
+  }
+}
+
+__exports.SettingsTile = undefined;
+Object.assign(__exports, { SettingsTile });
 
 },
 'src/ui/loadoutWindow.js': (__exports, __req) => {
