@@ -11,7 +11,7 @@
  */
 
 import { ENEMIES, COLORS, UI, AI, SPRITES } from '../config.js';
-import { scaleEnemyDef, difficultyAim } from '../difficulty.js';
+import { scaleEnemyDef, difficultyAim, difficultyBehavior } from '../difficulty.js';
 import { drawSprite, drawBar, spriteSize } from '../gfx.js';
 import { playSound } from '../audio.js';
 import { angleDiff, clamp, degToRad, dist } from '../util.js';
@@ -66,6 +66,16 @@ export class Enemy {
 
     /** Schwierigkeitsstufe des Durchgangs (Erweiterung, Abschnitt 4). */
     this.difficulty = 'normal';
+
+    /**
+     * Persoenlicher Ringplatz um den Spieler (VERBESSERUNGEN_1 Abschnitt 5,
+     * "Umzingeln"). Zufaellig, damit mehrere Gegner nicht alle denselben Platz
+     * belegen; bleibt fuer dieses Leben stabil, sonst wechseln sie den Platz
+     * jedes Bild.
+     */
+    this.slotAngle = Math.random() * Math.PI * 2;
+    /** Restliche Wartezeit vor dem naechsten Angriff (staggerAttacks). */
+    this.staggerHold = 0;
   }
 
   /**
@@ -167,12 +177,83 @@ export class Enemy {
       default:
         // In Reichweite? Dann ausholen.
         if (d <= this.def.attackRange + player.hw) {
+          // Versetztes Angreifen (VERBESSERUNGEN_1 Abschnitt 5): auf Schwer
+          // duerfen hoechstens N Gegner gleichzeitig in der Ausholphase sein;
+          // die Ueberzaehligen warten kurz, damit nicht alle als Salve losgehen.
+          const beh = difficultyBehavior(this.difficulty);
+          if (beh.staggerAttacks && this._tooManyAttacking(game)) {
+            if (this.staggerHold <= 0) {
+              const min = AI.hardBehavior.staggerDelayMin;
+              const max = AI.hardBehavior.staggerDelayMax;
+              this.staggerHold = min + Math.random() * (max - min);
+            }
+            this.staggerHold -= dt;
+            return true; // stehen bleiben, noch nicht ausholen
+          }
+          this.staggerHold = 0;
           this.setState('windup');
           this.struck = false;
           return true;
         }
         return false;
     }
+  }
+
+  /**
+   * Zaehlt, wie viele andere Gegner gerade in der Ausholphase stecken. Fuer
+   * das versetzte Angreifen: erst wenn weniger als maxConcurrentWindups
+   * ausholen, darf der naechste loslegen.
+   */
+  _tooManyAttacking(game) {
+    const max = AI.hardBehavior.maxConcurrentWindups;
+    let count = 0;
+    for (const e of game.enemies) {
+      if (e === this || e.dead) continue;
+      if (e.state === 'windup') {
+        count++;
+        if (count >= max) return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Anlaufziel fuer die Bewegung (VERBESSERUNGEN_1 Abschnitt 5 "Umzingeln").
+   *
+   * Auf Normal: einfach der Spieler — direkt drauf zu.
+   * Auf Schwer/Alptraum: erst ein persoenlicher Platz auf einem Ring um den
+   * Spieler. Erst wenn der Gegner den Ring erreicht hat, wird der Spieler
+   * selbst zum Ziel und der Angriff folgt.
+   *
+   * Blockt der Spieler, wird der Ringplatz zusaetzlich AUSSERHALB des
+   * Block-Kegels gewaehlt — sonst laeuft der Gegner stumpf in den Block.
+   *
+   * Fernkampf-Gegner (mit keepDistance) laufen weiter direkt zum Spieler; sie
+   * halten selbst ihren Abstand und wuerden von einem Ring nur verwirrt.
+   */
+  _approachGoal(target) {
+    const beh = difficultyBehavior(this.difficulty);
+    if (!beh.surround) return target;
+    if (this.def.keepDistance != null) return target;
+    const attackRange = this.def.attackRange;
+    if (attackRange == null) return target;
+
+    const d = dist(this.x, this.y, target.x, target.y);
+    const ring = attackRange + AI.hardBehavior.ringPadding;
+    // Am Ring angekommen -> direkt in Reichweite laufen und zuschlagen.
+    if (d <= ring + AI.hardBehavior.ringSnap) return target;
+
+    let slot = this.slotAngle;
+    if (target.blocking && typeof target.aim === 'number') {
+      const sidestep = degToRad(AI.hardBehavior.shieldSidestepDeg);
+      // Seite anhand des Zufalls-Slots waehlen (mal links, mal rechts vom Block).
+      const side = Math.sin(this.slotAngle - target.aim) >= 0 ? 1 : -1;
+      slot = target.aim + side * sidestep;
+    }
+    return {
+      x: target.x + Math.cos(slot) * ring,
+      y: target.y + Math.sin(slot) * ring,
+    };
   }
 
   /**
@@ -184,9 +265,12 @@ export class Enemy {
    * Das ist bewusst kein Pathfinding: es genuegt fuer offene Level und kostet fast nichts.
    */
   steer(target, level, _dt) {
-    const angle = Math.atan2(target.y - this.y, target.x - this.x);
+    // Umzingeln (VERBESSERUNGEN_1 Abschnitt 5): auf Schwer/Alptraum wird nicht
+    // direkt der Spieler angelaufen, sondern ein Ringplatz um ihn.
+    const goal = this._approachGoal(target);
+    const angle = Math.atan2(goal.y - this.y, goal.x - this.x);
 
-    if (level.isPathClear(this.x, this.y, target.x, target.y, this.hw, this.hh)) {
+    if (level.isPathClear(this.x, this.y, goal.x, goal.y, this.hw, this.hh)) {
       this.turnPref = 0;
       return angle;
     }

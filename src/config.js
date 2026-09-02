@@ -485,6 +485,31 @@ export const AI = {
   probeDistance: 22,
   /** Ausweichwinkel in Grad, der Reihe nach probiert. */
   avoidAngles: [40, 75, 110, 145],
+
+  /**
+   * Verhalten auf Schwer/Alptraum (VERBESSERUNGEN_1 Abschnitt 5).
+   * surround: Gegner laufen zunaechst auf einen Ringplatz um den Spieler zu,
+   * bevor sie zuschlagen — sie kommen aus verschiedenen Richtungen statt als
+   * Traube von vorn. Ring-Radius ist relativ zur Angriffsreichweite, damit
+   * kleine Gegner naeher am Spieler warten als grosse.
+   */
+  hardBehavior: {
+    /** Radius des Anlaufrings, addiert zur eigenen attackRange. */
+    ringPadding: 24,
+    /** Ab dieser Naehe zum Ring wird direkt der Spieler angelaufen. */
+    ringSnap: 10,
+    /** Max. Gegner gleichzeitig in der Ausholphase (staggerAttacks). */
+    maxConcurrentWindups: 2,
+    /** Wartezeit fuer die Ueberzaehligen, zufaellig zwischen min und max (s). */
+    staggerDelayMin: 0.5,
+    staggerDelayMax: 1.0,
+    /**
+     * Wenn der Spieler blockt, weichen Gegner um mindestens diesen Winkel
+     * (Grad) vom Blockzentrum ab — sie kommen bevorzugt von der Seite/hinten.
+     * Muss > SHIELD.blockArc / 2 sein (60°), sonst laufen sie in den Block.
+     */
+    shieldSidestepDeg: 80,
+  },
 };
 
 /**
@@ -929,6 +954,8 @@ export const DIFFICULTIES = {
     name: 'Normal', short: 'N',
     hp: 1.0, damage: 1.0, speed: 1.0, gold: 1.0, xp: 1.0,
     attackSpeed: 1.0, aim: 1.0,
+    // KI-Verhaltensschalter (VERBESSERUNGEN_1 Abschnitt 5).
+    surround: false, staggerAttacks: false, punishDodge: false,
     stars: 1,
     unlockNote: 'von Anfang an',
   },
@@ -936,6 +963,8 @@ export const DIFFICULTIES = {
     name: 'Schwer', short: 'S',
     hp: 1.5, damage: 1.3, speed: 1.0, gold: 1.8, xp: 1.8,
     attackSpeed: 1.25, aim: 1.5,
+    // Umzingeln + versetzt angreifen + Schild umgehen.
+    surround: true, staggerAttacks: true, punishDodge: false,
     stars: 2,
     unlockNote: 'Level auf Normal geschafft',
   },
@@ -943,6 +972,8 @@ export const DIFFICULTIES = {
     name: 'Alptraum', short: 'A',
     hp: 2.2, damage: 1.7, speed: 1.15, gold: 3.0, xp: 3.0,
     attackSpeed: 1.55, aim: 2.2,
+    // Zusaetzlich: Ausweichrolle abwarten (Schritt 2, kommt separat).
+    surround: true, staggerAttacks: true, punishDodge: true,
     stars: 3,
     unlockNote: 'Level auf Schwer geschafft',
   },

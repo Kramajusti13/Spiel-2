@@ -52,6 +52,20 @@ export function difficultyAim(id) {
   return difficultyDef(id).aim ?? 1;
 }
 
+/**
+ * Verhaltens-Schalter fuer die KI (VERBESSERUNGEN_1 Abschnitt 5):
+ * { surround, staggerAttacks, punishDodge } pro Stufe. Fehlt einer,
+ * gilt false — damit bleibt Normal beim alten Verhalten.
+ */
+export function difficultyBehavior(id) {
+  const d = difficultyDef(id);
+  return {
+    surround: !!d.surround,
+    staggerAttacks: !!d.staggerAttacks,
+    punishDodge: !!d.punishDodge,
+  };
+}
+
 /** Gefuellte Sterne am Levelknoten: 0 = nie geschafft, 3 = Alptraum. */
 export function starsFor(best) {
   return best < 0 ? 0 : difficultyDef(difficultyAt(best)).stars;
