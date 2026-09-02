@@ -34,6 +34,8 @@ export class Arrow {
     this.knockback = opt.knockback ?? BOW.knockback;
     /** true = vom Spieler abgeschossen (trifft Gegner). */
     this.friendly = opt.friendly ?? true;
+    /** Nur Spieler-Pfeile duerfen ueber Wasser (Gegner-Pfeile bleiben an Wasser haengen). */
+    this.overWater = opt.overWater ?? this.friendly;
     /** Endliche Reichweite: nach dieser Flugstrecke verschwindet der Pfeil. */
     this.maxRange = opt.maxRange ?? BOW.maxRange;
     this.traveled = 0;
@@ -72,8 +74,10 @@ export class Arrow {
         return;
       }
 
-      if (game.level.isSolidAt(this.x, this.y)) {
+      if (game.level.isSolidAt(this.x, this.y)
+        && !(this.overWater && game.level.isWaterAt(this.x, this.y))) {
         // Ein Stueck zurueck, damit der Pfeil sichtbar in der Wand steckt.
+        // Ueber Wasser fliegt der Pfeil weiter — nur echte Waende halten ihn auf.
         this.x -= stepX * 0.5;
         this.y -= stepY * 0.5;
         playSound('arrowHit', { volume: 0.5 });
