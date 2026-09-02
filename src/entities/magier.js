@@ -5,7 +5,7 @@
  * Verbrennungsschaden verursacht. Der Magier rennt nicht weg."
  *
  * Wie der Bogenschuetze, aber mit zwei Unterschieden:
- *   1. Er wirft Feuerbaelle statt Pfeile â diese verrursachen zusaetzlich
+ *   1. Er wirft Feuerbaelle statt Pfeile  diese verursachen zusaetzlich
  *      Verbrennung (BurnCloud, Schaden ueber Zeit).
  *   2. Er flieht nicht: kommt der Spieler nah, weicht er nicht aus.
  *      Er steht und wirft weiter.
@@ -110,11 +110,35 @@ export class Magier extends Enemy {
 
   /** Platzhalter: schlanke Gestalt mit Kapuze und Stab. */
   drawBody(ctx) {
-    if (hasSprite(this.facing) * 12),
-        Math.round(cy + Math.sin(this.facing) * 12), glow, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    ctx.restore();
+    if (hasSprite(this.sprite)) {
+      super.drawBody(ctx);
+      return;
     }
+    const s = this.def.sprite;
+    const cy = this.y + s.offsetY;
+    let fill = this.baseColor;
+    if (this.state === 'windup' || this.state === 'strike') fill = COLORS.enemyWindup;
+    if (this.hitFlash > 0) fill = COLORS.enemyHit;
+
+    ctx.save();
+    ctx.fillStyle = fill;
+    ctx.fillRect(Math.round(this.x - s.w / 2), Math.round(cy - s.h / 2), s.w, s.h);
+    ctx.strokeStyle = 'rgba(0,0,0,0.45)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(Math.round(this.x - s.w / 2) + 0.5, Math.round(cy - s.h / 2 + 0.5),
+      s.w - 1, s.h - 1);
+    // Kapuze.
+    ctx.fillStyle = COLORS.magierAccent ?? '#4a2a6a';
+    ctx.fillRect(Math.round(this.x - s.w / 2 + 2), Math.round(cy - s.h / 2 - 4), s.w - 4, 6);
+    // Gluehender Feuerball am Stab beim Ausholen.
+    if (this.state === 'windup') {
+      const glow = 3 + 5 * this.windupProgress;
+      ctx.fillStyle = COLORS.fireball ?? '#ff6600';
+      ctx.beginPath();
+      ctx.arc(Math.round(this.x + Math.cos(this.facing) * 12),
+        Math.round(cy + Math.sin(this.facing) * 12), glow, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
   }
 }

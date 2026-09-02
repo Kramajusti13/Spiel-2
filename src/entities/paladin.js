@@ -1,14 +1,14 @@
 /**
- * paladin.js â Nahkaempfer mit Ansturm und Selbstheilung (Etappe 1).
+ * paladin.js  Nahkaempfer mit Ansturm und Selbstheilung (Etappe 1).
  *
  * "Rennt schnell auf einen zu, laedt seinen Hammer auf, um daraufhin doppelten
  * Schaden zu machen. Heilt sich ab und zu."
  *
  * Drei Verhaltensweisen, gewaehlt nach Abstand und Zustand:
  *   < 44 px:    Nahkampf (Hammer)
- *   100-400 px: Ansturm (charge) â sichtbare Vorwarnung, dann schnelle
+ *   100-400 px: Ansturm (charge)  sichtbare Vorwarnung, dann schnelle
  *               Bewegung auf den Spieler zu, doppelten Schaden beim Treffer.
- *   < 50 % HP:  Selbstheilung â kurzes Ausholen, dann Heilung. Cooldown 8 s.
+ *   < 50 % HP:  Selbstheilung  kurzes Ausholen, dann Heilung. Cooldown 8 s.
  */
 
 import { COLORS } from '../config.js';
@@ -47,12 +47,13 @@ export class Paladin extends Enemy {
 
     // --- Ansturm ---
     if (this.updateCharge(dt, game, d)) return;
+
     // --- Nahkampf ---
     if (this.updateMelee(dt, game, d)) return;
 
     // --- Angriffswahl ---
     if (this.state === 'chase') {
-      // Nah genugz? Zuschlagen.
+      // Nah genug? Zuschlagen.
       if (d <= this.def.attackRange + player.hw) {
         this.setState('windup');
         this.struck = false;
@@ -160,7 +161,7 @@ export class Paladin extends Enemy {
         playSound('skillPoint');
         game.spawnDamageNumber(this.x, this.y - this.hh - 10,
           '+' + amount, COLORS.paladinAccent ?? '#ffd700', true);
-        game.spawnHitSpark(ithis.x, this.y, 0));
+        game.spawnHitSpark(this.x, this.y, 0);
         this.setState('healRecover');
       }
       return true;
@@ -172,7 +173,7 @@ export class Paladin extends Enemy {
     return false;
   }
 
-  // --- Zeichnen -------------------------------------------------------
+  // --- Zeichnen --------------------------------------------------------
 
   draw(ctx) {
     if (this.dead) { this.drawDeath(ctx); return; }
@@ -183,7 +184,69 @@ export class Paladin extends Enemy {
 
     if (this.state === 'windup') this.drawTelegraph(ctx);
     if (this.state === 'chargeWindup') this.drawChargeTelegraph(ctx);
-    if (this.facing) * 3);
+    if (this.state === 'healWindup') this.drawHealTelegraph(ctx);
+    this.drawBody(ctx);
+    this.drawHpBar(ctx);
+  }
+
+  drawChargeTelegraph(ctx) {
+    const c = this.def.charge;
+    const p = clamp(this.stateTime / c.windupTime, 0, 1);
+    const len = c.speed * c.duration * p;
+    ctx.save();
+    ctx.globalAlpha = 0.15 + 0.35 * p;
+    ctx.fillStyle = COLORS.enemyWindup;
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.facing);
+    ctx.fillRect(0, -c.radius, len, c.radius * 2);
+    ctx.restore();
+  }
+
+  drawHealTelegraph(ctx) {
+    const h = this.def.heal;
+    const p = clamp(this.stateTime / h.windupTime, 0, 1);
+    ctx.save();
+    ctx.strokeStyle = COLORS.paladinAccent ?? '#ffd700';
+    ctx.lineWidth = 2;
+    ctx.globalAlpha = 0.4 + 0.4 * p;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, 20 + 30 * p, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /** Platzhalter: goldene, breite Gestalt mit Hammer. */
+  drawBody(ctx) {
+    if (hasSprite(this.sprite)) {
+      super.drawBody(ctx);
+      return;
+    }
+    const s = this.def.sprite;
+    const grow = 1 + this.windupProgress * 0.15 + (this.state === 'charging' ? 0.15 : 0);
+    const w = s.w * grow;
+    const h = s.h * grow;
+    const cy = this.y + s.offsetY;
+
+    let fill = this.baseColor;
+    const attacking = ['windup', 'strike', 'chargeWindup', 'charging', 'healWindup'].includes(this.state);
+    if (attacking) fill = COLORS.enemyWindup;
+    if (this.state === 'healWindup' || this.state === 'healRecover') fill = COLORS.paladinAccent ?? '#ffd700';
+    if (this.hitFlash > 0) fill = COLORS.enemyHit;
+
+    ctx.save();
+    ctx.fillStyle = fill;
+    ctx.fillRect(Math.round(this.x - w / 2), Math.round(cy - h / 2), Math.round(w), Math.round(h));
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(Math.round(this.x - w / 2) + 1, Math.round(cy - h / 2 + 1),
+      Math.round(w) - 2, Math.round(h) - 2);
+    // Hammer beim Ausholen.
+    if (this.state === 'windup') {
+      const lift = 4 + 8 * this.windupProgress;
+      ctx.fillStyle = COLORS.paladinAccent ?? '#ffd700';
+      ctx.fillRect(Math.round(this.x + w / 2), Math.round(cy - h / 2 - lift), 10, 8);
+    }
+    const ex = Math.cos(this.facing) * 3;
     const ey = Math.sin(this.facing) * 2;
     ctx.fillStyle = '#1a1a0a';
     ctx.fillRect(Math.round(this.x - 5 + ex), Math.round(cy - 5 + ey), 3, 3);
