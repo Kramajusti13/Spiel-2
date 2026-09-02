@@ -759,25 +759,44 @@ export const ENEMIES = {
    * Die Phase haengt am Leben: ueber 66 % Phase 1, ueber 33 % Phase 2, darunter 3.
    */
   orcChieftain: {
-    name: 'Ork-Haeuptling', maxHp: 400, damage: 25, defense: 5, speed: 55,
-    aggroRadius: 900, loseAggroRadius: 9999, attackRange: 52, strikeRadius: 72,
+    name: 'Ork-Haeuptling', maxHp: 600, damage: 35, defense: 5, speed: 55,
+    aggroRadius: 900, loseAggroRadius: 9999,
+    /** Nahkampf (Axtschlag): "unter 80 px" laut Spec. */
+    attackRange: 80, strikeRadius: 100,
     windupTime: 0.6, strikeTime: 0.2, recoverTime: 1.0, strikeArc: 160,
     phases: 3,
     /** Ab diesem Lebensanteil beginnt die naechste Phase. */
     phaseThresholds: [0.66, 0.33],
-    /** Phase 2+: Ansturm. Holt sichtbar aus, dann geradeaus. */
+    /**
+     * Ansturm — 1,2 s rote Linie, dann geradeaus (VERBESSERUNGEN_1 Abschnitt 7).
+     * Wirksam ab 150-400 px Abstand.
+     */
     charge: {
-      windupTime: 0.7, speed: 340, duration: 0.55, cooldown: 4.0,
-      damage: 20, radius: 34, minRange: 120, maxRange: 420,
+      windupTime: 1.2, speed: 340, duration: 0.55, cooldown: 4.0,
+      damage: 50, radius: 34, minRange: 150, maxRange: 400,
     },
-    /** Phase 3: Bodenstampfer im Umkreis, trifft auch hinter ihm. */
-    slam: {
-      windupTime: 0.9, radius: 130, damage: 30, cooldown: 6.0, recoverTime: 1.2,
+    /**
+     * Kriegsruf ab Phase 2 (VERBESSERUNGEN_1 Abschnitt 7): "ueber 400 px ruft
+     * er 2 Goblins, max. 4 gleichzeitig, alle 12 s".
+     */
+    kriegsruf: {
+      windupTime: 0.7, recoverTime: 0.8, cooldown: 12.0,
+      distanceThreshold: 400,
+      goblinCount: 2, maxAlive: 4, spawnRadius: 80,
     },
-    /** Phase 3 macht ihn schneller und ungeduldiger. */
-    phase3SpeedFactor: 1.3, phase3RecoverFactor: 0.7,
+    /**
+     * Wutmodus ab Phase 3 (VERBESSERUNGEN_1 Abschnitt 7): 1 s sichtbares
+     * Bruellen als Vorwarnung, danach +30 % Tempo und Doppelschlag im
+     * Nahkampf (2x 35 Schaden). Kein Kriegsruf mehr.
+     */
+    wutmodus: {
+      introTime: 1.0,
+      speedFactor: 1.3,
+      /** Kuerzeres Ausholen fuer den Folgeschlag im Doppelschlag. */
+      doppelschlagWindup: 0.35,
+    },
     hitbox: { w: 40, h: 40 }, sprite: { w: 44, h: 46, offsetY: -4 },
-    knockbackResist: 0.9, gold: { min: 200, max: 200 }, xp: 300,
+    knockbackResist: 0.9, gold: { min: 350, max: 350 }, xp: 450,
     isBoss: true,
   },
 
