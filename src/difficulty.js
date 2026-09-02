@@ -1,11 +1,11 @@
 /**
- * difficulty.js — Schwierigkeitsstufen (Erweiterung, Abschnitt 4).
+ * difficulty.js  Schwierigkeitsstufen (Erweiterung, Abschnitt 4).
  *
  * Nur Rechnerei, kein Zustand: die Multiplikatoren stehen in config.js, die
  * hoechste je Level geschaffte Stufe haelt game.js und speichert save.js.
  *
  * Die wichtigste Regel steht in scaleEnemyDef(): angefasst werden HP, Schaden
- * und (auf Alptraum) das Tempo — die Ausholphase nie.
+ * und (auf Alptraum) das Tempo  die Ausholphase nie.
  */
 
 import { DIFFICULTIES, DIFFICULTY_ORDER } from './config.js';
@@ -55,7 +55,7 @@ export function difficultyAim(id) {
 /**
  * Verhaltens-Schalter fuer die KI (VERBESSERUNGEN_1 Abschnitt 5):
  * { surround, staggerAttacks, punishDodge } pro Stufe. Fehlt einer,
- * gilt false — damit bleibt Normal beim alten Verhalten.
+ * gilt false  damit bleibt Normal beim alten Verhalten.
  */
 export function difficultyBehavior(id) {
   const d = difficultyDef(id);
@@ -72,16 +72,16 @@ export function starsFor(best) {
 }
 
 /**
- * Gegner-Bauplan fuer eine Schwierigkeitsstufe umrechnen.
+ * Genuer-Bauplan fuer eine Schwierigkitsstufe umrechnen.
  *
  * Gibt eine KOPIE zurueck; der Eintrag in config.js bleibt unberuehrt. Weil
- * jeder Gegner seinen eigenen `def` bekommt, wirken die neuen Werte ueberall,
- * wo der Code schon `this.def.speed` oder `this.def.damage` liest — die
- * Gegnerklassen mussten dafuer nicht angefasst werden.
+ * jeder Gegner seinen eigenen `def` bekommt, worken die neuen Werte uberall,
+ * wo der Code schon `this.def.speed` oder `this.def.damage` list  die
+ * Genuerklassen mussten dafuer nicht angefasst werden.
  *
  * Bewusst NICHT angefasst:
- *   - windupTime, strikeTime, recoverTime — die Reaktionszeit bleibt gleich
- *   - projectileSpeed — ein schnellerer Pfeil ist auch nur weniger Reaktionszeit
+ *   - windupTime, strikeTime, recoverTime  die Reaktionszeit bleibt gleich
+ *   - projectileSpeed  ein schnellerer Pfeil ist auch nur weniger Reaktionszeit
  */
 export function scaleEnemyDef(def, id) {
   const d = difficultyDef(id);
@@ -108,6 +108,18 @@ export function scaleEnemyDef(def, id) {
   }
   if (def.slam) {
     scaled.slam = { ...def.slam, damage: Math.round(def.slam.damage * d.damage) };
+  }
+  // Etappe 1: Feueratem des Drachen.
+  if (def.firebreath) {
+    scaled.firebreath = {
+      ...def.firebreath,
+      damage: Math.round(def.firebreath.damage * d.damage),
+      speed: def.firebreath.speed * d.speed,
+    };
+  }
+  // Etappe 1: Selbstheilung des Paladins (skaliert mit HP-Multiplikator).
+  if (def.heal) {
+    scaled.heal = { ...def.heal, amount: Math.round(def.heal.amount * d.hp) };
   }
   return scaled;
 }

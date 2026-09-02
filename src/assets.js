@@ -1,9 +1,9 @@
 /**
- * assets.js — welche Bild- und Tondateien geladen werden (Abschnitt 8).
+ * assets.js  welche Bild- und Tondateien geladen werden (Abschnitt 8).
  *
  * Sprites werden unter dem Schluessel registriert, den der Zeichencode benutzt:
  * 'player', 'slime', 'coin', 'arrow' und 'tile.<name aus der Level-Legende>'.
- * Fehlt eine Datei, laeuft das Spiel weiter — gfx.js zeichnet dann wie bisher
+ * Fehlt eine Datei, laeuft das Spiel weiter  gfx.js zeichnet dann wie bisher
  * das farbige Platzhalter-Rechteck. Deshalb blockiert eine fehlende Grafik nie.
  *
  * EIGENE GRAFIKEN EINSETZEN:
@@ -34,8 +34,15 @@ export const ENTITY_SPRITES = {
   titanoboa: 'titanoboa',
   coin: 'coin',
   arrow: 'arrow',
-  /** Wurfstein des Gorillas — wie der Pfeil ein Flugkoerper mit eigenem Bild. */
+  /** Wurfstein des Gorillas  wie der Pfeil ein Flugkoerper mit eigenem Bild. */
   stone: 'stone',
+  // Etappe 1: neue Monster + Feuerball
+  ritter: 'ritter',
+  magier: 'magier',
+  paladin: 'paladin',
+  werwolf: 'werwolf',
+  drache: 'drache',
+  fireball: 'fireball',
 };
 
 /**
@@ -50,18 +57,20 @@ export const TILE_SPRITES = [
   'bossFloor', 'bossFloorDark',
   // Urwald, Teich, Wiese, Sumpf (Erweiterung 2, Abschnitt 2)
   'water', 'swampFloor', 'swampFloorDark', 'reed',
+  // Etappe 2: Mittelalter-Tiles (vorgesehen)
+  'castleFloor', 'castleFloorDark', 'castleWall', 'castlePath',
 ];
 
 /** Toene: Schluessel -> Dateiname (ohne .wav). */
 export const SOUNDS = [
   'swing', 'hit', 'hitCrit', 'enemyDeath', 'playerHit', 'block',
-  'coin', 'bow', 'arrowHit', 'roll', 'potion',
+  'coin', 'bow', '\narrowHit', 'roll', 'potion',
   'levelClear', 'bossPhase', 'playerDeath', 'buy', 'skillPoint',
 ];
 
 /**
  * Alles laden, was da ist. Fehlende Dateien werden nur gezaehlt, nicht als
- * Fehler behandelt — das Spiel startet auch ohne jede Datei.
+ * Fehler behandelt  das Spiel startet auch ohne jede Datei.
  *
  * @param {(geladen: number, gesamt: number) => void} [onProgress]
  * @returns {Promise<{sprites: number, sounds: number, fehlend: string[]}>}
