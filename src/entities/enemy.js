@@ -11,7 +11,7 @@
  */
 
 import { ENEMIES, COLORS, UI, AI, SPRITES } from '../config.js';
-import { scaleEnemyDef } from '../difficulty.js';
+import { scaleEnemyDef, difficultyAim } from '../difficulty.js';
 import { drawSprite, drawBar, spriteSize } from '../gfx.js';
 import { playSound } from '../audio.js';
 import { angleDiff, clamp, degToRad, dist } from '../util.js';
@@ -145,7 +145,7 @@ export class Enemy {
       case 'windup':
         // Zielt waehrend des Ausholens noch leicht nach — aber langsam,
         // damit Ausweichen sich lohnt.
-        this.facing = this._turnTowards(player, dt, 2.5);
+        this.facing = this._turnTowards(player, dt, 2.5 * difficultyAim(this.difficulty));
         if (this.stateTime >= this.def.windupTime) this.setState('strike');
         return true;
 

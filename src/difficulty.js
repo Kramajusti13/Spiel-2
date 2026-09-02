@@ -47,6 +47,11 @@ export function isDifficultyUnlocked(id, best) {
   return i >= 0 && i <= best + 1;
 }
 
+/** Zielgenauigkeits-Multiplikator der Gegner (schnelleres Nachdrehen im Windup). */
+export function difficultyAim(id) {
+  return difficultyDef(id).aim ?? 1;
+}
+
 /** Gefuellte Sterne am Levelknoten: 0 = nie geschafft, 3 = Alptraum. */
 export function starsFor(best) {
   return best < 0 ? 0 : difficultyDef(difficultyAt(best)).stars;
@@ -66,13 +71,17 @@ export function starsFor(best) {
  */
 export function scaleEnemyDef(def, id) {
   const d = difficultyDef(id);
-  if (d.hp === 1 && d.damage === 1 && d.speed === 1) return def;
+  const atkSpeed = d.attackSpeed ?? 1;
+  if (d.hp === 1 && d.damage === 1 && d.speed === 1 && atkSpeed === 1) return def;
 
   const scaled = {
     ...def,
     maxHp: Math.round(def.maxHp * d.hp),
     damage: Math.round(def.damage * d.damage),
     speed: def.speed * d.speed,
+    // Hoehere Stufen: kuerzere Ausholphase und Erholung -> schnellere Angriffe.
+    windupTime: def.windupTime != null ? def.windupTime / atkSpeed : def.windupTime,
+    recoverTime: def.recoverTime != null ? def.recoverTime / atkSpeed : def.recoverTime,
   };
 
   // Sonderangriffe des Bosses tragen ihren Schaden selbst.

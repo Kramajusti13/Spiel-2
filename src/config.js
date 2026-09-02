@@ -883,18 +883,21 @@ export const DIFFICULTIES = {
   normal: {
     name: 'Normal', short: 'N',
     hp: 1.0, damage: 1.0, speed: 1.0, gold: 1.0, xp: 1.0,
+    attackSpeed: 1.0, aim: 1.0,
     stars: 1,
     unlockNote: 'von Anfang an',
   },
   hard: {
     name: 'Schwer', short: 'S',
     hp: 1.5, damage: 1.3, speed: 1.0, gold: 1.8, xp: 1.8,
+    attackSpeed: 1.25, aim: 1.5,
     stars: 2,
     unlockNote: 'Level auf Normal geschafft',
   },
   nightmare: {
     name: 'Alptraum', short: 'A',
     hp: 2.2, damage: 1.7, speed: 1.15, gold: 3.0, xp: 3.0,
+    attackSpeed: 1.55, aim: 2.2,
     stars: 3,
     unlockNote: 'Level auf Schwer geschafft',
   },
