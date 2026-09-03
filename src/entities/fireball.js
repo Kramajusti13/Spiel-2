@@ -1,5 +1,5 @@
 /**
- * fireball.js  Feuerball des Magiers und Drachen (Etappe 1).
+ * fireball.js — Feuerball des Magiers und Drachen (Etappe 1).
  *
  * Aufbau wie poisonSpit.js: fliegt geradeaus, endliche Reichweite, zerplatzt
  * an Waenden, beim ersten Treffer oder am Reichweitenende. Beim Treffer wird
@@ -73,7 +73,7 @@ export class Fireball {
 
     p.takeDamage(this.damage, this.angle, game);
 
-    // Verbrennung: BurnCloud an den Spieler heften. Stapelt nicht 
+    // Verbrennung: BurnCloud an den Spieler heften. Stapelt nicht —
     // ein erneuter Treffer setzt die Dauer zurueck.
     const existing = game.clouds.find((c) => c instanceof BurnCloud && !c.spent);
     if (existing) {
@@ -110,7 +110,7 @@ export class Fireball {
     ctx.stroke();
     ctx.fillStyle = COLORS.burnBright ?? '#ffaa00';
     ctx.beginPath();
-    ctx.ellipse(0, 0, RADIUS * 0.5, RADIUS * 0.4, 0 0, Math.PI * 2);
+    ctx.ellipse(0, 0, RADIUS * 0.5, RADIUS * 0.4, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }
@@ -125,7 +125,7 @@ export class Fireball {
       const spread = RADIUS * (1 + (1 - t) * 2);
       ctx.fillRect(
         Math.round(this.x + Math.cos(a) * spread) - 1,
-         Math.round(this.y + Math.sin(a) * spread) - 1,
+        Math.round(this.y + Math.sin(a) * spread) - 1,
         3, 3,
       );
     }
