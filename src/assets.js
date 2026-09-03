@@ -42,7 +42,13 @@ export const ENTITY_SPRITES = {
   paladin: 'paladin',
   werwolf: 'werwolf',
   drache: 'drache',
-  fireball: 'fireball',
+  fireball: 'fireball
+  // Himmelsthema Monster (Level 16-20)
+  angel: 'angel',
+  seraphim: 'seraphim',
+  cherubim: 'cherubim',
+  archangel: 'archangel',
+  michael: 'michael',',
 };
 
 /**
@@ -56,9 +62,12 @@ export const TILE_SPRITES = [
   'dirt', 'dirtDark', 'palisade',
   'bossFloor', 'bossFloorDark',
   // Urwald, Teich, Wiese, Sumpf (Erweiterung 2, Abschnitt 2)
-  'water', 'swampFloor', 'swampFloorDark', 'reed',
+  'water', 'swampFloor', 'swampFloorDark', 'r
+eed',
   // Etappe 2: Mittelalter-Tiles (vorgesehen)
   'castleFloor', 'castleFloorDark', 'castleWall', 'castlePath',
+  // Himmelsthema Tiles
+  'heavenStone', 'heavenBrick', 'heavenGate', 'heavenMarble', 'heavenRuins', 'heavenArch', 'templeWall', 'skyDark', 'darkPillar', 'bossPlatform',
 ];
 
 /** Toene: Schluessel -> Dateiname (ohne .wav). */
