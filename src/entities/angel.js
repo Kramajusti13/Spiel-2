@@ -82,7 +82,9 @@ export class Angel extends Enemy {
       radius: 0,
       maxRadius: 60,
       damage: this.def.damage,
+      growthTime: 0,
       update(dt) {
+        this.growthTime += dt;
         const progress = Math.min(1, this.growthTime / this.def.windupTime);
         this.radius = this.maxRadius * progress;
       },
@@ -97,8 +99,8 @@ export class Angel extends Enemy {
       }
     };
     this.halo.def = this.def;
-    this.halo.growthTime = 0;
-    game.addEffect(this.halo);
+    
+    game.effects.push(this.halo);
   }
 
   _explodeHalo(game) {
