@@ -73,6 +73,7 @@ export class Seraphim extends Enemy {
     const player = game.player;
     const angle = Math.atan2(player.y - this.y, player.x - this.x);
     
+    // Lichtstrahl als Projektil erstellen
     this.beam = {
       x: this.x + Math.cos(angle) * this.hw * 2,
       y: this.y + Math.sin(angle) * this.hh * 2,
@@ -86,15 +87,21 @@ export class Seraphim extends Enemy {
         this.x += this.vx * dt;
         this.y += this.vy * dt;
         this.traveled += Math.abs(this.vx) * dt;
+        
+        // Pruefen ob Spielertreffer
         const player = game.player;
         const d = dist(this.x, this.y, player.x, player.y);
         if (d <= this.radius + player.hw) {
           player.takeDamage(this.damage, angle, game);
           this.dead = true;
         }
+        
+        // Pruefen ob Reichweite ueberschritten
         if (this.traveled >= this.maxRange) {
           this.dead = true;
         }
+        
+        // Pruefen Wandkollision
         if (game.level.isBoxBlocked(this.x, this.y, this.radius, this.radius)) {
           this.dead = true;
         }
@@ -108,6 +115,7 @@ export class Seraphim extends Enemy {
         ctx.restore();
       }
     };
+    
     game.addProjectile(this.beam);
     this.beamCooldown = this.def.attackCooldown;
   }
