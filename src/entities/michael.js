@@ -188,7 +188,7 @@ export class Michael extends Enemy {
       owner: this
     };
     
-    game.addProjectile(this.sword);
+    game.effects.push(this.sword);
     if (typeof playSound === 'function') playSound('swordThrow');
   }
 
@@ -236,7 +236,7 @@ export class Michael extends Enemy {
     shockwave.def = this.def;
     shockwave.hit = false;
     
-    game.addEffect(shockwave);
+    game.effects.push(shockwave);
     if (typeof playSound === 'function') playSound('shockwave');
   }
 
