@@ -27,12 +27,12 @@ export const ENEMY_COLORS = {
   frog: COLORS.frog,
   giftpilz: COLORS.giftpilz,
   krokodil: COLORS.krokodil,
-  titanoboa: COLORS.titanobo
+  titanoboa: COLORS.titanoboa,
   angel: COLORS.angel,
   seraphim: COLORS.seraphim,
   cherubim: COLORS.cherubim,
   archangel: COLORS.archangel,
-  michael: COLORS.michael,a,
+  michael: COLORS.michael,
 };
 
 export class Enemy {

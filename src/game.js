@@ -749,6 +749,11 @@ export class Game {
 
   updateEffects(dt) {
     for (const fx of this.effects) {
+      if (typeof fx.update === 'function') {
+        if (typeof fx.growthTime === 'number') fx.growthTime += dt;
+        fx.update(dt);
+        continue;
+      }
       fx.age += dt;
       if (fx.type === 'spark') {
         fx.x += fx.vx * dt;
@@ -757,7 +762,10 @@ export class Game {
         fx.vy *= Math.exp(-8 * dt);
       }
     }
-    this.effects = this.effects.filter((fx) => fx.age < fx.life);
+    this.effects = this.effects.filter((fx) => {
+      if (typeof fx.update === 'function') return !fx.dead && !fx.exploded;
+      return fx.age < fx.life;
+    });
   }
 
   // --- XP und Stufen (Erweiterung, Abschnitt 1) ---------------------------
@@ -915,6 +923,15 @@ export class Game {
       type: 'number', x, y, value: String(value), color, big,
       age: 0, life: UI.damageNumbers.duration,
     });
+  }
+
+  /**
+   * Objekt-Effekt hinzufuegen (z. B. Heiligenschein, Schockwelle).
+   * Erwartet ein Objekt mit eigenen update(dt)/draw(ctx)-Methoden,
+   * das sich selbst per this.dead = true als fertig markiert.
+   */
+  addEffect(fx) {
+    this.effects.push(fx);
   }
 
   /**
@@ -1116,6 +1133,10 @@ export class Game {
 
   drawEffects(ctx) {
     for (const fx of this.effects) {
+      if (typeof fx.draw === 'function') {
+        fx.draw(ctx);
+        continue;
+      }
       if (fx.type === 'trail') continue;   // liegt schon hinter den Figuren
       const t = fx.age / fx.life;
       if (fx.type === 'number') {
