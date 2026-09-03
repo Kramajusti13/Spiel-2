@@ -1,9 +1,9 @@
 /**
- * assets.js  welche Bild- und Tondateien geladen werden (Abschnitt 8).
+ * assets.js — welche Bild- und Tondateien geladen werden (Abschnitt 8).
  *
  * Sprites werden unter dem Schluessel registriert, den der Zeichencode benutzt:
  * 'player', 'slime', 'coin', 'arrow' und 'tile.<name aus der Level-Legende>'.
- * Fehlt eine Datei, laeuft das Spiel weiter  gfx.js zeichnet dann wie bisher
+ * Fehlt eine Datei, laeuft das Spiel weiter — gfx.js zeichnet dann wie bisher
  * das farbige Platzhalter-Rechteck. Deshalb blockiert eine fehlende Grafik nie.
  *
  * EIGENE GRAFIKEN EINSETZEN:
@@ -34,7 +34,7 @@ export const ENTITY_SPRITES = {
   titanoboa: 'titanoboa',
   coin: 'coin',
   arrow: 'arrow',
-  /** Wurfstein des Gorillas  wie der Pfeil ein Flugkoerper mit eigenem Bild. */
+  /** Wurfstein des Gorillas — wie der Pfeil ein Flugkoerper mit eigenem Bild. */
   stone: 'stone',
   // Etappe 1: neue Monster + Feuerball
   ritter: 'ritter',
@@ -43,11 +43,17 @@ export const ENTITY_SPRITES = {
   werwolf: 'werwolf',
   drache: 'drache',
   fireball: 'fireball',
+  // Himmelsthema Monster (Level 16-20)
+  angel: 'engel',
+  seraphim: 'seraphim',
+  cherubim: 'cherubim',
+  archangel: 'erzengel',
+  michael: 'erzengel_michael',
 };
 
 /**
  * Kacheln: der Schluessel entsteht aus dem `name` in der Level-Legende
- * (legend["."].name = "grass" -> Schluessel "tile.grass").
+ * (legend["-"].name = "grass" -> Schluessel "tile.grass").
  */
 export const TILE_SPRITES = [
   'grass', 'grassDark', 'path', 'wall', 'tree',
@@ -56,22 +62,23 @@ export const TILE_SPRITES = [
   'dirt', 'dirtDark', 'palisade',
   'bossFloor', 'bossFloorDark',
   // Urwald, Teich, Wiese, Sumpf (Erweiterung 2, Abschnitt 2)
-  'water', 'swampFloor', 'swampFloorDark', 'r
-eed',
+  'water', 'swampFloor', 'swampFloorDark', 'reed',
   // Etappe 2: Mittelalter-Tiles (vorgesehen)
   'castleFloor', 'castleFloorDark', 'castleWall', 'castlePath',
+  // Himmelsthema Tiles
+  'heavenStone', 'heavenBrick', 'heavenGate', 'heavenMarble', 'heavenRuins', 'heavenArch', 'templeWall', 'skyDark', 'darkPillar', 'bossPlatform',
 ];
 
 /** Toene: Schluessel -> Dateiname (ohne .wav). */
 export const SOUNDS = [
   'swing', 'hit', 'hitCrit', 'enemyDeath', 'playerHit', 'block',
-  'coin', 'bow', '\narrowHit', 'roll', 'potion',
+  'coin', 'bow', 'arrowHit', 'roll', 'potion',
   'levelClear', 'bossPhase', 'playerDeath', 'buy', 'skillPoint',
 ];
 
 /**
  * Alles laden, was da ist. Fehlende Dateien werden nur gezaehlt, nicht als
- * Fehler behandelt  das Spiel startet auch ohne jede Datei.
+ * Fehler behandelt — das Spiel startet auch ohne jede Datei.
  *
  * @param {(geladen: number, gesamt: number) => void} [onProgress]
  * @returns {Promise<{sprites: number, sounds: number, fehlend: string[]}>}
@@ -83,19 +90,19 @@ export async function loadAssets(onProgress) {
   let sounds = 0;
 
   for (const [key, file] of Object.entries(ENTITY_SPRITES)) {
-    jobs.push(loadSprite(key, `${SPRITE_DIR}/${file}.png`)
+    jobs.push(loadSprite(key, SPRITE_DIR + '/' + file + '.png')
       .then(() => { sprites += 1; })
-      .catch(() => fehlend.push(`${file}.png`)));
+      .catch(() => fehlend.push(file + '.png')));
   }
   for (const name of TILE_SPRITES) {
-    jobs.push(loadSprite(`tile.${name}`, `${SPRITE_DIR}/tile_${name}.png`)
+    jobs.push(loadSprite('tile.' + name, SPRITE_DIR + '/tile_' + name + '.png')
       .then(() => { sprites += 1; })
-      .catch(() => fehlend.push(`tile_${name}.png`)));
+      .catch(() => fehlend.push('tile_' + name + '.png')));
   }
   for (const name of SOUNDS) {
-    jobs.push(loadSound(name, `${SOUND_DIR}/${name}.wav`)
+    jobs.push(loadSound(name, SOUND_DIR + '/' + name + '.wav')
       .then(() => { sounds += 1; })
-      .catch(() => fehlend.push(`${name}.wav`)));
+      .catch(() => fehlend.push(name + '.wav')));
   }
 
   let fertig = 0;
