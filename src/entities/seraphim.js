@@ -116,7 +116,7 @@ export class Seraphim extends Enemy {
       }
     };
     
-    game.addProjectile(this.beam);
+    game.effects.push(this.beam);
     this.beamCooldown = this.def.attackCooldown;
   }
 }
