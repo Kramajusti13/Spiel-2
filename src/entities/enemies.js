@@ -90,7 +90,7 @@ export const ENEMY_CLASSES = {
 export function createEnemy(type, x, y, difficulty = 'normal') {
   const Cls = ENEMY_CLASSES[type];
   if (!Cls) {
-    console.warn('Gegnertyp ' + type + '' ist nicht in ENEMY_CLASSES eingetragen.');
+    console.warn(`Gegnertyp '${type}' ist nicht in ENEMY_CLASSES eingetragen.`);
     return null;
   }
   const enemy = new Cls(x, y);
