@@ -29,6 +29,13 @@ import { Frog } from './frog.js';
 import { Giftpilz } from './giftpilz.js';
 import { Krokodil } from './krokodil.js';
 import { Titanoboa } from './titanoboa.js';
+
+// Himmelsthema Monster (Level 16-20)
+import { Angel } from './angel.js';
+import { Seraphim } from './seraphim.js';
+import { Cherubim } from './cherubim.js';
+import { Archangel } from './archangel.js';
+import { Michael } from './michael.js';
 // Etappe 1: neue Monster
 import { Werwolf } from './werwolf.js';
 import { Ritter } from './ritter.js';
@@ -44,7 +51,8 @@ COLORS.magierAccent = '#4a2a6a';
 COLORS.paladin = '#d4a838';
 COLORS.paladinAccent = '#ffd700';
 COLORS.werwolf = '#5a4a3a';
-COLORS.werwolfAccent = '#8a7a5a';
+COLORS.werwolfA
+ccent = '#8a7a5a';
 COLORS.drache = '#aa3322';
 COLORS.dracheAccent = '#ff6600';
 COLORS.fireball = '#ff6600';
@@ -97,6 +105,7 @@ ENEMIES.paladin = {
   heal: {
     cooldown: 8.0, amount: 100, windupTime: 0.8,
   },
+
 };
 
 /** Magier — Fernkaempfer mit Feuerball und Verbrennung. Flieht nicht. */
@@ -127,6 +136,67 @@ ENEMIES.drache = {
   meleeThreshold: 80,
 };
 
+
+// ===== Himmelsthema Monster (Level 16-20) =====
+
+/** Engel — Fernkaempfer mit Heiligenschein-Explosion. */
+ENEMIES.angel = {
+  name: 'Engel', maxHp: 1500, damage: 180, defense: 0, speed: 80,
+  aggroRadius: 300, loseAggroRadius: 500, range: 400,
+  attackCooldown: 2.0, windupTime: 0.5, strikeTime: 0.3, recoverTime: 1.0,
+  hitbox: { w: 28, h: 32 }, sprite: { w: 30, h: 34, offsetY: -2 },
+  knockbackResist: 0.1, gold: { min: 800, max: 1000 }, xp: 3000,
+  halo: { maxRadius: 60, damage: 180 }
+};
+
+/** Seraphim — Fernkaempfer mit Lichtstrahl. */
+ENEMIES.seraphim = {
+  name: 'Seraphim', maxHp: 2000, damage: 200, defense: 0, speed: 70,
+  aggroRadius: 350, loseAggroRadius: 550, range: 500,
+  attackCooldown: 2.5, windupTime: 0.6, strikeTime: 0.2, recoverTime: 1.2,
+  projectileSpeed: 450,
+  hitbox: { w: 30, h: 32 }, sprite: { w: 32, h: 36, offsetY: -2 },
+  knockbackResist: 0.15, gold: { min: 1100, max: 1300 }, xp: 3500
+};
+
+/** Cherubim — Nahkaempfer mit Sprint und Dash. */
+ENEMIES.cherubim = {
+  name: 'Cherubim', maxHp: 2500, damage: 220, defense: 0, speed: 120,
+  aggroRadius: 300, loseAggroRadius: 500, attackRange: 35,
+  dashRange: 300, dashSpeed: 250, dashDuration: 0.4, dashWindupTime: 0.5,
+  dashHitRadius: 40, dashCooldown: 4.0,
+  windupTime: 0.5, strikeTime: 0.2, recoverTime: 0.8,
+  hitbox: { w: 26, h: 28 }, sprite: { w: 28, h: 30, offsetY: -2 },
+  knockbackResist: 0.2, gold: { min: 1400, max: 1600 }, xp: 4000
+};
+
+/** Erzengel — Nahkaempfer mit 3er-Schlag, Teleport und Selbstheilung. */
+ENEMIES.archangel = {
+  name: 'Erzengel', maxHp: 3000, damage: 250, defense: 5, speed: 90,
+  aggroRadius: 350, loseAggroRadius: 550, attackRange: 40,
+  teleportDistance: 150, teleportWindupTime: 0.5, teleportCooldown: 5.0,
+  healAmount: 300, healCooldown: 8.0,
+  windupTime: 0.5, strikeTime: 0.2, recoverTime: 0.6, strikeArc: 140,
+  hitbox: { w: 32, h: 34 }, sprite: { w: 34, h: 38, offsetY: -2 },
+  knockbackResist: 0.3, gold: { min: 1700, max: 1900 }, xp: 4500
+};
+
+/** Erzengel Michael — Boss mit Schwertwurf und Flaechenschaden. */
+ENEMIES.michael = {
+  name: 'Erzengel Michael', maxHp: 7000, damage: 300, defense: 10, speed: 70,
+  aggroRadius: 900, loseAggroRadius: 9999, attackRange: 50,
+  range: 450, minRange: 100,
+  swordSpeed: 350, swordReturnSpeed: 400, swordRange: 450, swordDamage: 300,
+  swordWindupTime: 0.8, swordCooldown: 6.0,
+  teleportTime: 0.3, pickupTime: 0.5,
+  shockwaveRadius: 130, shockwaveDamage: 150, shockwaveDuration: 0.4,
+  windupTime: 0.6, strikeTime: 0.2, recoverTime: 1.0,
+  hitbox: { w: 40, h: 44 }, sprite: { w: 44, h: 48, offsetY: -4 },
+  knockbackResist: 0.8, gold: { min: 3000, max: 3000 }, xp: 10000,
+  isBoss: true
+};
+
+// ===== Level 16-20 registrieren =====
 // --- Etappe 2: Level 11-15 registrieren (mutiert das LEVELS-Array) ---
 LEVELS.push(
   { name: 'Burgfried', url: './assets/levels/level11.json', built: true,
@@ -140,6 +210,17 @@ LEVELS.push(
   { name: 'Drachenhort', url: './assets/levels/level15.json', built: true,
     description: 'Der Drache wartet in seinem Hort. Nur Fernangriffe treffen!' },
 );
+  { name: 'Himmelstor', url: './assets/levels/level16.json', built: true,
+    description: 'Sechs Engel bewachen den Eingang zum Himmel.' },
+  { name: 'Himmelspforte', url: './assets/levels/level17.json', built: true,
+    description: 'Zehn gemischte Engel und Seraphim am Tor.' },
+  { name: 'Himmelstempel', url: './assets/levels/level18.json', built: true,
+    description: 'Zwoelf gemischte Cherubim, Engel und Seraphim im Tempel.' },
+  { name: 'Abgeschotteter Raum', url: './assets/levels/level19.json', built: true,
+    description: 'Zehn Erzengel und vier Cherubim in dunkler Kammer.' },
+  { name: 'Himmelsbosskammer', url: './assets/levels/level20.json', built: true,
+    description: 'Erzengel Michael mit zwei Erzengeln als Bodyguards!' }
+
 
 export const ENEMY_CLASSES = {
   slime: Slime,
@@ -147,7 +228,8 @@ export const ENEMY_CLASSES = {
   archer: Archer,
   armoredOrc: ArmoredOrc,
   orcChieftain: OrcChieftain,
-  gorilla: Gorilla,
+ 
+ gorilla: Gorilla,
   frog: Frog,
   giftpilz: Giftpilz,
   krokodil: Krokodil,
@@ -157,6 +239,12 @@ export const ENEMY_CLASSES = {
   paladin: Paladin,
   magier: Magier,
   drache: Drache,
+
+  angel: Angel,
+  seraphim: Seraphim,
+  cherubim: Cherubim,
+  archangel: Archangel,
+  michael: Michael,
 };
 
 export function createEnemy(type, x, y, difficulty = 'normal') {
