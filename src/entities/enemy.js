@@ -27,7 +27,12 @@ export const ENEMY_COLORS = {
   frog: COLORS.frog,
   giftpilz: COLORS.giftpilz,
   krokodil: COLORS.krokodil,
-  titanoboa: COLORS.titanoboa,
+  titanoboa: COLORS.titanobo
+  angel: COLORS.angel,
+  seraphim: COLORS.seraphim,
+  cherubim: COLORS.cherubim,
+  archangel: COLORS.archangel,
+  michael: COLORS.michael,a,
 };
 
 export class Enemy {
@@ -513,4 +518,3 @@ export class Enemy {
     ctx.fillText(this.state, this.x, this.y - this.hh - 16);
   }
 }
-
