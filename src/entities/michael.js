@@ -37,8 +37,7 @@ export class Michael extends Enemy {
       this.lastPhase = this.phase;
       if (typeof playSound === 'function') playSound('bossPhase');
       if (typeof game.shake === 'function') game.shake(10, 0.4);
-      game.spawnDamageNumber(this.x, this.y - this.hh - 30, 
-        "Phase " + this.phase, COLORS.bossAccent, true);
+      game.spawnDamageNumber(this.x, this.y - this.hh - 30, "Phase " + this.phase, COLORS.bossAccent, true);
     }
 
     // Aggro
