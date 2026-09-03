@@ -288,7 +288,8 @@ export class Enemy {
    * Hindernis herum und bleibt dabei bei EINER Seite, bis die Luftlinie wieder
    * frei ist — sonst zappelt er vor jeder Mauerkante hin und her.
    * Das ist bewusst kein Pathfinding: es genuegt fuer offene Level und kostet fast nichts.
-   */
+   *
+*/
   steer(target, level, _dt) {
     // Umzingeln (VERBESSERUNGEN_1 Abschnitt 5): auf Schwer/Alptraum wird nicht
     // direkt der Spieler angelaufen, sondern ein Ringplatz um ihn.
