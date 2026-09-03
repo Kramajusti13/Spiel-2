@@ -65,7 +65,7 @@ eed',
 /** Toene: Schluessel -> Dateiname (ohne .wav). */
 export const SOUNDS = [
   'swing', 'hit', 'hitCrit', 'enemyDeath', 'playerHit', 'block',
-  'coin', 'bow', 'arrowHit', 'roll', 'potion',
+  'coin', 'bow', '\narrowHit', 'roll', 'potion',
   'levelClear', 'bossPhase', 'playerDeath', 'buy', 'skillPoint',
 ];
 
