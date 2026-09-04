@@ -66,7 +66,8 @@ export class Seraphim extends Enemy {
     // Bewegung
     const heading = this.steer(player, game.level, dt);
     const speed = this.def.speed;
-    game.level.moveEntity(this, Math.cos(heading) * speed * dt, Math.sin(heading) * speed * dt);
+    game.level.moveEntity(this, Math.cos(heading) * speed * dt, 
+Math.sin(heading) * speed * dt);
   }
 
   _fireLightBeam(game) {
