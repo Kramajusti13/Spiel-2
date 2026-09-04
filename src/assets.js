@@ -26,7 +26,6 @@ export const ENTITY_SPRITES = {
   archer: 'archer',
   armoredOrc: 'armoredOrc',
   orcChieftain: 'orcChieftain',
-  // Urwald (Erweiterung 2, Abschnitt 1)
   gorilla: 'gorilla',
   frog: 'frog',
   giftpilz: 'giftpilz',
@@ -34,16 +33,13 @@ export const ENTITY_SPRITES = {
   titanoboa: 'titanoboa',
   coin: 'coin',
   arrow: 'arrow',
-  /** Wurfstein des Gorillas — wie der Pfeil ein Flugkoerper mit eigenem Bild. */
   stone: 'stone',
-  // Etappe 1: neue Monster + Feuerball
   ritter: 'ritter',
   magier: 'magier',
   paladin: 'paladin',
   werwolf: 'werwolf',
   drache: 'drache',
   fireball: 'fireball',
-  // Himmelsthema Monster (Level 16-20)
   angel: 'engel',
   seraphim: 'seraphim',
   cherubim: 'cherubim',
@@ -61,11 +57,8 @@ export const TILE_SPRITES = [
   'ruinFloor', 'ruinFloorDark', 'pillar',
   'dirt', 'dirtDark', 'palisade',
   'bossFloor', 'bossFloorDark',
-  // Urwald, Teich, Wiese, Sumpf (Erweiterung 2, Abschnitt 2)
   'water', 'swampFloor', 'swampFloorDark', 'reed',
-  // Etappe 2: Mittelalter-Tiles (vorgesehen)
   'castleFloor', 'castleFloorDark', 'castleWall', 'castlePath',
-  // Himmelsthema Tiles
   'heavenStone', 'heavenBrick', 'heavenGate', 'heavenMarble', 'heavenRuins', 'heavenArch', 'templeWall', 'skyDark', 'darkPillar', 'bossPlatform',
 ];
 
@@ -76,13 +69,6 @@ export const SOUNDS = [
   'levelClear', 'bossPhase', 'playerDeath', 'buy', 'skillPoint',
 ];
 
-/**
- * Alles laden, was da ist. Fehlende Dateien werden nur gezaehlt, nicht als
- * Fehler behandelt — das Spiel startet auch ohne jede Datei.
- *
- * @param {(geladen: number, gesamt: number) => void} [onProgress]
- * @returns {Promise<{sprites: number, sounds: number, fehlend: string[]}>}
- */
 export async function loadAssets(onProgress) {
   const jobs = [];
   const fehlend = [];
