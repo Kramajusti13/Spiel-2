@@ -24,7 +24,6 @@ export class Cherubim extends Enemy {
     const player = game.player;
     const d = dist(this.x, this.y, player.x, player.y);
 
-    // Aggro
     if (this.state === 'idle' && d <= this.def.aggroRadius && !player.dead) {
       this.setState('chase');
     } else if (this.state !== 'idle' && (d > this.def.loseAggroRadius || player.dead)) {
@@ -35,7 +34,6 @@ export class Cherubim extends Enemy {
     this.facing = Math.atan2(player.y - this.y, player.x - this.x);
     this.dashCooldown = Math.max(0, this.dashCooldown - dt);
 
-    // Dash-Angriff
     if (this.state === 'dashWindup') {
       if (this.stateTime >= this.def.dashWindupTime) {
         this.dashing = true;
@@ -52,11 +50,9 @@ export class Cherubim extends Enemy {
         this.dashing = false;
         this.setState('recover');
       }
-      // Bewegung waehrend des Dash
       const dashSpeed = this.def.dashSpeed;
       game.level.moveEntity(this, Math.cos(this.facing) * dashSpeed * dt, Math.sin(this.facing) * dashSpeed * dt);
       
-      // Schaden waehrend des Dash verteilen
       if (!this.dashHit) {
         this.dashHit = this._checkDashHit(game);
       }
@@ -71,16 +67,13 @@ export class Cherubim extends Enemy {
       return;
     }
 
-    // Standard-Nahkampf
     if (this.meleeCycle(dt, game)) return;
 
-    // Dash-Entscheidung: Wenn Spieler zu weit weg ist, dashes
     if (d > this.def.attackRange + player.hw && this.dashCooldown <= 0 && d <= this.def.dashRange) {
       this.setState('dashWindup');
       return;
     }
 
-    // Bewegung
     const heading = this.steer(player, game.level, dt);
     const speed = this.def.speed;
     game.level.moveEntity(this, Math.cos(heading) * speed * dt, Math.sin(heading) * speed * dt);
