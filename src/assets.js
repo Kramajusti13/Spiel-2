@@ -59,8 +59,7 @@ export const TILE_SPRITES = [
   'grass', 'grassDark', 'path', 'wall', 'tree',
   'caveFloor', 'caveFloorDark', 'caveWall', 'rock',
   'ruinFloor', 'ruinFloorDark', 'pillar',
-  'dirt', 'di
-rtDark', 'palisade',
+  'dirt', 'dirtDark', 'palisade',
   'bossFloor', 'bossFloorDark',
   // Urwald, Teich, Wiese, Sumpf (Erweiterung 2, Abschnitt 2)
   'water', 'swampFloor', 'swampFloorDark', 'reed',
