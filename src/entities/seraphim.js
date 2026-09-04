@@ -22,7 +22,6 @@ export class Seraphim extends Enemy {
     const player = game.player;
     const d = dist(this.x, this.y, player.x, player.y);
 
-    // Aggro
     if (this.state === 'idle' && d <= this.def.aggroRadius && !player.dead) {
       this.setState('chase');
     } else if (this.state !== 'idle' && (d > this.def.loseAggroRadius || player.dead)) {
@@ -33,7 +32,6 @@ export class Seraphim extends Enemy {
     this.facing = Math.atan2(player.y - this.y, player.x - this.x);
     this.beamCooldown = Math.max(0, this.beamCooldown - dt);
 
-    // Lichtstrahl-Angriff
     if (this.state === 'windup') {
       if (this.stateTime >= this.def.windupTime) {
         this._fireLightBeam(game);
@@ -56,14 +54,12 @@ export class Seraphim extends Enemy {
       return;
     }
 
-    // Angriffsbereit? (nur mit freier Sicht)
     const hasLineOfSight = game.level.isPathClear(this.x, this.y, player.x, player.y, 4, 4);
     if (this.beamCooldown <= 0 && d <= this.def.range && hasLineOfSight) {
       this.setState('windup');
       return;
     }
 
-    // Bewegung
     const heading = this.steer(player, game.level, dt);
     const speed = this.def.speed;
     game.level.moveEntity(this, Math.cos(heading) * speed * dt, Math.sin(heading) * speed * dt);
@@ -73,7 +69,6 @@ export class Seraphim extends Enemy {
     const player = game.player;
     const angle = Math.atan2(player.y - this.y, player.x - this.x);
     
-    // Lichtstrahl als Projektil erstellen
     this.beam = {
       x: this.x + Math.cos(angle) * this.hw * 2,
       y: this.y + Math.sin(angle) * this.hh * 2,
@@ -88,7 +83,6 @@ export class Seraphim extends Enemy {
         this.y += this.vy * dt;
         this.traveled += Math.abs(this.vx) * dt;
         
-        // Pruefen ob Spielertreffer
         const player = game.player;
         const d = dist(this.x, this.y, player.x, player.y);
         if (d <= this.radius + player.hw) {
@@ -96,12 +90,10 @@ export class Seraphim extends Enemy {
           this.dead = true;
         }
         
-        // Pruefen ob Reichweite ueberschritten
         if (this.traveled >= this.maxRange) {
           this.dead = true;
         }
         
-        // Pruefen Wandkollision
         if (game.level.isBoxBlocked(this.x, this.y, this.radius, this.radius)) {
           this.dead = true;
         }
