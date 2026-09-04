@@ -63,7 +63,8 @@ export class Enemy {
     this.knockX = 0;
     this.knockY = 0;
     this.deathTimer = 0;   // kurze Auflös-Animation nach dem Tod
-    /** Waffe des letzten Treffers — fuer die Kill-Statistik (Schritt 7). */
+    /** Waffe des letzten Treffers — fuer 
+die Kill-Statistik (Schritt 7). */
     this.lastHitBy = null;
 
     /** Platzhalterfarbe, solange kein Sprite geladen ist. */
@@ -115,7 +116,8 @@ export class Enemy {
    * Krokodil waehrend es abgetaucht ist. Getroffen wird gar nicht erst —
    * Schwerthieb, Pfeil und Speer pruefen diesen Wert VOR dem Treffer und
    * gehen sonst durch. Ohne das wuerde ein Pfeil an einem abgetauchten
-   * Krokodil verpuffen, statt weiterzufliegen, und ein Hieb gaelte als
+   * Krokodil verpuffen, statt weiterz
+ufliegen, und ein Hieb gaelte als
    * verbraucht, obwohl er nichts getroffen hat.
    */
   get invulnerable() {
@@ -188,7 +190,8 @@ export class Enemy {
       default:
         // In Reichweite? Dann ausholen.
         if (d <= this.def.attackRange + player.hw) {
-          const beh = difficultyBehavior(this.difficulty);
+       
+   const beh = difficultyBehavior(this.difficulty);
 
           // Ausweichrolle abwarten (VERBESSERUNGEN_1 Abschnitt 5, Alptraum):
           // Solange der Spieler rollt, wird der Timer aufgefrischt; danach
@@ -288,7 +291,8 @@ export class Enemy {
    * Hindernis herum und bleibt dabei bei EINER Seite, bis die Luftlinie wieder
    * frei ist — sonst zappelt er vor jeder Mauerkante hin und her.
    * Das ist bewusst kein Pathfinding: es genuegt fuer offene Level und kostet fast nichts.
-   *
+   
+*
 */
   steer(target, level, _dt) {
     // Umzingeln (VERBESSERUNGEN_1 Abschnitt 5): auf Schwer/Alptraum wird nicht
@@ -347,7 +351,8 @@ export class Enemy {
     if (player.dead) return false;
 
     const radius = opt.radius ?? this.def.strikeRadius;
-    const damage = opt.damage ?? this.def.damage;
+    const damage = opt.
+damage ?? this.def.damage;
     const arc = opt.arc ?? this.def.strikeArc;
     const angleToPlayer = Math.atan2(player.y - this.y, player.x - this.x);
 
@@ -395,6 +400,7 @@ export class Enemy {
     // endlos "stunlocken". Er verliert nur seinen Vorwaertsdrang.
     if (this.hp <= 0) this.die(game);
   }
+
 
   die(game) {
     playSound('enemyDeath');
