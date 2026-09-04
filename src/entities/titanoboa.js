@@ -99,7 +99,8 @@ export class Titanoboa extends Enemy {
 
   /** 1 oder 2 — haengt am verbleibenden Leben. */
   get phase() {
-    return this.hp / this.maxHp > this.def.phaseThresholds[0] ? 1 : 2;
+    return this.hp / this.maxHp > this.def.phaseThresholds[0] ? 1 
+: 2;
   }
 
   /**
@@ -157,7 +158,7 @@ export class Titanoboa extends Enemy {
         this.hh = (this.def.hitbox.h / 2) * this.def.phase2SizeFactor;
         playSound('bossPhase');
         game.shake(8, 0.4);
-        game.spawnDamageNumber(this.x, this.y - this.hh - 22, 'Gehaeutet!',
+        game.spawnDamageNumber(this.x, this.y - this.hh - 22, 'Gehäutet!',
           COLORS.titanoboaAccent, true);
         this.setState('chase');
       }
