@@ -32,7 +32,6 @@ export class Michael extends Enemy {
     const player = game.player;
     const d = dist(this.x, this.y, player.x, player.y);
 
-    // Phasenwechsel
     if (this.phase !== this.lastPhase) {
       this.lastPhase = this.phase;
       if (typeof playSound === 'function') playSound('bossPhase');
@@ -40,7 +39,6 @@ export class Michael extends Enemy {
       game.spawnDamageNumber(this.x, this.y - this.hh - 30, "Phase " + this.phase, COLORS.bossAccent, true);
     }
 
-    // Aggro
     if (this.state === 'idle' && d <= this.def.aggroRadius && !player.dead) {
       this.setState('chase');
     }
@@ -50,7 +48,6 @@ export class Michael extends Enemy {
     this.swordCooldown = Math.max(0, this.swordCooldown - dt);
     this.teleportCooldown = Math.max(0, this.teleportCooldown - dt);
 
-    // Schwertwurf-Angriff
     if (this.state === 'swordWindup') {
       if (this.stateTime >= this.def.swordWindupTime) {
         this._throwSword(game);
@@ -60,16 +57,14 @@ export class Michael extends Enemy {
     }
 
     if (this.state === 'swordThrown') {
-      // Warten bis Schwert zurueckkehrt oder Reichweite ueberschritten
       if (!this.sword || this.sword.returned || this.sword.dead) {
         this.sword = null;
-        this.teleportCooldown = 0; // Sofort teleportieren
+        this.teleportCooldown = 0;
         this.setState('teleportToSword');
       }
       return;
     }
 
-    // Teleport zum Schwert
     if (this.state === 'teleportToSword') {
       if (this.stateTime >= this.def.teleportTime) {
         this._teleportToSword(game);
@@ -94,22 +89,18 @@ export class Michael extends Enemy {
       return;
     }
 
-    // Angriffsentscheidung
     if (this.state === 'chase') {
-      // Schwertwurf (wenn Cooldown abgelaufen und Spieler in Reichweite)
       if (this.swordCooldown <= 0 && d <= this.def.range && d > this.def.minRange) {
         this.setState('swordWindup');
         return;
       }
 
-      // Standard-Nahkampf
       if (d <= this.def.attackRange + player.hw) {
         this.setState('windup');
         return;
       }
     }
 
-    // Bewegung
     const heading = this.steer(player, game.level, dt);
     const speed = this.def.speed * this._getPhaseSpeedFactor();
     game.level.moveEntity(this, Math.cos(heading) * speed * dt, Math.sin(heading) * speed * dt);
@@ -128,7 +119,6 @@ export class Michael extends Enemy {
     const player = game.player;
     const angle = Math.atan2(player.y - this.y, player.x - this.x);
     
-    // Schwert als Projektil erstellen
     this.sword = {
       x: this.x + Math.cos(angle) * this.hw * 2,
       y: this.y + Math.sin(angle) * this.hh * 2,
@@ -145,25 +135,21 @@ export class Michael extends Enemy {
         this.y += this.vy * dt;
         this.traveled += Math.abs(this.vx) * dt;
         
-        // Pruefen ob Spieler-Treffer
         const player = game.player;
         const d = dist(this.x, this.y, player.x, player.y);
         if (d <= this.radius + player.hw) {
           player.takeDamage(this.damage, angle, game);
-          this.returned = true; // Schwert kehrt zurueck
+          this.returned = true;
         }
         
-        // Pruefen ob Reichweite ueberschritten
         if (this.traveled >= this.maxRange) {
           this.returned = true;
         }
         
-        // Pruefen Wandkollision
         if (game.level.isBoxBlocked(this.x, this.y, this.radius, this.radius)) {
           this.returned = true;
         }
         
-        // Wenn zurueckgerufen, zum Boss zurueckfliegen
         if (this.returned) {
           const toBossX = this.owner.x - this.x;
           const toBossY = this.owner.y - this.y;
@@ -196,15 +182,12 @@ export class Michael extends Enemy {
     if (this.sword) {
       this.x = this.sword.x;
       this.y = this.sword.y;
-      if (ty
-
-peof playSound === 'function') playSound('teleport');
+      if (typeof playSound === 'function') playSound('teleport');
       if (typeof game.shake === 'function') game.shake(5, 0.2);
     }
   }
 
   _createShockwave(game) {
-    // Flaechenschaden beim Aufheben des Schwerts
     const shockwave = {
       x: this.x,
       y: this.y,
@@ -217,7 +200,6 @@ peof playSound === 'function') playSound('teleport');
           this.dead = true;
         }
         
-        // Schaden an alle Gegner in Reichweite
         const player = game.player;
         const d = dist(this.x, this.y, player.x, player.y);
         if (d <= this.radius + player.hw && !this.hit) {
@@ -243,7 +225,6 @@ peof playSound === 'function') playSound('teleport');
   }
 
   drawBody(ctx) {
-    // Boss-Skalierung (1.75x wie Ork-Haeuptling)
     const scale = 1.75;
     if (hasSprite(this.sprite)) {
       const s = this.def.sprite;
