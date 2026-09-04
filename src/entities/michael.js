@@ -196,7 +196,8 @@ export class Michael extends Enemy {
     if (this.sword) {
       this.x = this.sword.x;
       this.y = this.sword.y;
-      if (typeof playSound === 'function') playSound('teleport');
+      if (ty
+peof playSound === 'function') playSound('teleport');
       if (typeof game.shake === 'function') game.shake(5, 0.2);
     }
   }
