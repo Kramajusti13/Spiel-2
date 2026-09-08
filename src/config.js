@@ -66,6 +66,7 @@ export const PLAYER = {
  *   'scale' Schaden = Waffenschaden * (1 + Angriffskraft/100)   (10 * 1,1 = 11)
  *
  * Mit 'add' toetet der erste 
+
 Hieb einen Slime (20 HP) sofort — Level 1 ist dann
  * reines Tutorial. Mit 'scale' braucht ein Slime zwei Hiebe, die Ausholphase der
  * Gegner kommt oefter zum Tragen und das Spiel wird spuerbar fordernder.
@@ -116,6 +117,7 @@ export const SHIELD = {
    * "Blockmeister" zusammengerechnet (Erweiterung 2, Abschnitt 5: Deckel bei
    * 90 %). Vorher 0,95 — mit Max-Stufe 15 braeuchte der Blockmeister allein
 
+
    * schon 150 %, deshalb ist diese Zeile jetzt eine harte Grenze und keine
    * Vorsichtsmassnahme mehr.
    */
@@ -165,7 +167,8 @@ export const ARMOR = {
  * (Erweiterung 2, Abschnitt 7).
  *
  * Der Startwert 3 ist der bisherige CONSUMABLES.potion.maxCarried; ab hier
- * ist die Ober
+ * ist die Ob
+er
 grenze eine Kaufsache und steht deshalb hier statt dort.
  */
 export const POTION_BELT = {
@@ -223,6 +226,7 @@ export const BOW = {
   recoilTime: 0.14,
   tiers: [
     { name: 'Kurzbogen', damage: 8, price: 80, fireRateFactor: 1 },
+
    
  { name: 'Langbogen', damage: 15, price: 200, fireRateFactor: 1 },
     { name: 'Kompositbogen', damage: 25, price: 500, fireRateFactor: 2 },
@@ -270,8 +274,8 @@ export const SPEAR = {
   knockback: 210,
 
   /** Wurf (Rechtsklick-Alternative: Taste F). */
-  th
-rowCooldown: 3.0,
+
+  throwCooldown: 3.0,
   /** Wurfschaden = 100 % des Speerschadens (Abschnitt 3). */
   throwDamageFactor: 1.0,
   /** Sichtbar langsamer und schwerer als ein Pfeil (420 px/s). */
@@ -329,7 +333,8 @@ export const SPRITES = {
   'entity.drache': 'drache',
   'entity.fireball': 'fireball',
   'entity.angel': 'engel',
-  'entity.seraphim': 'seraphim',
+ 
+ 'entity.seraphim': 'seraphim',
   'entity.cherubim': 'cherubim',
   'entity.archangel': 'erzengel',
   'entity.michael': 'erzengel_michael',
