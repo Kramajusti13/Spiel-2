@@ -48,7 +48,9 @@ export class Gorilla extends Enemy {
     // --- Rueckzug nach einem Nahkampftreffer (siehe takeDamage) ---
     if (this.state === 'retreat') {
       const speed = this.def.speed * this.def.retreatSpeedFactor;
-      level.moveEntity(this,
+     
+
+ level.moveEntity(this,
         Math.cos(this.retreatAngle) * speed * dt,
         Math.sin(this.retreatAngle) * speed * dt);
       if (this.stateTime >= this.def.retreatTime || d >= this.def.retreatDistance) {
@@ -107,7 +109,9 @@ export class Gorilla extends Enemy {
       const away = Math.atan2(this.y - player.y, this.x - player.x);
       vx = Math.cos(away) * speed;
       vy = Math.sin(away) * speed;
-    } else if (d > want + tol || !this.hasLineOfSight) {
+    } else if (d > want 
++
+ tol || !this.hasLineOfSight) {
       const heading = this.steer(player, game.level, dt);
       vx = Math.cos(heading) * speed;
       vy = Math.sin(heading) * speed;
@@ -156,7 +160,9 @@ export class Gorilla extends Enemy {
     if (dist(this.x, this.y, player.x, player.y) > this.def.retreatTriggerRange) return;
 
     // Mitten im Ausholen bricht er nicht ab — sonst liesse er sich mit
-    // schnellen Hieben endlos am Werfen hindern (dieselbe Ueberlegung wie
+    // schnellen Hieben endlos am Werfen hinder
+n 
+(dieselbe Ueberlegung wie
     // beim Stunlock in enemy.takeDamage).
     if (this.state === 'windup' || this.state === 'strike') return;
 

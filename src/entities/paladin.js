@@ -54,8 +54,7 @@ export class Paladin extends Enemy {
     // --- Angriffswahl ---
     if (this.state === 'chase') {
       // Nah genug? Zuschlagen.
-      if (d <= this.def.attackRange + pla
-yer.hw) {
+      if (d <= this.def.attackRange + player.hw) {
         this.setState('windup');
         this.struck = false;
         return;
