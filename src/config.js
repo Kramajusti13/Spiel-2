@@ -64,7 +64,8 @@ export const PLAYER = {
  *   'add'   Schaden = Angriffskraft + Waffenschaden      (10 + 10 = 20)
  *   'scale' Schaden = Waffenschaden * (1 + Angriffskraft/100)   (10 * 1,1 = 11)
  *
- * Mit 'add' toetet der erste Hieb einen Slime (20 HP) sofort — Level 1 ist dann
+ * Mit 'add' toetet der erste H
+ieb einen Slime (20 HP) sofort — Level 1 ist dann
  * reines Tutorial. Mit 'scale' braucht ein Slime zwei Hiebe, die Ausholphase der
  * Gegner kommt oefter zum Tragen und das Spiel wird spuerbar fordernder.
  */
@@ -113,6 +114,7 @@ export const SHIELD = {
    * Obergrenze der GESAMTEN Schadensreduktion beim Blocken, Schild und Skill
    * "Blockmeister" zusammengerechnet (Erweiterung 2, Abschnitt 5: Deckel bei
    * 90 %). Vorher 0,95 — mit Max-Stufe 15 braeuchte der Blockmeister allein
+
 
  
   * schon 150 %, deshalb ist diese Zeile jetzt eine harte Grenze und keine
@@ -165,6 +167,7 @@ export const ARMOR = {
  * (Erweiterung 2, Abschnitt 7).
  *
  *
+
  D
 er Startwert 3 ist der bisherige CONSUMABLES.potion.maxCarried; ab hier
  * ist die Obergrenze eine Kaufsache und steht deshalb hier statt dort.
@@ -266,7 +269,8 @@ export const SPEAR = {
    * aber nur, was direkt vor einem steht.
    */
   arc: 40,
-  /** Rueckstoss auf getroffene Gegner — schwerer als das Schwert. */
+  /** Rueckstoss auf getroffene Gegner — schwerer al
+s das Schwert. */
   knockback: 210,
 
   /** Wurf (Rechtsklick-Alternative: Taste F). */
@@ -320,7 +324,8 @@ export const POISON = {
   /** Wie lange die Wolke ein- und ausblendet (Teil von cloudLife). */
   cloudFadeIn: 0.25,
   cloudFadeOut: 0.6,
-  /** "We
+  /**
+ "We
 r sie beruehrt, ist 2 s vergiftet: 8 Schaden pro Sekunde". */
   duration: 2.0,
   damagePerSecond: 8,
@@ -373,7 +378,8 @@ export const LOADOUT = {
    * Ab wie vielen besessenen Waffen das Fenster ueberhaupt erscheint. Mit nur
    * einer Waffe gaebe es nichts zu waehlen — dann waere der Knopf eine
    * Enttaeuschung (Abschnitt 4: "erscheint erst, sobald der Spieler
-   * mindestens zwei Waffen besitzt").
+   * mindestens zwe
+i Waffen besitzt").
    */
   minWeapons: 2,
   /** Anzeigereihenfolge und Symbol im Fenster. */
@@ -432,7 +438,8 @@ export const XP = {
    */
   growth: 1.25,
   /**
-   * Das Dokument nennt keine
+   * Das Dokument nennt 
+keine
  Obergrenze. Diese hier verhindert nur, dass die
    * Zahlen bei extremem Farmen ins Absurde laufen; erreichbar ist sie kaum.
    */
@@ -480,7 +487,8 @@ export const SKILLS = {
    *   Geschwindigkeit  15 x 8 %  = +120 % Tempo. Der Spieler rennt schneller,
    *                    als die Kamera folgen kann, und laeuft an Gegnern
    *                    vorbei, bevor deren Ausholphase ueberhaupt anlaeuft.
-   *   Blockmeister     15 x 10 % = 150 % Schadensreduktion. Ueber 100 % waere
+   *   Blockmeister     15 x 10 % = 150 % Schadensreduktion. 
+Ueber 100 % waere
    *                    ein geblockter Treffer eine Heilung.
    *
    * Der Block-Deckel gilt fuer die GESAMTE Reduktion inklusive Schild und
@@ -529,7 +537,8 @@ export const AI = {
     shieldSidestepDeg: 80,
     /**
      * Alptraum-Verhalten (punishDodge, VERBESSERUNGEN_1 Abschnitt 5):
-     * Ausweichrolle abwarten und 0,3 s nach dem Rollen-Ende zuschlagen —
+     * Ausweichrolle abwarten und 0,3 s nach de
+m Rollen-Ende zuschlagen —
      * genau der Moment, in dem der Spieler noch nicht wieder blocken kann.
      */
     dodgePunishDelay: 0.3,
@@ -578,7 +587,8 @@ export const ENEMIES = {
     /**
      * Angriffsreichweite (VERBESSERUNGEN_1 Abschnitt 2: 352 px = 11 Kacheln).
      * Wahrnehmung = 1,3 x Angriffsreichweite ~ 458 px; darunter beginnt er zu
-     * zielen, darueber nicht. loseAggroRadius bleibt darueber, damit er nicht
+     * zielen, darueber nicht. loseAggroRadius bleibt darueber, damit er
+ nicht
      * am Rand oszilliert.
      */
     range: 352,
@@ -621,7 +631,8 @@ export const ENEMIES = {
    *      und wirft weiter.
    *
    * Werte gelten fuer Normal; die Schwierigkeitsstufen multiplizieren wie
-   * gehabt (100 HP, 30 Schaden, 55 XP, 60–80 Gold).
+   * gehabt (100 HP, 
+30 Schaden, 55 XP, 60–80 Gold).
    */
   gorilla: {
     name: 'Gorilla', maxHp: 100, damage: 30, defense: 0, speed: 60,
@@ -665,7 +676,8 @@ export const ENEMIES = {
    * Punktes — ausweichen heisst hier weglaufen, nicht danebenstehen. Damit das
    * fair bleibt, liegt waehrend des ganzen Fluges ein Zielkreis auf dem Boden:
    * er zeigt genau den Fleck, der gleich Schaden nimmt. Der Kreis ist die
-   * Ausholphase, und mit 1,2 s ist sie die laengste im Spiel — die Flaeche ist
+   * Ausholphase, und mit 1,2 s ist sie die laengste im Spi
+el — die Flaeche ist
    * gross, also braucht man Zeit, sie zu verlassen.
    *
    * Waehrend des Sprungs ist er nicht angreifbar (Abschnitt 1). Das ist der
@@ -713,7 +725,8 @@ export const ENEMIES = {
    * deshalb funktioniert er in Gruppen.
    *
    * Der Unterschied zu allen bisherigen Gegnern: seine Wolke bleibt liegen,
-   * nachdem er selbst schon weitergelaufen (oder tot) ist. Der Angriff endet
+   * nachdem 
+er selbst schon weitergelaufen (oder tot) ist. Der Angriff endet
    * nicht mit dem Angreifer.
    */
   giftpilz: {
@@ -758,7 +771,8 @@ export const ENEMIES = {
     aggroRadius: 340, loseAggroRadius: 620,
     /** "Taucht 3 s im Boden ab." */
     submergeTime: 3.0,
-    /** "0,5 s Ausholphase (Schatten haelt an und wird groesser)". */
+    /** "0,5 s Ausholphase (Schatten haelt an und wird groesse
+r)". */
     windupTime: 0.5, strikeTime: 0.12,
     /** "Bleibt 4 s an der Oberflaeche. Nur in diesem Fenster kann es Schaden nehmen." */
     surfaceTime: 4.0,
@@ -809,6 +823,7 @@ export const ENEMIES = {
      */
     wutmodus: {
       introTime: 1.0,
+
      
  speedFactor: 1.3,
       /** Kuerzeres Ausholen fuer den Folgeschlag im Doppelschlag. */
@@ -826,7 +841,7 @@ export const ENEMIES = {
    *   Ein Schatten wandert sichtbar ueber den Boden auf den Spieler zu. 1,5 s
    *   bevor sie hochschiesst, bleibt der Schatten stehen und pulsiert. Wer
    *   dann noch darauf steht, wird verschlungen: 100 Schaden. Danach bleibt
-   *   sie 3 s ueber der Erde und ist angreifbar.
+   *   sie 3 s ueber der Erde und ist r.
    *
    * PHASE 2 (50 % - 0 % HP): haeutet sich, wird groesser und schneller.
    *   Beisst zu und schlaegt mit dem Schwanz, spuckt Gift.
@@ -927,6 +942,211 @@ export const ENEMIES = {
   },
 };
 
+
+/**
+ * Questliste (Erweiterung, Abschnitt 3).
+ *
+ * Absichtlich reine Daten: es gibt keinen Code pro Quest. Jeder Eintrag nennt
+ * nur einen Zaehler und einen Zielwert — neue Quests brauchen deshalb nichts
+ * als eine weitere Zeile hier, kein Programmieren.
+ *
+ * `
+counter` verweist auf die Zaehler aus stats.js (Schritt 7):
+ *   kills:<typ>          Kills nach Monstertyp        z. B. kills:goblin
+ *   weapon:<waffe>       Kills nach benutzter Waffe   z. B. weapon:bow
+ *   level:<index>        wie oft dieses Level geschafft (0 = Waldlichtung)
+ *   difficulty:<stufe>   Level-Abschluesse auf dieser Stufe oder hoeher
+ *   stat:<feld>          jedes Zahlenfeld aus stats.js
+ *   heroLevel            die Stufe des Helden
+ *   nightmareNoDeath     Level, die auf Alptraum ohne Tod geschafft sind
+ *
+ * `reward` kennt gold, xp, potions und skillPoints. Skillpunkte vergibt
+ * ausschliesslich Quest 11 — sie ist die Kroenung des Spiels (Abschnitt 1).
+ *
+ * Die Reihenfolge ist die Nachrueck-Reihenfolge: es sind immer die ersten drei
+ * noch nicht abgeholten Quests aktiv.
+ */
+export const QUESTS = [
+  { id: 1, text: 'Besiege 10 Slimes', counter: 'kills:slime', target: 10,
+    reward: { gold: 50, xp: 50 } },
+  { id: 2, text: 'Schaffe die Waldlichtung', counter: 'level:0', target: 1,
+    reward: { gold: 75, xp: 100 } },
+  { id: 3, text: 'Sammle 200 Gold', counter: 'stat:goldEarned', target: 200,
+    reward: { gold: 100 } },
+  { id: 4, text: 'Besiege 20 Goblins', counter: 'kills:goblin', target: 20,
+    reward: { gold: 120, xp: 150 } },
+  { id: 5, text: 'Schaffe ein Level ohne zu sterben', counter: 'stat:cleanRuns', target: 1,
+    reward: { gold: 150, xp: 200 } },
+  { id: 6, text: 'Erreiche Stufe 5', counter: 'heroLevel', target: 5,
+    reward: { gold: 200, potions: 1 } },
+  { id: 7, text: 'Besiege 10 Gegner mit dem Bogen', counter: 'weapon:bow', target: 10,
+    reward: { gold: 150, xp: 150 } },
+  { id: 8, text: 'Blocke 15 Angriffe', counter: 'stat:blocks', target: 15,
+    reward: { gold: 100, xp: 100 } },
+  { id: 9, text: 'Schaffe ein Level auf Schwer', counter: 'difficulty:hard', target: 1,
+    reward: { gold: 250, xp: 300 } },
+  { id: 10, text: 'Besiege den Ork-Haeuptling', counter: 'kills:orcChieftain', target: 1,
+    reward: { gold: 500, xp
+: 500 } },
+  {
+    id: 11,
+    text: 'Schaffe alle Level auf Alptraum, jedes ohne zu sterben',
+    // Kurzform fuer die Fortschrittszeile: "Alptraum ohne Tod  3/5".
+    shortText: 'Alptraum ohne Tod',
+    counter: 'nightmareNoDeath',
+    target: 5,
+    reward: { gold: 1000, xp: 2000, skillPoints: 5 },
+  },
+];
+
+/** Wie viele Quests gleichzeitig aktiv sind (Abschnitt 3). */
+export const QUEST_SLOTS = 3;
+
+/**
+ * Schwierigkeitsstufen bei Level-Wiederholung (Erweiterung, Abschnitt 4).
+ *
+ * Erhoeht werden ausschliesslich HP, Schaden und — nur auf Alptraum — das
+ * Bewegungstempo der Gegner. Die Ausholphase vor einem Angriff bleibt auf
+ * ALLEN Stufen gleich lang: schneller reagieren zu muessen ist kein
+ * Schwierigkeitsgrad, sondern fuehlt sich nur unfair an. Deshalb stehen
+ * windupTime, strikeTime und recoverTime hier bewusst nicht drin.
+ *
+ * `stars` ist die Zahl gefuellter Sterne am Levelknoten der Route.
+ */
+export const DIFFICULTIES = {
+  normal: {
+    name: 'Normal', short: 'N',
+    hp: 1.0, damage: 1.0, speed: 1.0, gold: 1.0, xp: 1.0,
+    stars: 1,
+    unlockNote: 'von Anfang an',
+  },
+  hard: {
+    name: 'Schwer', short: 'S',
+    hp: 1.5, damage: 1.3, speed: 1.0, gold: 1.8, xp: 1.8,
+    stars: 2,
+    unlockNote: 'Level auf Normal geschafft',
+  },
+  nightmare: {
+    name: 'Alptraum', short: 'A',
+    hp: 2.2, damage: 1.7, speed: 1.15, gold: 3.0, xp: 3.0,
+    stars: 3,
+    unlockNote: 'Level auf Schwer geschafft',
+  },
+};
+
+/**
+ * Reihenfolge der Stufen. Der Index ist zugleich der gespeicherte Wert
+ * ("hoechste geschaffte Stufe"), -1 heisst "noch nie geschafft".
+ */
+export const DIFFICULTY_ORDER = ['normal', 'hard', 'nightmare'];
+
+/** Gold-Muenzen, die Gegner fallen lassen. */
+export const LOOT = {
+  /** Ab dieser Distanz wird die Muenze eingesammelt (Abschnitt 6: ca. 40 px). */
+  pickupRadius: 40,
+  /** Ab hier fliegt die Muenze dem Spieler entgegen. */
+  magnetRadius: 78,
+  magnetSpeed: 260,
+  /** Anfangsschwung beim Drop. */
+  scatterSpeed: 70,
+  friction: 6,
+  
+/** Muenze ist erst nach dieser Zeit einsammelbar. */
+  armTime: 0.15,
+  bobAmplitude: 2.5,
+  bobSpeed: 5,
+  sprite: { w: 10, h: 10 },
+};
+
+/**
+ * Tod & Wiederbelebung (Abschnitt 9).
+ *
+ * Kosten: 50 G beim ersten Tod pro Level, danach je 25 G mehr
+ * (50 -> 75 -> 100 -> 125 …). Der Zaehler wird zurueckgesetzt, sobald das
+ * Level abgeschlossen ist.
+ */
+export const DEATH = {
+  reviveBaseCost: 50,
+  /** Aufschlag pro weiterem Tod im selben Level. */
+  reviveCostIncrement: 25,
+  /** Gnadenfrist nach dem Aufstehen, damit man nicht sofort wieder stirbt. */
+  reviveInvulnTime: 1.6,
+  /** Kurze Sperre, bevor der Todesbildschirm Eingaben annimmt (Fehlklicks). */
+  screenInputDelay: 0.35,
+  /** Wie lange der Bildschirm einblendet. */
+  fadeInTime: 0.5,
+};
+
+/**
+ * Ton (Abschnitt 8). Alle Lautstaerken 0…1.
+ * Stummschalten im Spiel mit M.
+ */
+export const AUDIO = {
+  enabled: true,
+  masterVolume: 0.7,
+  sfxVolume: 0.8,
+  /** Zufaellige Tonhoehen-Streuung, damit Wiederholungen nicht mechanisch klingen. */
+  pitchSpread: 0.08,
+  /** Mindestabstand zwischen zwei gleichen Toenen in Sekunden. */
+  retriggerDelay: 0.04,
+};
+
+/**
+ * Sprites (Abschnitt 8): alle Assets sind 32x32.
+ * Solange kein Bild geladen ist, zeichnet gfx.js Platzhalter in der Groesse
+ * `sprite.w` x `sprite.h`. Mit Bild wird quadratisch in `spriteScale * 32`
+ * gezeichnet — so passen Kenney-Kacheln ohne Verzerrung.
+ */
+export const SPRITES = {
+  /** Kantenlaenge einer Sprite-Quelldatei. */
+  size: 32,
+  /** Vergroesserung je Figur (1 = 32 px). */
+  scale: {
+    player: 1,
+    slime: 1,
+    goblin: 1,
+    archer: 1,
+    armoredOrc: 1.15,
+    orcChieftain: 1.75,
+    coin: 0.5,
+  },
+};
+
+/** HP-Balken ueber Gegnern und HUD-Layout. */
+export const UI = {
+  enemyHpBar: { width: 30, height: 4, offsetY: 10, hideWhenFull: true },
+  hud: {
+    margin: 14,
+    hpBar: { width: 220, height: 18 },
+    staminaBar: { width: 220, height: 8 },
+    /** Ausdauerleiste ausblenden, wenn sie voll ist? */
+    hideStaminaWhenFull: false
+,
+    /**
+     * XP-Leiste am unteren Bildschirmrand (Erweiterung, Abschnitt 1).
+     * Sie ist dauerhaft sichtbar, daneben steht die aktuelle Stufe.
+     */
+    xpBar: { width: 420, height: 9, bottomMargin: 12 },
+    font: '14px "Segoe UI", system-ui, sans-serif',
+    fontSmall: '11px "Segoe UI", system-ui, sans-serif',
+  },
+  /** Aufsteigende Schadenszahlen. */
+  damageNumbers: { rise: 26, duration: 0.7 },
+  /** Menue-Bildschirme (Tod, spaeter Shop und Pause). */
+  menu: {
+    buttonWidth: 380,
+    buttonHeight: 56,
+    gap: 12,
+    panelPadding: 26,
+    font: '16px "Segoe UI", system-ui, sans-serif',
+    titleFont: '42px "Segoe UI", system-ui, sans-serif',
+  },
+};
+
+/**
+ * Farbpalette — duester-mittelalterlich (Abschnitt 8).
+ * Solange keine Sprites geladen sind, zeichnet gfx.js farbige Rechtecke in diesen Farben.
+ */
 export const COLORS = {
   background: '#14131a',
   // Level 1 — Waldlichtung
@@ -980,7 +1200,8 @@ export const COLORS = {
   enemyHit: '#f0e6d8',
 
   gold: '#d9b04a',
-  goldDark: '#8a6c22',
+  goldD
+ark: '#8a6c22',
   blood: '#8c2f2f',
 
   hpFill: '#a33c3c',
@@ -1022,112 +1243,6 @@ export const COLORS = {
  * Level-Reihenfolge (Abschnitt 7).
  * Alle Level sind gebaut; `built: false` wuerde eines im Shop sperren.
  */
-
-export const UI = {
-  enemyHpBar: { width: 30, height: 4, offsetY: 10, hideWhenFull: true },
-  hud: {
-    margin: 14,
-    hpBar: { width: 220, height: 18 },
-    staminaBar: { width: 220, height: 8 },
-    /** Ausdauerleiste ausblenden, wenn sie voll ist? */
-    hideStaminaWhenFull: false,
-    /**
-     * XP-Leiste am unteren Bildschirmrand (Erweiterung, Abschnitt 1).
-     * Sie ist dauerhaft sichtbar, daneben steht die aktuelle Stufe.
-     */
-    xpBar: { width: 420, height: 9, bottomMargin: 12 },
-    font: '14px "Segoe UI", system-ui, sans-serif',
-    fontSmall: '11px "Segoe UI", system-ui, sans-serif',
-  },
-  /** Aufsteigende Schadenszahlen. */
-  damageNumbers: { rise: 26, duration: 0.7 },
-  /** Menue-Bildschirme (Tod, spaeter Shop und Pause). */
-  menu: {
-    buttonWidth: 380,
-    buttonHeight: 56,
-    gap: 12,
-    panelPadding: 26,
-    font: '16px "Segoe UI", system-ui, sans-serif',
-    titleFont: '42px "Segoe UI", system-ui, sans-serif',
-  },
-};
-
-/**
- * Farbpalette — duester-mittelalterlich (Abschnitt 8).
- * Solange keine Sprites geladen sind, zeichnet gfx.js farbige Rechtecke in diesen Farben.
- */
-
-export const LOOT = {
-  /** Ab dieser Distanz wird die Muenze eingesammelt (Abschnitt 6: ca. 40 px). */
-  pickupRadius: 40,
-  /** Ab hier fliegt die Muenze dem Spieler entgegen. */
-  magnetRadius: 78,
-  magnetSpeed: 260,
-  /** Anfangsschwung beim Drop. */
-  scatterSpeed: 70,
-  friction: 6,
-  
-/** Muenze ist erst nach dieser Zeit einsammelbar. */
-  armTime: 0.15,
-  bobAmplitude: 2.5,
-  bobSpeed: 5,
-  sprite: { w: 10, h: 10 },
-};
-
-/**
- * Tod & Wiederbelebung (Abschnitt 9).
- *
- * Kosten: 50 G beim ersten Tod pro Level, danach je 25 G mehr
- * (50 -> 75 -> 100 -> 125 …). Der Zaehler wird zurueckgesetzt, sobald das
- * Level abgeschlossen ist.
- */
-
-export const DEATH = {
-  reviveBaseCost: 50,
-  /** Aufschlag pro weiterem Tod im selben Level. */
-  reviveCostIncrement: 25,
-  /** Gnadenfrist nach dem Aufstehen, damit man nicht sofort wieder stirbt. */
-  reviveInvulnTime: 1.6,
-  /** Kurze Sperre, bevor der Todesbildschirm Eingaben annimmt (Fehlklicks). */
-  screenInputDelay: 0.35,
-  /** Wie lange der Bildschirm einblendet. */
-  fadeInTime: 0.5,
-};
-
-/**
- * Ton (Abschnitt 8). Alle Lautstaerken 0…1.
- * Stummschalten im Spiel mit M.
- */
-
-export const AUDIO = {
-  enabled: true,
-  masterVolume: 0.7,
-  sfxVolume: 0.8,
-  /** Zufaellige Tonhoehen-Streuung, damit Wiederholungen nicht mechanisch klingen. */
-  pitchSpread: 0.08,
-  /** Mindestabstand zwischen zwei gleichen Toenen in Sekunden. */
-  retriggerDelay: 0.04,
-};
-
-/**
- * Sprites (Abschnitt 8): alle Assets sind 32x32.
- * Solange kein Bild geladen ist, zeichnet gfx.js Platzhalter in der Groesse
- * `sprite.w` x `sprite.h`. Mit Bild wird quadratisch in `spriteScale * 32`
- * gezeichnet — so passen Kenney-Kacheln ohne Verzerrung.
- */
-
-export const SAVE = {
-  enabled: true,
-  /** Schluessel im localStorage. Aendern = alte Staende werden ignoriert. */
-  key: 'lootAndBlade.save.v1',
-  /** Hochzaehlen, wenn sich das Format aendert — alte Staende werden dann verworfen. */
-  version: 1,
-  /** Wie lange "Gespeichert" eingeblendet wird. */
-  noticeTime: 1.2,
-};
-
-/** Welches Level beim Start geladen wird. */
-
 export const LEVELS = [
   {
     name: 'Waldlichtung',
@@ -1164,7 +1279,6 @@ export const LEVELS = [
 ;
 
 /** Level-Ausgang (Abschnitt 7). */
-
 export const LEVEL = {
   /** Abstand zur Ausgangsmitte, in dem E funktioniert. */
   exitRadius: 44,
@@ -1180,101 +1294,15 @@ export const LEVEL = {
  * Gespeichert wird automatisch nach jedem abgeschlossenen Level und nach
  * jedem Shop-Kauf.
  */
-
-export const QUESTS = [
-  { id: 1, text: 'Besiege 10 Slimes', counter: 'kills:slime', target: 10,
-    reward: { gold: 50, xp: 50 } },
-  { id: 2, text: 'Schaffe die Waldlichtung', counter: 'level:0', target: 1,
-    reward: { gold: 75, xp: 100 } },
-  { id: 3, text: 'Sammle 200 Gold', counter: 'stat:goldEarned', target: 200,
-    reward: { gold: 100 } },
-  { id: 4, text: 'Besiege 20 Goblins', counter: 'kills:goblin', target: 20,
-    reward: { gold: 120, xp: 150 } },
-  { id: 5, text: 'Schaffe ein Level ohne zu sterben', counter: 'stat:cleanRuns', target: 1,
-    reward: { gold: 150, xp: 200 } },
-  { id: 6, text: 'Erreiche Stufe 5', counter: 'heroLevel', target: 5,
-    reward: { gold: 200, potions: 1 } },
-  { id: 7, text: 'Besiege 10 Gegner mit dem Bogen', counter: 'weapon:bow', target: 10,
-    reward: { gold: 150, xp: 150 } },
-  { id: 8, text: 'Blocke 15 Angriffe', counter: 'stat:blocks', target: 15,
-    reward: { gold: 100, xp: 100 } },
-  { id: 9, text: 'Schaffe ein Level auf Schwer', counter: 'difficulty:hard', target: 1,
-    reward: { gold: 250, xp: 300 } },
-  { id: 10, text: 'Besiege den Ork-Haeuptling', counter: 'kills:orcChieftain', target: 1,
-    reward: { gold: 500, xp: 500 } },
-  {
-    id: 11,
-    text: 'Schaffe alle Level auf Alptraum, jedes ohne zu sterben',
-    // Kurzform fuer die Fortschrittszeile: "Alptraum ohne Tod  3/5".
-    shortText: 'Alptraum ohne Tod',
-    counter: 'nightmareNoDeath',
-    target: 5,
-    reward: { gold: 1000, xp: 2000, skillPoints: 5 },
-  },
-];
-
-/** Wie viele Quests gleichzeitig aktiv sind (Abschnitt 3). */
-
-export const QUEST_SLOTS = 3;
-
-/**
- * Schwierigkeitsstufen bei Level-Wiederholung (Erweiterung, Abschnitt 4).
- *
- * Erhoeht werden ausschliesslich HP, Schaden und — nur auf Alptraum — das
- * Bewegungstempo der Gegner. Die Ausholphase vor einem Angriff bleibt auf
- * ALLEN Stufen gleich lang: schneller reagieren zu muessen ist kein
- * Schwierigkeitsgrad, sondern fuehlt sich nur unfair an. Deshalb stehen
- * windupTime, strikeTime und recoverTime hier bewusst nicht drin.
- *
- * `stars` ist die Zahl gefuellter Sterne am Levelknoten der Route.
- */
-
-export const DIFFICULTIES = {
-  normal: {
-    name: 'Normal', short: 'N',
-    hp: 1.0, damage: 1.0, speed: 1.0, gold: 1.0, xp: 1.0,
-    stars: 1,
-    unlockNote: 'von Anfang an',
-  },
-  hard: {
-    name: 'Schwer', short: 'S',
-    hp: 1.5, damage: 1.3, speed: 1.0, gold: 1.8, xp: 1.8,
-    stars: 2,
-    unlockNote: 'Level auf Normal geschafft',
-  },
-  nightmare: {
-    name: 'Alptraum', short: 'A',
-    hp: 2.2, damage: 1.7, speed: 1.15, gold: 3.0, xp: 3.0,
-    stars: 3,
-    unlockNote: 'Level auf Schwer geschafft',
-  },
+export const SAVE = {
+  enabled: true,
+  /** Schluessel im localStorage. Aendern = alte Staende werden ignoriert. */
+  key: 'lootAndBlade.save.v1',
+  /** Hochzaehlen, wenn sich das Format aendert — alte Staende werden dann verworfen. */
+  version: 1,
+  /** Wie lange "Gespeichert" eingeblendet wird. */
+  noticeTime: 1.2,
 };
 
-/**
- * Reihenfolge der Stufen. Der Index ist zugleich der gespeicherte Wert
- * ("hoechste geschaffte Stufe"), -1 heisst "noch nie geschafft".
- */
-
-export const DIFFICULTY_ORDER = ['normal', 'hard', 'nightmare'];
-
-/** Gold-Muenzen, die Gegner fallen lassen. */
-
-export const SPRITES = {
-  /** Kantenlaenge einer Sprite-Quelldatei. */
-  size: 32,
-  /** Vergroesserung je Figur (1 = 32 px). */
-  scale: {
-    player: 1,
-    slime: 1,
-    goblin: 1,
-    archer: 1,
-    armoredOrc: 1.15,
-    orcChieftain: 1.75,
-    coin: 0.5,
-  },
-};
-
-/** HP-Balken ueber Gegnern und HUD-Layout. */
-
+/** Welches Level beim Start geladen wird. */
 export const START_LEVEL = LEVELS[0].url;
-
