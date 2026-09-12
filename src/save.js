@@ -34,7 +34,8 @@
  *   localStorage ein Stand, den das Hauptmenue nicht anbietet, die
  *   Sicherheitsabfrage von "Neues Spiel" aber trotzdem beklagen wuerde.
  *
- * Alles hier ist gegen Fehler abgesichert: localStorage kann im privaten Modus
+ * Alle
+s hier ist gegen Fehler abgesichert: localStorage kann im privaten Modus
  * werfen, und ein von Hand veraenderter Spielstand darf das Spiel nicht
  * zerlegen. Im Zweifel wird wie bei einem neuen Spiel gestartet.
  */
@@ -84,6 +85,7 @@ function readStats(data) {
 }
 
 /** Liest den Rohtext; gibt null zurueck, we
+
 nn nichts da oder nichts lesbar ist. */
 function readRaw() {
   try {
@@ -122,7 +124,8 @@ function loadProgress(src) {
   // die Felder nicht — dann greifen die Startwerte aus createProgress().
   p.armorTier = clamp(Math.floor(src.armorTier ?? 0), 0, ARMOR.tiers.length - 1);
   p.potionBeltTier = clamp(Math.floor(src.potionBeltTier ?? 0), 0, POTION_BELT.tiers.length - 1);
-  // Nur die drei bekannten Waffen uebernehmen: ein Spielstand darf keine
+  // Nur die drei bekannten Waffen ueberneh
+men: ein Spielstand darf keine
   // eigenen Schluessel in den Schmiede-Zaehler schmuggeln.
   p.smith = {};
   for (const id of WEAPON_ORDER) {
@@ -169,7 +172,8 @@ let questResetPending = false;
 
 /**
  * Den Quest-Hinweis abholen — danach ist er weg.
- * @returns {null | {text: string, reason: string}} Hinweis, oder null
+ * @returns {null | {text: string, reason: string}} Hinweis, oder nu
+ll
  */
 export function takeQuestResetNotice() {
   if (!questResetPending) return null;
@@ -233,7 +237,8 @@ export function loadGame() {
   // -1 = noch nie geschafft (Abschnitt 4).
   //
   // Zwei aeltere Formate werden mitgelesen: ein Stand mit `completed` (vor den
-  // Schwierigkeitsstufen) zaehlt als "auf Normal geschafft
+  // Schwierigkeitsstufen) zaehlt als "auf Normal geschaff
+t
 ", ein Stand ganz
   // ohne beides wird aus unlockedLevel zurueckgerechnet — wer Level 3 offen
   // hat, muss 1 und 2 geschafft haben.

@@ -119,6 +119,7 @@ export class Magier extends Enemy {
     let fill = this.baseColor;
     if (this.state =
 
+
 == 'windup' || this.state === 'strike') fill = COLORS.enemyWindup;
     if (this.hitFlash > 0) fill = COLORS.enemyHit;
 

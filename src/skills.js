@@ -121,5 +121,6 @@ export function perRankText(id) {
 export function earnedPoints(progress) {
   return progress.skillPo
 
+
 ints + spentPoints(progress);
 }

@@ -60,6 +60,7 @@ export class MainMenu {
       }));
       buttons.push(this.
 
+
 makeButton({
         label: 'Ja, alles loeschen',
         hint: this.summary ? `weg waere: ${this.summary}` : '',

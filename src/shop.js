@@ -55,6 +55,7 @@ export function nextSwordOffer(progress) {
 /** Nächste Schildstufe, oder null wenn schon die bes
 
 
+
 te. */
 export function nextShieldOffer(progress) {
   const tier = progress.shieldTier + 1;
@@ -169,7 +170,8 @@ export function nextArmorOffer(progress) {
     current,
     name: next.name,
     detail: tier > 0
-      ? `+${now.defense} → +${next.defense} Verteidigung`
+      ? `+${now.defense} → +${next
+.defense} Verteidigung`
       : `+${next.defense} Verteidigung — wirkt immer, auch ohne Schild`,
     price: next.price,
     sold: false,
@@ -230,6 +232,7 @@ export function smithOffer(progress) {
  * Skill-Reset (Abschnitt 4): alle vergebenen Punkte zurueck in den Pool.
  * Ohne vergebene Punkte gibt es nichts zurueckzusetzen.
  */
+
 
 export function respecOffer(progress) {
   const spent = spentPoints(progress);
@@ -296,6 +299,7 @@ export function buy(id, progress, wallet) {
     case 'spear':
       progress.spearTier += 1;
  
+
   
   
  break;

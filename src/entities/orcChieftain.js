@@ -54,6 +54,7 @@ export class OrcChieftain extends Enemy {
   /** Doppelschlag: nur in Phase 3 nach abg
 
 
+
 eschlossenem Bruellen. */
   get wutmodusActive() {
     return this.phase === 3 && this.wutIntroDone;
@@ -112,7 +113,8 @@ eschlossenem Bruellen. */
       if (d <= this.def.attackRange + player.hw) {
         this.setState('windup');
         this.struck = false;
-      
+     
+ 
  
  
 this.hitsInCombo = 0;
@@ -294,7 +296,8 @@ this.hitsInCombo = 0;
     if (this.state === 'windup' || this.state === 'doppelschlagWindup') this.drawTelegraph(ctx);
     if (this.state === 'chargeWindup') this.drawChargeTelegraph(ctx);
     if (this.state === 'kriegsrufWindup') this.drawKriegsrufTelegraph(ctx);
-    if (this.state === 
+    if (this.state ===
+ 
 'wutIntro') this.drawWutIntro(ctx);
 
     this.drawBody(ctx);

@@ -61,6 +61,7 @@ const DASHBOARD_CSS = `
     border: 
 
 
+
 2px solid #3a3640;
     border-radius: 8px;
     background: #1a1820;
@@ -149,7 +150,8 @@ const DASHBOARD_CSS = `
     z-index: 1000;
     background: #14131a;
     border: 2px solid #3a3640;
-    border-radius: 12px
+    border-radius: 1
+2px
 ;
     box-shadow: 0 0 60px #000a;
     max-width: 700px;
@@ -346,7 +348,8 @@ export class Dashboard {
         <span class="portrait-sp" data-role="portrait-sp">0 SP</span>
       </div>
     `;
-    // Die Portrait-Referenzen auf das kompakte E
+    // Die Portrait-Referenzen auf das kompak
+te E
 lement umleiten.this.portrait.level = portraitCompact.querySelector('[data-role="portrait-level"]');
     this.portrait.xpFill = portraitCompact.querySelector('[data-role="portrait-xp-fill"]');
     this.portrait.gold = portraitCompact.querySelector('[data-role="portrait-gold"]');
@@ -385,6 +388,7 @@ lement umleiten.this.portrait.level = portraitCompact.querySelector('[data-role=
 
     // Die Route-Kachel (tile-route) in den Ausklappbereich verschieben.
     const routeTile = document.getElementById(
+
 'tile-route');
     if (routeTile) {
       routeTile.style.display = '';
@@ -501,7 +505,8 @@ lement umleiten.this.portrait.level = portraitCompact.querySelector('[data-role=
     const gespeichert = game.save();
     this.setMessage(
       'Ton ' + (muted ? 'aus' : 'an') + ' (nur fuer diese Sitzung)' +
-      (gespeichert ? '
+      (gespeichert ? 
+'
  · 
 Spielstand gespeichert' : '')
     );
@@ -566,7 +571,8 @@ Spielstand gespeichert' : '')
     // Kompaktes Portrait.
     if (this.portrait.level) {
       this.set('portraitLevel', this.portrait.level, 'textContent
-', 'Stufe 
+', 
+'Stufe 
 ' + level);
     }
     if (this.portrait.xpFill) {

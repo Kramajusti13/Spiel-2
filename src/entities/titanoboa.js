@@ -103,6 +103,7 @@ export class Titanoboa extends Enemy {
 
 
 
+
 : 2;
   }
 
@@ -288,7 +289,8 @@ utet!',
     const s = this.state;
     return s === 'tailWindup' || s === 'tailStrike'
       || s === 'biteWindup' || s === 'biteStrike'
-      || s === 'spitWindup' ||
+      || s === 'spitWindup' 
+||
  s
  === 'spitStrike';
   }
@@ -481,6 +483,7 @@ this.targetX : this.x;
     if (this.state === 'spitWindup') this.drawSpitTelegraph(ctx);
     super.draw(ctx);
   }
+
 
   
 drawBody(ctx) {

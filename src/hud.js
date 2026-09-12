@@ -47,7 +47,8 @@ export function drawHud(ctx, game) {
     y += st.height + 6;
   }
 
-  // --- Ausruestung: die zwei mitgenommenen Waffen auf Taste 1 und 2 ---
+  // --- Ausru
+estung: die zwei mitgenommenen Waffen auf Taste 1 und 2 ---
   // Welche das sind, entscheidet die Ausruestungswahl auf dem Dashboard
   // (Erweiterung 2, Abschnitt 4). Die dritte liegt zu Hause und steht
   // deshalb auch nicht im HUD.
@@ -103,6 +104,7 @@ export function drawHud(ctx, game) {
   const pop = Math.max(0, game.goldPop);
   drawText(ctx, String(game.gold), gx - 52, m + 2,
     pop > 0 ? '#f4d67a' : COLORS.gold
+
 ,
     pop > 0 ? '16px "Segoe UI", system-ui, sans-serif' : UI.hud.font);
 
@@ -158,8 +160,8 @@ function drawXpBar(ctx, game) {
   drawBar(ctx, x, y, w, cfg.height, game.xpBarRatio,
     flash ? COLORS.xpFillBright : COLORS.xpFill, COLORS.xpBack, COLORS.hpBorder);
 
-  // Stufe links ne
-ben der Leiste — die Zahl, die den Fortschritt traegt.drawText(ctx, `Stufe ${game.xpBarLevel}`, x - 10, y + cfg.height / 2,
+  // Stufe links n
+eben der Leiste — die Zahl, die den Fortschritt traegt.drawText(ctx, `Stufe ${game.xpBarLevel}`, x - 10, y + cfg.height / 2,
     flash ? COLORS.xpFillBright : COLORS.text, UI.hud.fontSmall, 'right', 'middle');
 
   // Rechts der Rohwert, damit man das Ziel sieht statt nur einen Balken.
@@ -255,6 +257,7 @@ function drawDebugPanel(ctx, game) {
     `Level ${game.level.name} (${game.level.width}x${game.level.height}) — ${game.difficulty}`,
     `Ausgang ${game.levelCleared ? 'offen' : 'zu'}${game.playerAtExit() ? ' — in Reichweite' : ''}`,
     // Quest-Zaehler (Schritt 7) — bis die Quest-Kachel sie z
+
 eigt (Schritt 8).
     `Kills ${statLine(game.stats.killsByType)}`,
     `Waffe ${statLine(game.stats.killsByWeapon)}  Blocks ${game.stats.blocks}`,

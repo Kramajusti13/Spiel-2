@@ -54,6 +54,7 @@ export class Archer extends Enemy {
       }
       return;   // beim Zielen steht er still, das macht ihn angreifbar
   
+
   }
 
     if (this.state === 'strike') {
@@ -109,8 +110,8 @@ export class Archer extends Enemy {
     }
 
     const hit = game.level.moveEntity(this, vx * dt, vy * dt);
-    // An einer Wand die Ausweichrichtungwec
-hseln, statt dagegen zu schieben.if (hit.hitX || hit.hitY) this.strafeDir = -this.strafeDir;
+    // An einer Wand die Ausweichrichtun
+gwechseln, statt dagegen zu schieben.if (hit.hitX || hit.hitY) this.strafeDir = -this.strafeDir;
   }
 
   shoot(game) {
@@ -165,7 +166,8 @@ hseln, statt dagegen zu schieben.if (hit.hitX || hit.hitY) this.strafeDir = -thi
     const pull = this.state === 'windup' ? 3 * this.windupProgress : 0;
     ctx.translate(Math.round(this.x), Math.round(cy));
     ctx.rotate(this.facing);
-    ctx.strokeStyle = COLORS.archerAccent;
+    ctx.strokeStyle = COLORS.archer
+Accent;
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(6, 0, 9, -1.2, 1.2);

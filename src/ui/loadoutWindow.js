@@ -109,6 +109,7 @@ export class LoadoutWindow {
       note.class
 
 
+
 Name = 'weapon-note';
       main.append(nameRow, stats, note);
 
@@ -166,7 +167,8 @@ Name = 'weapon-note';
 
     const dabei = loadout(progress);
     this.set('count', this.el.count,
-      `${dabei.length} von ${LOADOUT.slots} Plaetzen belegt`);
+      `${dabei.length} von ${LOA
+DOUT.slots} Plaetzen belegt`);
     this.el.count.classList.toggle('is-full', dabei.length >= LOADOUT.slots);
 
     for (const info of allWeaponInfos(progress)) {

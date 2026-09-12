@@ -111,6 +111,7 @@ export class Drache extends Enemy {
 
     // --- Bewegung: direkt zum Spieler fliegen, keine Wand-Kollision ---
     // Abstand halten: nicht auf den Spi
+
 eler drauf fliegen.const wantDist = 150;
     if (d > wantDist + 20) {
       const speed = this.def.speed * dt;
@@ -221,7 +222,8 @@ eler drauf fliegen.const wantDist = 150;
     const ey = Math.sin(this.facing) * 3;
     ctx.fillStyle = '#1a0a0a';
     ctx.fillRect(Math.round(this.x - 8 + ex), Math.round(cy - 6 + ey),
- 5, 4);
+ 5,
+ 4);
     ctx.fillRect(Math.round(this.x + 3 + ex), Math.round(cy - 6 + ey), 5, 4);
     ctx.restore();
   }

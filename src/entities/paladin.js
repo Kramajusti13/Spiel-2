@@ -121,6 +121,7 @@ export class Paladin extends Enemy {
    
 
 
+
  }
 
     if (this.state === 'charging') {
@@ -243,7 +244,8 @@ export class Paladin extends Enemy {
     ctx.strokeStyle = 'rgba(0,0,0,0.5)';
     ctx.lineWidth = 2;
     ctx.strokeRect(Math.round(this.x - w / 2) + 1, Math.round(cy - h / 2 + 1),
-      Math.round(w) - 2, Math.round(h) - 2);
+      M
+ath.round(w) - 2, Math.round(h) - 2);
     // Hammer beim Ausholen.
     if (this.state === 'windup') {
       const lift = 4 + 8 * this.windupProgress;
