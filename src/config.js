@@ -65,6 +65,7 @@ export const PLAYER = {
  *   'scale' Schaden = Waffenschaden * (1 + Angriffskraft/100)   (10 * 1,1 = 11)
  *
  * Mit 'add' toetet der erste H
+
 ieb einen Slime (20 HP) sofort — Level 1 ist dann
  * reines Tutorial. Mit 'scale' braucht ein Slime zwei Hiebe, die Ausholphase der
  * Gegner kommt oefter zum Tragen und das Spiel wird spuerbar fordernder.
@@ -114,6 +115,7 @@ export const SHIELD = {
    * Obergrenze der GESAMTEN Schadensreduktion beim Blocken, Schild und Skill
    * "Blockmeister" zusammengerechnet (Erweiterung 2, Abschnitt 5: Deckel bei
    * 90 %). Vorher 0,95 — mit Max-Stufe 15 braeuchte der Blockmeister allein
+
  
   * schon 150 %, deshalb ist diese Zeile jetzt eine harte Grenze und keine
    * Vorsichtsmassnahme mehr.
@@ -164,7 +166,8 @@ export const ARMOR = {
  * Trankguertel — wie viele Heiltraenke gleichzeitig ins Gepaeck passen
  * (Erweiterung 2, Abschnitt 7).
  *
- * D
+ *
+ D
 er Startwert 3 ist der bisherige CONSUMABLES.potion.maxCarried; ab hier
  * ist die Obergrenze eine Kaufsache und steht deshalb hier statt dort.
  */
@@ -265,7 +268,8 @@ export const SPEAR = {
    * aber nur, was direkt vor einem steht.
    */
   arc: 40,
-  /** Rueckstoss auf getroffene Gegner — schwerer als da
+  /** Rueckstoss auf getroffene Gegner — schwerer als
+ da
 s Schwert. */
   knockback: 210,
 
@@ -320,7 +324,8 @@ export const POISON = {
   /** Wie lange die Wolke ein- und ausblendet (Teil von cloudLife). */
   cloudFadeIn: 0.25,
   cloudFadeOut: 0.6,
-  /** "We
+  /**
+ "We
 r sie beruehrt, ist 2 s vergiftet: 8 Schaden pro Sekunde". */
   duration: 2.0,
   damagePerSecond: 8,
@@ -373,7 +378,8 @@ export const LOADOUT = {
    * Ab wie vielen besessenen Waffen das Fenster ueberhaupt erscheint. Mit nur
    * einer Waffe gaebe es nichts zu waehlen — dann waere der Knopf eine
    * Enttaeuschung (Abschnitt 4: "erscheint erst, sobald der Spieler
-   * mindestens zwei Waf
+   * mindestens zwe
+i Waf
 fen besitzt").
    */
   minWeapons: 2,
@@ -433,7 +439,8 @@ export const XP = {
    */
   growth: 1.25,
   /**
-   * Das Dokument nennt keine
+   * Das Dokument nennt
+ keine
  Obergrenze. Diese hier verhindert nur, dass die
    * Zahlen bei extremem Farmen ins Absurde laufen; erreichbar ist sie kaum.
    */
@@ -481,7 +488,8 @@ export const SKILLS = {
    *   Geschwindigkeit  15 x 8 %  = +120 % Tempo. Der Spieler rennt schneller,
    *                    als die Kamera folgen kann, und laeuft an Gegnern
    *                    vorbei, bevor deren Ausholphase ueberhaupt anlaeuft.
-   *   Blockmeister     15 x 10 % = 150 % Schadensreduktion. Ueber 
+   *   Blockmeister     15 x 10 % = 150 % Schadensreduktion.
+ Ueber 
 100 % waere
    *                    ein geblockter Treffer eine Heilung.
    *
@@ -531,7 +539,8 @@ export const AI = {
     shieldSidestepDeg: 80,
     /**
      * Alptraum-Verhalten (punishDodge, VERBESSERUNGEN_1 Abschnitt 5):
-     * Ausweichrolle abwarten und 0,3 s nach dem Roll
+     * Ausweichrolle abwarten und 0,3 s nach 
+dem Roll
 en-Ende zuschlagen —
      * genau der Moment, in dem der Spieler noch nicht wieder blocken kann.
      */
@@ -581,7 +590,8 @@ export const ENEMIES = {
     /**
      * Angriffsreichweite (VERBESSERUNGEN_1 Abschnitt 2: 352 px = 11 Kacheln).
      * Wahrnehmung = 1,3 x Angriffsreichweite ~ 458 px; darunter beginnt er zu
-     * zielen, darueber nicht. loseAggroRadius bleibt darueber, damit er nicht
+     * zielen, darueber nicht. loseAggroRadius bleibt darueber, damit
+ er nicht
 
      * am Rand oszilliert.
      */
@@ -625,7 +635,8 @@ export const ENEMIES = {
    *      und wirft weiter.
    *
    * Werte gelten fuer Normal; die Schwierigkeitsstufen multiplizieren wie
-   * gehabt (100 HP, 30 Sch
+   * gehabt (100 
+HP, 30 Sch
 aden, 55 XP, 60–80 Gold).
    */
   gorilla: {
@@ -670,7 +681,8 @@ aden, 55 XP, 60–80 Gold).
    * Punktes — ausweichen heisst hier weglaufen, nicht danebenstehen. Damit das
    * fair bleibt, liegt waehrend des ganzen Fluges ein Zielkreis auf dem Boden:
    * er zeigt genau den Fleck, der gleich Schaden nimmt. Der Kreis ist die
-   * Ausholphase, und mit 1,2 s ist sie die laengste im Spiel — d
+   * Ausholphase, und mit 1,2 s ist sie die laengste i
+m Spiel — d
 ie Flaeche ist
    * gross, also braucht man Zeit, sie zu verlassen.
    *
@@ -719,7 +731,8 @@ ie Flaeche ist
    * deshalb funktioniert er in Gruppen.
    *
    * Der Unterschied zu allen bisherigen Gegnern: seine Wolke bleibt liegen,
-   * nachdem er sel
+   * na
+chdem er sel
 bst schon weitergelaufen (oder tot) ist. Der Angriff endet
    * nicht mit dem Angreifer.
    */
@@ -765,7 +778,8 @@ bst schon weitergelaufen (oder tot) ist. Der Angriff endet
     aggroRadius: 340, loseAggroRadius: 620,
     /** "Taucht 3 s im Boden ab." */
     submergeTime: 3.0,
-    /** "0,5 s Ausholphase (Schatten haelt an und wird groesser)". *
+    /** "0,5 s Ausholphase (Schatten haelt an und wird 
+groesser)". *
 /
     windupTime: 0.5, strikeTime: 0.12,
     /** "Bleibt 4 s an der Oberflaeche. Nur in diesem Fenster kann es Schaden nehmen." */
@@ -816,7 +830,8 @@ bst schon weitergelaufen (oder tot) ist. Der Angriff endet
      * Nahkampf (2x 35 Schaden). Kein Kriegsruf mehr.
      */
     wutmodus: {
-      introTime: 1.0,
+      introTi
+me: 1.0,
      
  speedFactor: 1.3,
       /** Kuerzeres Ausholen fuer den Folgeschlag im Doppelschlag. */
@@ -834,13 +849,312 @@ bst schon weitergelaufen (oder tot) ist. Der Angriff endet
    *   Ein Schatten wandert sichtbar ueber den Boden auf den Spieler zu. 1,5 s
    *   bevor sie hochschiesst, bleibt der Schatten stehen und pulsiert. Wer
    *   dann noch darauf steht, wird verschlungen: 100 Schaden. Danach bleibt
-   *   sie 3 s ueber der Erde und ist angreifbar.
+   *   sie 3 s ueber der Erde und ist r.
    *
-   * PH
+   * PHASE 2 (50 % - 0 % HP): haeutet sich, wird groesser und schneller.
+   *   Beisst zu und schlaegt mit dem Schwanz, spuckt Gift.
+   */
+  titanoboa: {
+    name: 'Titanoboa', maxHp: 500, damage: 30, defense: 5, speed: 60,
+    aggroRadius: 600, loseAggroRadius: 9999,
+    windupTime: 0.6, strikeTime: 0.2, recoverTime: 1.0,
+    hitbox: { w: 40, h: 40 }, sprite: { w: 44, h: 46, offsetY: -4 },
+    knockbackResist: 0.9, gold: { min: 300, max: 300 }, xp: 500,
+    isBoss: true,
+    phaseThresholds: [0.5],
+    phase2SizeFactor: 1.3, phase2DamageBonus: 15, phase2SpeedFactor: 1.4,
+    attackPauseP1: 2.0, attackPauseP2: 1.2,
+    sheddingTime: 1.5,
+    submergedSpeed: 40, swallowRadius: 50, stalkTime: 3, swallowDamage: 100,
+    lungeWarning: 1.5, shadowRadius: 30,
+    bite: { windupTime: 0.8, strikeTime: 0.2, recoverTime: 1.5, damage: 40 },
+    tailSweep: { windupTime: 0.6, radius: 80, damage: 25, cooldown: 5.0 },
+    spit: { speed: 300, damage: 20, cooldown: 3.0 },
+  },
 
-... [Content truncated]
+  /**
+   * Engel (Himmelsthema, Level 16-20) — Fernkaempfer.
+   * Laesst einen Heiligenschein ueber dem Spieler erscheinen, der explodiert.
+   */
+  angel: {
+    name: 'Engel', maxHp: 1500, damage: 180, defense: 10, speed: 80,
+    aggroRadius: 400, loseAggroRadius: 600,
+    windupTime: 0.5, strikeTime: 0.1, recoverTime: 0.5,
+    range: 350, projectileSpeed: 250, attackCooldown: 2.0,
+    hitbox: { w: 24, h: 28 }, sprite: { w: 26, h: 30, offsetY: -2 },
+    knockbackResist: 0.3, gold: { min: 800, max: 1000 }, xp: 3000,
+  },
+
+  /**
+   * Seraphim (Himmelsthema) — Fernkaempfer.
+   * Schiesst einen grossen Lichtstrahl auf den Spieler.
+   */
+  seraphim: {
+    name: 'Seraphim', maxHp: 2000, damage: 200, defense: 15, speed: 90,
+    aggroRadius: 450, loseAggroRadius: 700,
+    windupTime: 0.6, strikeTime: 0.15, recoverTime: 0.6,
+    range: 400, projectileSpeed: 300, attackCooldown: 2.5,
+    hitbox: { w: 24, h: 28 }, sprite: { w: 26, h: 30, offsetY: -2 },
+    knockbackResist: 0.4, gold: { min: 1100, max: 1300 }, xp: 3500,
+  },
+
+  /**
+   * Cherubim (Himmelsthema) — Nahkaempfer.
+   * Sprintet auf den Spieler zu und versucht ihn zu beissen, kann dashen.
+   */
+  cherubim: {
+    name: 'Cherubim', maxHp: 2500, damage: 220, defense: 20, speed: 100,
+    aggroRadius: 500, loseAggroRadius: 800,
+    attackRange: 40, strikeRadius: 50,
+    windupTime: 0.5, strikeTime: 0.15, recoverTime: 0.8,
+    dashWindupTime: 0.4, dashDuration: 0.3, dashSpeed: 400,
+    dashRange: 300, dashHitRadius: 30, dashCooldown: 4.0,
+    hitbox: { w: 28, h: 30 }, sprite: { w: 30, h: 32, offsetY: -2 },
+    knockbackResist: 0.5, gold: { min: 1400, max: 1600 }, xp: 4000,
+  },
+
+  /**
+   * Erzengel (Himmelsthema) — Nahkaempfer.
+   * Schlaegt drei mal zu, teleportiert sich 150 px, heilt sich,
+   * und teleportiert sich hinter den Spieler.
+   */
+  archangel: {
+    name: 'Erzengel', maxHp: 3000, damage: 250, defense: 25, speed: 110,
+    aggroRadius: 500, loseAggroRadius: 9999,
+    attackRange: 45, strikeRadius: 55,
+    windupTime: 0.45, strikeTime: 0.15, recoverTime: 0.7,
+    teleportWindupTime: 0.3, teleportCooldown: 5.0,
+    healCooldown: 8.0, healAmount: 500,
+    hitbox: { w: 28, h: 32 }, sprite: { w: 30, h: 34, offsetY: -2 },
+    knockbackResist: 0.6, gold: { min: 1700, max: 1900 }, xp: 4500,
+  },
+
+  /**
+   * Erzengel Michael (Himmelsthema Boss, Level 20).
+   * Wirft sein Schwert, teleportiert sich zum Schwert um es aufzuheben
+   * und verursacht beim Aufheben Flaechenschaden.
+   */
+  michael: {
+    name: 'Erzengel Michael', maxHp: 7000, damage: 300, defense: 30, speed: 80,
+    aggroRadius: 800, loseAggroRadius: 9999,
+    attackRange: 50, strikeRadius: 60,
+    windupTime: 0.5, strikeTime: 0.2, recoverTime: 1.0,
+    range: 500, minRange: 150,
+    swordWindupTime: 0.6, swordSpeed: 600, swordDamage: 300,
+    swordRange: 500, swordReturnSpeed: 400, swordCooldown: 5.0,
+    teleportTime: 0.3, pickupTime: 0.5,
+    shockwaveRadius: 150, shockwaveDamage: 100, shockwaveDuration: 0.5,
+    hitbox: { w: 36, h: 40 }, sprite: { w: 40, h: 44, offsetY: -4 },
+    knockbackResist: 0.9, gold: { min: 3000, max: 3000 }, xp: 10000,
+    isBoss: true,
+  },
+};
 
 
+/**
+ * Questliste (Erweiterung, Abschnitt 3).
+ *
+ * Absichtlich reine Daten: es gibt keinen Code pro Quest. Jeder Eintrag nennt
+ * nur einen Zaehler und einen Zielwert — neue Quests brauchen deshalb nichts
+ * als eine weitere Zeile hier, kein Programmieren.
+ *
+ * `
+counter` verweist auf die Zaehler aus stats.js (Schritt 7):
+ *   kills:<typ>          Kills nach Monstertyp        z. B. kills:goblin
+ *   weapon:<waffe>       Kills nach benutzter Waffe   z. B. weapon:bow
+ *   level:<index>        wie oft dieses Level geschafft (0 = Waldlichtung)
+ *   difficulty:<stufe>   Level-Abschluesse auf dieser Stufe oder hoeher
+ *   stat:<feld>          jedes Zahlenfeld aus stats.js
+ *   heroLevel            die Stufe des Helden
+ *   nightmareNoDeath     Level, die auf Alptraum ohne Tod geschafft sind
+ *
+ * `reward` kennt gold, xp, potions und skillPoints. Skillpunkte vergibt
+ * ausschliesslich Quest 11 — sie ist die Kroenung des Spiels (Abschnitt 1).
+ *
+ * Die Reihenfolge ist die Nachrueck-Reihenfolge: es sind immer die ersten drei
+ * noch nicht abgeholten Quests aktiv.
+ */
+export const QUESTS = [
+  { id: 1, text: 'Besiege 10 Slimes', counter: 'kills:slime', target: 10,
+    reward: { gold: 50, xp: 50 } },
+  { id: 2, text: 'Schaffe die Waldlichtung', counter: 'level:0', target: 1,
+    reward: { gold: 75, xp: 100 } },
+  { id: 3, text: 'Sammle 200 Gold', counter: 'stat:goldEarned', target: 200,
+    reward: { gold: 100 } },
+  { id: 4, text: 'Besiege 20 Goblins', counter: 'kills:goblin', target: 20,
+    reward: { gold: 120, xp: 150 } },
+  { id: 5, text: 'Schaffe ein Level ohne zu sterben', counter: 'stat:cleanRuns', target: 1,
+    reward: { gold: 150, xp: 200 } },
+  { id: 6, text: 'Erreiche Stufe 5', counter: 'heroLevel', target: 5,
+    reward: { gold: 200, potions: 1 } },
+  { id: 7, text: 'Besiege 10 Gegner mit dem Bogen', counter: 'weapon:bow', target: 10,
+    reward: { gold: 150, xp: 150 } },
+  { id: 8, text: 'Blocke 15 Angriffe', counter: 'stat:blocks', target: 15,
+    reward: { gold: 100, xp: 100 } },
+  { id: 9, text: 'Schaffe ein Level auf Schwer', counter: 'difficulty:hard', target: 1,
+    reward: { gold: 250, xp: 300 } },
+  { id: 10, text: 'Besiege den Ork-Haeuptling', counter: 'kills:orcChieftain', target: 1,
+    reward: { gold: 500, xp
+: 500 } },
+  {
+    id: 11,
+    text: 'Schaffe alle Level auf Alptraum, jedes ohne zu sterben',
+    // Kurzform fuer die Fortschrittszeile: "Alptraum ohne Tod  3/5".
+    shortText: 'Alptraum ohne Tod',
+    counter: 'nightmareNoDeath',
+    target: 5,
+    reward: { gold: 1000, xp: 2000, skillPoints: 5 },
+  },
+];
+
+/** Wie viele Quests gleichzeitig aktiv sind (Abschnitt 3). */
+export const QUEST_SLOTS = 3;
+
+/**
+ * Schwierigkeitsstufen bei Level-Wiederholung (Erweiterung, Abschnitt 4).
+ *
+ * Erhoeht werden ausschliesslich HP, Schaden und — nur auf Alptraum — das
+ * Bewegungstempo der Gegner. Die Ausholphase vor einem Angriff bleibt auf
+ * ALLEN Stufen gleich lang: schneller reagieren zu muessen ist kein
+ * Schwierigkeitsgrad, sondern fuehlt sich nur unfair an. Deshalb stehen
+ * windupTime, strikeTime und recoverTime hier bewusst nicht drin.
+ *
+ * `stars` ist die Zahl gefuellter Sterne am Levelknoten der Route.
+ */
+export const DIFFICULTIES = {
+  normal: {
+    name: 'Normal', short: 'N',
+    hp: 1.0, damage: 1.0, speed: 1.0, gold: 1.0, xp: 1.0,
+    stars: 1,
+    unlockNote: 'von Anfang an',
+  },
+  hard: {
+    name: 'Schwer', short: 'S',
+    hp: 1.5, damage: 1.3, speed: 1.0, gold: 1.8, xp: 1.8,
+    stars: 2,
+    unlockNote: 'Level auf Normal geschafft',
+  },
+  nightmare: {
+    name: 'Alptraum', short: 'A',
+    hp: 2.2, damage: 1.7, speed: 1.15, gold: 3.0, xp: 3.0,
+    stars: 3,
+    unlockNote: 'Level auf Schwer geschafft',
+  },
+};
+
+/**
+ * Reihenfolge der Stufen. Der Index ist zugleich der gespeicherte Wert
+ * ("hoechste geschaffte Stufe"), -1 heisst "noch nie geschafft".
+ */
+export const DIFFICULTY_ORDER = ['normal', 'hard', 'nightmare'];
+
+/** Gold-Muenzen, die Gegner fallen lassen. */
+export const LOOT = {
+  /** Ab dieser Distanz wird die Muenze eingesammelt (Abschnitt 6: ca. 40 px). */
+  pickupRadius: 40,
+  /** Ab hier fliegt die Muenze dem Spieler entgegen. */
+  magnetRadius: 78,
+  magnetSpeed: 260,
+  /** Anfangsschwung beim Drop. */
+  scatterSpeed: 70,
+  friction: 6,
+  
+/** Muenze ist erst nach dieser Zeit einsammelbar. */
+  armTime: 0.15,
+  bobAmplitude: 2.5,
+  bobSpeed: 5,
+  sprite: { w: 10, h: 10 },
+};
+
+/**
+ * Tod & Wiederbelebung (Abschnitt 9).
+ *
+ * Kosten: 50 G beim ersten Tod pro Level, danach je 25 G mehr
+ * (50 -> 75 -> 100 -> 125 …). Der Zaehler wird zurueckgesetzt, sobald das
+ * Level abgeschlossen ist.
+ */
+export const DEATH = {
+  reviveBaseCost: 50,
+  /** Aufschlag pro weiterem Tod im selben Level. */
+  reviveCostIncrement: 25,
+  /** Gnadenfrist nach dem Aufstehen, damit man nicht sofort wieder stirbt. */
+  reviveInvulnTime: 1.6,
+  /** Kurze Sperre, bevor der Todesbildschirm Eingaben annimmt (Fehlklicks). */
+  screenInputDelay: 0.35,
+  /** Wie lange der Bildschirm einblendet. */
+  fadeInTime: 0.5,
+};
+
+/**
+ * Ton (Abschnitt 8). Alle Lautstaerken 0…1.
+ * Stummschalten im Spiel mit M.
+ */
+export const AUDIO = {
+  enabled: true,
+  masterVolume: 0.7,
+  sfxVolume: 0.8,
+  /** Zufaellige Tonhoehen-Streuung, damit Wiederholungen nicht mechanisch klingen. */
+  pitchSpread: 0.08,
+  /** Mindestabstand zwischen zwei gleichen Toenen in Sekunden. */
+  retriggerDelay: 0.04,
+};
+
+/**
+ * Sprites (Abschnitt 8): alle Assets sind 32x32.
+ * Solange kein Bild geladen ist, zeichnet gfx.js Platzhalter in der Groesse
+ * `sprite.w` x `sprite.h`. Mit Bild wird quadratisch in `spriteScale * 32`
+ * gezeichnet — so passen Kenney-Kacheln ohne Verzerrung.
+ */
+export const SPRITES = {
+  /** Kantenlaenge einer Sprite-Quelldatei. */
+  size: 32,
+  /** Vergroesserung je Figur (1 = 32 px). */
+  scale: {
+    player: 1,
+    slime: 1,
+    goblin: 1,
+    archer: 1,
+    armoredOrc: 1.15,
+    orcChieftain: 1.75,
+    coin: 0.5,
+  },
+};
+
+/** HP-Balken ueber Gegnern und HUD-Layout. */
+export const UI = {
+  enemyHpBar: { width: 30, height: 4, offsetY: 10, hideWhenFull: true },
+  hud: {
+    margin: 14,
+    hpBar: { width: 220, height: 18 },
+    staminaBar: { width: 220, height: 8 },
+    /** Ausdauerleiste ausblenden, wenn sie voll ist? */
+    hideStaminaWhenFull: false
+,
+    /**
+     * XP-Leiste am unteren Bildschirmrand (Erweiterung, Abschnitt 1).
+     * Sie ist dauerhaft sichtbar, daneben steht die aktuelle Stufe.
+     */
+    xpBar: { width: 420, height: 9, bottomMargin: 12 },
+    font: '14px "Segoe UI", system-ui, sans-serif',
+    fontSmall: '11px "Segoe UI", system-ui, sans-serif',
+  },
+  /** Aufsteigende Schadenszahlen. */
+  damageNumbers: { rise: 26, duration: 0.7 },
+  /** Menue-Bildschirme (Tod, spaeter Shop und Pause). */
+  menu: {
+    buttonWidth: 380,
+    buttonHeight: 56,
+    gap: 12,
+    panelPadding: 26,
+    font: '16px "Segoe UI", system-ui, sans-serif',
+    titleFont: '42px "Segoe UI", system-ui, sans-serif',
+  },
+};
+
+/**
+ * Farbpalette — duester-mittelalterlich (Abschnitt 8).
+ * Solange keine Sprites geladen sind, zeichnet gfx.js farbige Rechtecke in diesen Farben.
+ */
 export const COLORS = {
   background: '#14131a',
   // Level 1 — Waldlichtung
@@ -894,7 +1208,8 @@ export const COLORS = {
   enemyHit: '#f0e6d8',
 
   gold: '#d9b04a',
-  goldDark: '#8a6c22',
+  goldD
+ark: '#8a6c22',
   blood: '#8c2f2f',
 
   hpFill: '#a33c3c',
@@ -932,84 +1247,10 @@ export const COLORS = {
   menuAccent: '#cbb87a',
 };
 
-export const UI = {
-  enemyHpBar: { width: 30, height: 4, offsetY: 10, hideWhenFull: true },
-  hud: {
-    margin: 14,
-    hpBar: { width: 220, height: 18 },
-    staminaBar: { width: 220, height: 8 },
-    /** Ausdauerleiste ausblenden, wenn sie voll ist? */
-    hideStaminaWhenFull: false,
-    /**
-     * XP-Leiste am unteren Bildschirmrand (Erweiterung, Abschnitt 1).
-     * Sie ist dauerhaft sichtbar, daneben steht die aktuelle Stufe.
-     */
-    xpBar: { width: 420, height: 9, bottomMargin: 12 },
-    font: '14px "Segoe UI", system-ui, sans-serif',
-    fontSmall: '11px "Segoe UI", system-ui, sans-serif',
-  },
-  /** Aufsteigende Schadenszahlen. */
-  damageNumbers: { rise: 26, duration: 0.7 },
-  /** Menue-Bildschirme (Tod, spaeter Shop und Pause). */
-  menu: {
-    buttonWidth: 380,
-    buttonHeight: 56,
-    gap: 12,
-    panelPadding: 26,
-    font: '16px "Segoe UI", system-ui, sans-serif',
-    titleFont: '42px "Segoe UI", system-ui, sans-serif',
-  },
-};
-
-export const LOOT = {
-  /** Ab dieser Distanz wird die Muenze eingesammelt (Abschnitt 6: ca. 40 px). */
-  pickupRadius: 40,
-  /** Ab hier fliegt die Muenze dem Spieler entgegen. */
-  magnetRadius: 78,
-  magnetSpeed: 260,
-  /** Anfangsschwung beim Drop. */
-  scatterSpeed: 70,
-  friction: 6,
-  
-/** Muenze ist erst nach dieser Zeit einsammelbar. */
-  armTime: 0.15,
-  bobAmplitude: 2.5,
-  bobSpeed: 5,
-  sprite: { w: 10, h: 10 },
-};
-
-export const DEATH = {
-  reviveBaseCost: 50,
-  /** Aufschlag pro weiterem Tod im selben Level. */
-  reviveCostIncrement: 25,
-  /** Gnadenfrist nach dem Aufstehen, damit man nicht sofort wieder stirbt. */
-  reviveInvulnTime: 1.6,
-  /** Kurze Sperre, bevor der Todesbildschirm Eingaben annimmt (Fehlklicks). */
-  screenInputDelay: 0.35,
-  /** Wie lange der Bildschirm einblendet. */
-  fadeInTime: 0.5,
-};
-
-export const AUDIO = {
-  enabled: true,
-  masterVolume: 0.7,
-  sfxVolume: 0.8,
-  /** Zufaellige Tonhoehen-Streuung, damit Wiederholungen nicht mechanisch klingen. */
-  pitchSpread: 0.08,
-  /** Mindestabstand zwischen zwei gleichen Toenen in Sekunden. */
-  retriggerDelay: 0.04,
-};
-
-export const SAVE = {
-  enabled: true,
-  /** Schluessel im localStorage. Aendern = alte Staende werden ignoriert. */
-  key: 'lootAndBlade.save.v1',
-  /** Hochzaehlen, wenn sich das Format aendert — alte Staende werden dann verworfen. */
-  version: 1,
-  /** Wie lange "Gespeichert" eingeblendet wird. */
-  noticeTime: 1.2,
-};
-
+/**
+ * Level-Reihenfolge (Abschnitt 7).
+ * Alle Level sind gebaut; `built: false` wuerde eines im Shop sperren.
+ */
 export const LEVELS = [
   {
     name: 'Waldlichtung',
@@ -1045,76 +1286,31 @@ export const LEVELS = [
 ]
 ;
 
-export const QUESTS = [
-  { id: 1, text: 'Besiege 10 Slimes', counter: 'kills:slime', target: 10,
-    reward: { gold: 50, xp: 50 } },
-  { id: 2, text: 'Schaffe die Waldlichtung', counter: 'level:0', target: 1,
-    reward: { gold: 75, xp: 100 } },
-  { id: 3, text: 'Sammle 200 Gold', counter: 'stat:goldEarned', target: 200,
-    reward: { gold: 100 } },
-  { id: 4, text: 'Besiege 20 Goblins', counter: 'kills:goblin', target: 20,
-    reward: { gold: 120, xp: 150 } },
-  { id: 5, text: 'Schaffe ein Level ohne zu sterben', counter: 'stat:cleanRuns', target: 1,
-    reward: { gold: 150, xp: 200 } },
-  { id: 6, text: 'Erreiche Stufe 5', counter: 'heroLevel', target: 5,
-    reward: { gold: 200, potions: 1 } },
-  { id: 7, text: 'Besiege 10 Gegner mit dem Bogen', counter: 'weapon:bow', target: 10,
-    reward: { gold: 150, xp: 150 } },
-  { id: 8, text: 'Blocke 15 Angriffe', counter: 'stat:blocks', target: 15,
-    reward: { gold: 100, xp: 100 } },
-  { id: 9, text: 'Schaffe ein Level auf Schwer', counter: 'difficulty:hard', target: 1,
-    reward: { gold: 250, xp: 300 } },
-  { id: 10, text: 'Besiege den Ork-Haeuptling', counter: 'kills:orcChieftain', target: 1,
-    reward: { gold: 500, xp: 500 } },
-  {
-    id: 11,
-    text: 'Schaffe alle Level auf Alptraum, jedes ohne zu sterben',
-    // Kurzform fuer die Fortschrittszeile: "Alptraum ohne Tod  3/5".
-    shortText: 'Alptraum ohne Tod',
-    counter: 'nightmareNoDeath',
-    target: 5,
-    reward: { gold: 1000, xp: 2000, skillPoints: 5 },
-  },
-];
-
-export const QUEST_SLOTS = 3;
-
-export const DIFFICULTIES = {
-  normal: {
-    name: 'Normal', short: 'N',
-    hp: 1.0, damage: 1.0, speed: 1.0, gold: 1.0, xp: 1.0,
-    stars: 1,
-    unlockNote: 'von Anfang an',
-  },
-  hard: {
-    name: 'Schwer', short: 'S',
-    hp: 1.5, damage: 1.3, speed: 1.0, gold: 1.8, xp: 1.8,
-    stars: 2,
-    unlockNote: 'Level auf Normal geschafft',
-  },
-  nightmare: {
-    name: 'Alptraum', short: 'A',
-    hp: 2.2, damage: 1.7, speed: 1.15, gold: 3.0, xp: 3.0,
-    stars: 3,
-    unlockNote: 'Level auf Schwer geschafft',
-  },
+/** Level-Ausgang (Abschnitt 7). */
+export const LEVEL = {
+  /** Abstand zur Ausgangsmitte, in dem E funktioniert. */
+  exitRadius: 44,
+  /** Kantenlaenge der Ausgangsmarke. */
+  exitSize: 30,
+  /** Pfeil am Bildschirmrand, wenn der offene Ausgang ausserhalb liegt. */
+  showExitArrow: true,
+  arrowMargin: 34,
 };
 
-export const DIFFICULTY_ORDER = ['normal', 'hard', 'nightmare'];
+/**
+ * Spielstand (Abschnitt 9).
+ * Gespeichert wird automatisch nach jedem abgeschlossenen Level und nach
+ * jedem Shop-Kauf.
+ */
+export const SAVE = {
+  enabled: true,
+  /** Schluessel im localStorage. Aendern = alte Staende werden ignoriert. */
+  key: 'lootAndBlade.save.v1',
+  /** Hochzaehlen, wenn sich das Format aendert — alte Staende werden dann verworfen. */
+  version: 1,
+  /** Wie lange "Gespeichert" eingeblendet wird. */
+  noticeTime: 1.2,
+};
 
+/** Welches Level beim Start geladen wird. */
 export const START_LEVEL = LEVELS[0].url;
-
-export const SPRITES = {
-  /** Kantenlaenge einer Sprite-Quelldatei. */
-  size: 32,
-  /** Vergroesserung je Figur (1 = 32 px). */
-  scale: {
-    player: 1,
-    slime: 1,
-    goblin: 1,
-    archer: 1,
-    armoredOrc: 1.15,
-    orcChieftain: 1.75,
-    coin: 0.5,
-  },
-};
