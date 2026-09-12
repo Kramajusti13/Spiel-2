@@ -62,7 +62,8 @@ export async function loadSpriteSheet(key, url, frameW, frameH) {
  * @param {string}  key      Sprite-Schluessel, z. B. 'slime'
  * @param {number}  x        Weltkoordinate der Mitte
  * @param {number}  y        Weltkoordinate der Mitte
- * @param {number}  w        Breite
+ * @param {nu
+mber}  w        Breite
  * @param {number}  h        Hoehe
  * @param {string}  color    Platzhalterfarbe, solange kein Sprite geladen ist
  * @param {object} [opt]     { frame, flipX, alpha, rotation, tint, tintAlpha }
@@ -115,7 +116,8 @@ export function drawSprite(ctx, key, x, y, w, h, color, opt = {}) {
  * Mit Sprite: quadratisch, weil alle Assets 32x32 sind (Abschnitt 8) — sonst
  * wuerde ein quadratisches Bild in ein hochkantiges Rechteck gequetscht.
  *
- * @param {string} key    Sprite-Schluessel
+ * @param {string} key
+    Sprite-Schluessel
  * @param {{w:number,h:number}} placeholder  Masse aus config
  * @param {number} [scale] Vergroesserung, 1 = 32 px
  */

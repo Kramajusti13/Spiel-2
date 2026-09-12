@@ -236,8 +236,7 @@ const DASHBOARD_CSS = `
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-c
-ontent: center;
+    justify-content: center;
     gap: 2px;
     margin-bottom: 8px;
   }
@@ -343,8 +342,7 @@ export class Dashboard {
         <span class="portrait-sp" data-role="portrait-sp">0 SP</span>
       </div>
     `;
-    // Die Portrait-Referenzen auf das kompakte Ele
-ment umleiten.
+    // Die Portrait-Referenzen auf das kompakte Element umleiten.
     this.portrait.level = portraitCompact.querySelector('[data-role="portrait-level"]');
     this.portrait.xpFill = portraitCompact.querySelector('[data-role="portrait-xp-fill"]');
     this.portrait.gold = portraitCompact.querySelector('[data-role="portrait-gold"]');
@@ -498,7 +496,8 @@ ment umleiten.
     const gespeichert = game.save();
     this.setMessage(
       'Ton ' + (muted ? 'aus' : 'an') + ' (nur fuer diese Sitzung)' +
-      (gespeichert ? ' · Spielstand gespeichert' : '')
+      (gespeichert ? ' · 
+Spielstand gespeichert' : '')
     );
   }
 
@@ -560,7 +559,8 @@ ment umleiten.
 
     // Kompaktes Portrait.
     if (this.portrait.level) {
-      this.set('portraitLevel', this.portrait.level, 'textContent', 'Stufe ' + level);
+      this.set('portraitLevel', this.portrait.level, 'textContent', 'Stufe 
+' + level);
     }
     if (this.portrait.xpFill) {
       this.portrait.xpFill.style.width = pct;

@@ -109,7 +109,8 @@ export function questProgress(quest, game) {
  * leer (alles geschafft), steht dort null (VERBESSERUNGEN_1 Abschnitt 8).
  *
  * @param {number[]} claimed Bereits abgeholte Quest-IDs
- * @returns {Array<object|null>} in Reihenfolge leicht, mittel, schwer
+ * @returns 
+{Array<object|null>} in Reihenfolge leicht, mittel, schwer
  */
 export function activeQuests(claimed) {
   const claimedSet = new Set(claimed);

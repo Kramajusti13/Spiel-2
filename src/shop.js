@@ -52,7 +52,8 @@ export function nextSwordOffer(progress) {
   };
 }
 
-/** Nächste Schildstufe, oder null wenn schon die beste. */
+/** Nächste Schildstufe, oder null wenn schon die bes
+te. */
 export function nextShieldOffer(progress) {
   const tier = progress.shieldTier + 1;
   const now = SHIELD.tiers[progress.shieldTier];
@@ -109,7 +110,8 @@ export function nextBowOffer(progress) {
  * Naechste Speerstufe (Erweiterung 2, Abschnitt 3). Wie beim Bogen ist
  * spearTier vor dem ersten Kauf -1, das erste Angebot ist also der Holzspeer.
  */
-export function nextSpearOffer(progress) {
+export
+ function nextSpearOffer(progress) {
   const tier = progress.spearTier + 1;
   const now = progress.spearTier >= 0 ? SPEAR.tiers[progress.spearTier] : null;
   const current = now ? `Stufe ${progress.spearTier + 1}` : '—';
@@ -291,7 +293,8 @@ export function buy(id, progress, wallet) {
       break;
     case 'spear':
       progress.spearTier += 1;
-      break;
+     
+ break;
     case 'shield':
       progress.shieldTier += 1;
       break;

@@ -50,8 +50,7 @@ export class LoadoutWindow {
   }
 
   bind() {
-    this.el.headerBut
-ton.addEventListener('click', () => this.open());
+    this.el.headerButton.addEventListener('click', () => this.open());
     this.el.shopButton.addEventListener('click', () => this.open());
     this.el.close.addEventListener('click', () => this.close());
 
@@ -214,7 +213,8 @@ T.slots} Plaetzen belegt`);
     // Was passiert, wenn beide Plaetze voll sind — das ist die einzige Regel,
     // die man beim ersten Mal nicht errät.
     this.set('hint', this.el.hint, dabei.length >= LOADOUT.slots
-      ? 'Beide Plaetze belegt — ein Klick auf eine dritte Waffe ersetzt die zuerst gewaehlte.'
+      ? 'Beide Plaetze belegt — ein Klick a
+uf eine dritte Waffe ersetzt die zuerst gewaehlte.'
       : 'Waehle eine zweite Waffe.');
   }
 
