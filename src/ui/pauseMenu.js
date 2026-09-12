@@ -60,6 +60,7 @@ export class PauseMenu {
           onActivate: () => game.giveUpLevel() }),
         make({ label: 'Level neu starten', hint: 'alle Monster leben wieder',
     
+
       keys: ['KeyR'], keyLabel: 'R',
           // Dieselbe Stufe wie im laufenden Durchgang — ein Neustart darf
           // nicht heimlich auf Normal zurueckfallen.
