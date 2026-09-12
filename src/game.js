@@ -541,6 +541,7 @@ export class Game {
     if (this.characterReturnState === 'dashboard') this.openDashboard(this.dashboard.message);
     else this.state = 'playing';
     this.syncScreen();
+
   }
 
   /** Steht der Spieler nah genug am Ausgang? */
@@ -786,6 +787,7 @@ export class Game {
   /** Wie viel XP bis zur naechsten Stufe fehlt. */
   get xpNeeded() {
     return xpToNext(this.progress.level);
+
   }
 
   /** Fuellstand der XP-Leiste, 0…1 — der echte Wert, nicht der animierte. */
@@ -915,7 +917,7 @@ export class Game {
     this.deathsThisRun += 1;
     this.shake(9, 0.4);
     this.state = 'dead';
-    this.deathScreen.open();
+        this.deathScreen.open();
   }
 
   spawnDamageNumber(x, y, value, color, big = false) {

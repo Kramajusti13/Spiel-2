@@ -116,7 +116,8 @@ export class Arrow {
     const p = game.player;
     if (p.dead) return false;
     if (!aabbOverlap(this.x, this.y, BOW.hitRadius, BOW.hitRadius, p.x, p.y, p.hw, p.hh)) return false;
-    p.takeDamage(this.damage, this.angle, game);
+    p.takeDamage(this.damage
+, this.angle, game);
     this.spent = true;
     return true;
   }

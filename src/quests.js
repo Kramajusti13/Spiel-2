@@ -110,6 +110,7 @@ export function questProgress(quest, game) {
  *
  * @param {number[]} claimed Bereits abgeholte Quest-IDs
  * @returns 
+
 {Array<object|null>} in Reihenfolge leicht, mittel, schwer
  */
 export function activeQuests(claimed) {
@@ -171,7 +172,8 @@ export function claimQuest(id, game) {
 export function rewardText(quest) {
   const r = quest.reward ?? {};
   const parts = [];
-  if (r.gold) parts.push(`${r.gold} G`);
+  if (r.
+gold) parts.push(`${r.gold} G`);
   if (r.xp) parts.push(`${r.xp} XP`);
   if (r.potions) parts.push(`${r.potions} Heiltrank`);
   if (r.skillPoints) parts.push(`${r.skillPoints} Skillpunkte`);

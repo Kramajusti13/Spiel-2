@@ -101,6 +101,7 @@ export class Titanoboa extends Enemy {
   get phase() {
     return this.hp / this.maxHp > this.def.phaseThresholds[0] ? 1 
 
+
 : 2;
   }
 
@@ -159,7 +160,8 @@ export class Titanoboa extends Enemy {
         this.hh = (this.def.hitbox.h / 2) * this.def.phase2SizeFactor;
         playSound('bossPhase');
         game.shake(8, 0.4);
-        game.spawnDamageNumber(this.x, this.y - this.hh - 22, 'Gehäutet!',
+        game.spawnDamageNumber(this.x, this.y - this.hh - 22, 'Gehä
+utet!',
           COLORS.titanoboaAccent, true);
         this.setState('chase');
       }
@@ -284,7 +286,8 @@ export class Titanoboa extends Enemy {
     const s = this.state;
     return s === 'tailWindup' || s === 'tailStrike'
       || s === 'biteWindup' || s === 'biteStrike'
-      || s === 'spitWindup' || s === 'spitStrike';
+      || s === 'spitWindup' || s
+ === 'spitStrike';
   }
 
   chooseAttack(game, player) {
@@ -409,8 +412,8 @@ export class Titanoboa extends Enemy {
   drawShadow(ctx) {
     const warnt = this.state === 'warn';
     const t = warnt ? this.stateTime / this.def.lungeWarning : 0;
-    const cx = warnt ? t
-his.targetX : this.x;
+    const cx = warnt ? 
+this.targetX : this.x;
     const cy = warnt ? this.targetY : this.y;
     const puls = warnt ? 1 + 0.16 * Math.sin(this.stateTime * (7 + 10 * t)) : 1;
     const r = this.def.shadowRadius * puls;

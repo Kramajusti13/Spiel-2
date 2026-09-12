@@ -43,6 +43,7 @@ export function createStats() {
      */
     killsByTypeAndDifficulty: Object.fromEntries(Object.keys(ENEMIES).map((k) =>
  
+
      [k, Object.fromEntries(DIFFICULTY_ORDER.map((d) => [d, 0]))])),
 
     // --- Gold ---
@@ -156,7 +157,8 @@ export function sanitizeStats(raw) {
     stats[key] = num(raw[key]);
   }
   stats.gameCompleted = raw.gameCompleted === true;
-  for (const key of Object.keys(stats.killsByType)) {
+  for (const key of Object.keys
+(stats.killsByType)) {
     stats.killsByType[key] = num(raw.killsByType?.[key]);
   }
   for (const key of Object.keys(stats.killsByWeapon)) {
