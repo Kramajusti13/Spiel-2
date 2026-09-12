@@ -220,8 +220,7 @@ export const BOW = {
   hitRadius: 3,
   sprite: { w: 14, h: 3 },
   /** Sichtbarer Rueckstoss des Bogens nach dem Schuss. */
-  recoilTime: 0
-.14,
+  recoilTime: 0.14,
   tiers: [
     { name: 'Kurzbogen', damage: 8, price: 80, fireRateFactor: 1 },
     { name: 'Langbogen', damage: 15, price: 200, fireRateFactor: 1 },
