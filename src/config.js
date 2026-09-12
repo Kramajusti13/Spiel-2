@@ -1126,6 +1126,7 @@ export const COLORS = {
   text: '#d8d3c4',
   textDim: '#8b8577',
   swing: '#e8e2d4',
+  poison: '#6b9a4a',
   debug: '#39d0ff',
 
   // XP und Stufe (Erweiterung, Abschnitt 1) â bewusst kein Gold-Ton,

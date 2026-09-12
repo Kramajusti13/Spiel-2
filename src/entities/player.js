@@ -20,7 +20,8 @@ import { clamp, degToRad, angleDiff, dist } from '../util.js';
  */
 export function createProgress() {
   return {
-    swordTier: 0,   // Index in SWORD.tiersshieldTier: 0,  // Index in SHIELD.tiers, 0 = kein Schild   (Schritt 7)
+    swordTier: 0,   // Index in SWORD.tiers
+    shieldTier: 0,  // Index in SHIELD.tiers, 0 = kein Schild   (Schritt 7)
     bowTier: -1,    // -1 = noch kein Bogen gekauft             (Schritt 10)
     spearTier: -1,  // -1 = noch kein Speer gekauft   (Erweiterung 2, Abschn. 3)
     /** 'sword' | 'bow' | 'spear' — gefuehrte Waffe (Tasten 1 und 2). */
@@ -33,7 +34,8 @@ export function createProgress() {
     loadout: defaultLoadout(),
     potions: 0,     // Heiltraenke im Gepaeck                   (Schritt 9)
     // --- Neue Gold-Ausgaben (Erweiterung 2, Abschnitt 7) ---
-    armorTier: 0,       // Index in ARMOR.tiers, 0 = keine RuestungpotionBeltTier: 0,  // Index in POTION_BELT.tiers, 0 = Startguertel
+    armorTier: 0,       // Index in ARMOR.tiers, 0 = keine Ruestung
+    potionBeltTier: 0,  // Index in POTION_BELT.tiers, 0 = Startguertel
     /** Waffe -> wie oft beim Schmied geschaerft (0…SMITH.maxPerWeapon). */
     smith: {},
     skillPoints: 0, // noch nicht vergebene Punkte              (Schritt 11)
@@ -90,7 +92,8 @@ export class Player {
     this.throwAnim = 0;          // > 0, solange die Wurfbewegung sichtbar ist
 
     /** Ausweichrolle. */
-    this.rollTimer = 0;          // > 0, solange die Rolle laeuft
+    this.rollTimer = 0;  
+        // > 0, solange die Rolle laeuft
     this.rollInvulnTimer = 0;    // > 0 = unverwundbar durch die Rolle
     this.rollAngle = 0;
     this.rollTrailTimer = 0;
@@ -155,7 +158,8 @@ export class Player {
   }
 
   // --- Ruestung (Erweiterung 2, Abschnitt 7) --------
-----------------------
+---------
+-------------
 
   get armorTier() {
     return this.progress.armorTier;
@@ -371,7 +375,8 @@ export class Player {
    *
    * Sie muss nicht nur gekauft, sondern auch MITGENOMMEN sein — sonst stuende
    * der Spieler nach einem Wechsel auf dem Dashboard mit einer W
-affe im Level,
+affe im 
+Level,
    * die er zu Hause gelassen hat.
    */
   get weapon() {
@@ -557,7 +562,8 @@ n geblockter Treffer wuerde sonst heilen.
     if (game) game.poisonedThisRun = true;
     if (neu) {
 
-      this.poisonTick = 0;
+     
+ this.poisonTick = 0;
       game?.spawnDamageNumber(this.x, this.y - 34, 'Vergiftet', COLORS.poison);
     }
   }
@@ -657,7 +663,8 @@ n geblockter Treffer wuerde sonst heilen.
 
       // Rueckstoss nach einem Treffer klingt ab.
 
-      if (this.knockX !== 0 || this.knockY !== 0) {
+    
+  if (this.knockX !== 0 || this.knockY !== 0) {
         dx += this.knockX * dt;
         dy += this.knockY * dt;
         const decay = Math.exp(-PLAYER.knockbackDecay * dt);
@@ -708,7 +715,8 @@ n geblockter Treffer wuerde sonst heilen.
       if (!this.dead && !this.isRolling) {
         this.staminaFlash = 0.3;
         game?.spawnDamageNumber(this.x, 
-this.y - 30, 'Ausdauer', COLORS.staminaEmpty);
+this
+.y - 30, 'Ausdauer', COLORS.staminaEmpty);
       }
       return false;
     }
@@ -771,6 +779,7 @@ this.y - 30, 'Ausdauer', COLORS.staminaEmpty);
     for (const enemy of game.enemies) {
       // Unverwundbare Gegner (springender Frosch, abgetauchtes Krokodi
 l)
+
       // werden uebersprungen — der Hieb gilt fuer sie nicht als verbraucht.
       if (enemy.dead || enemy.invulnerable || this.swingHits.has(enemy)) continue;
 
@@ -873,21 +882,214 @@ this.defense));
     // Weicher Schatten am Boden — macht die Figur auf dem Boden "aufliegend".
     ctx.fillStyle = 'rgba(0,0,0,0.28)';
     ctx.beginPath();
+    ctx.ellipse(Math.round(this.x), Math.round(this.y + this.hh), 9, 4, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    const vergiftet = this.poisonTimer > 0;
+    const tint = this.hitFlash > 0
+      ? COLORS.playerHit
+      : vergiftet ? COLORS.poison : null;
+    const tintAlpha = vergiftet ? 0.5 : 0.85;
+    // Leichtes Wippen beim Laufen (faellt weg, sobald ein Sprite mit Animation da ist).
+    const bob = !hasSprite(this.sprite) && this.moving && !this.isRolling
+      ? Math.sin(this.animTime * 12) * 1.5
+      : 0;
+
+    if (this.isRolling) {
+      // Rolle: die Figur ueberschlaegt sich einmal und duckt sich dabei.
+      const t = 1 - this.rollTimer / ROLL.duration;   // 0 -> 1
+      const duck = 1 - 0.35 * Math.sin(t * Math.PI);
+      const rs = spriteSize(this.sprite, s, SPRITES.scale.player);
+      drawSprite(ctx, this.sprite, this.x, cy + (rs.h * (1 - duck)) / 2,
+        rs.w * (1 + 0.25 * Math.sin(t * Math.PI)), rs.h * duck, COLORS.player, {
+          tint,
+          tintAlpha,
+          rotation: this.rollAngle + t * Math.PI * 2,
+        });
+      if (this.isSwinging) this._drawSwing(ctx);
+      return;
+    }
+
+    const size = spriteSize(this.sprite, s, SPRITES.scale.player);
+    drawSprite(ctx, this.sprite, this.x, cy + bob, size.w, size.h, COLORS.player, {
+      tint,
+      tintAlpha,
+      frame: Math.floor(this.animTime * 8),
+      // Sprites zeigen nach rechts; nach links wird gespiegelt.
+      flipX: Math.cos(this.aim) < 0,
+    });
+
+    // Die Blickrichtung ist spielrelevant (Blockwinkel, Trefferkegel), deshalb
+    // wird die Marke auch mit Sprite gezeichnet — nur kleiner.
+    this._drawAimMarker(ctx, cy + bob);
+    if (this.weapon === 'bow') this._drawBow(ctx, cy + bob);
+    if (this.weapon === 'spear') this._drawSpear(ctx, cy + bob);
+    if (this.blocking) this._drawShield(ctx, cy + bob);
+    if (this.isSwinging) this._drawSwing(ctx);
+  }
+
+  /**
+   * Bogen in Blickrichtung: gespannter Bogen, der nach dem Schuss kurz
+   * zurueckschnellt. Zeigt zugleich an, welche Waffe gewaehlt ist.
+   */
+  _drawBow(ctx, cy) {
+    const recoil = this.bowRecoil / BOW.recoilTime;   // 1 -> 0
+    const ready = this.attackCooldown <= 0;
+    const radius = 13 - recoil * 3;
+
+    ctx.save();
+    ctx.translate(Math.round(this.x), Math.round(cy));
+    ctx.rotate(this.aim);
+    // Bogenholz
+    ctx.strokeStyle = COLORS.bow;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(4, 0, radius, -1.1, 1.1);
+    ctx.stroke();
+    // Sehne — gespannt, solange nachgeladen wird
+    ctx.strokeStyle = ready ? COLORS.arrow : COLORS.textDim;
+    ctx.lineWidth = 1;
+    const pull = ready ? 0 : 4;
+    ctx.beginPath();
+    ctx.moveTo(4 + Math.cos(-1.1) * radius, Math.sin(-1.1) * radius);
+    ctx.lineTo(4 - pull, 0);
+    ctx.lineTo(4 + Math.cos(1.1) * radius, Math.sin(1.1) * radius);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /**
+   * Speer in Blickrichtung. Zeigt zugleich an, welche Waffe gewaehlt
+   * ist — und ob der Wurf bereit ist: solange die Abklingzeit laeuft,
+   * ist die Spitze stumpf eingefaerbt.
+   */
+  _drawSpear(ctx, cy) {
+    // Waehrend des Stosses steckt der Speer im _drawSwing-Teil, hier nur die
+    // Ruhehaltung; die kurze Wurfbewegung zieht ihn nach hinten.
+    if (this.isSwinging) return;
+    const pull = this.throwAnim > 0 ? -8 : 0;
+    const ready = this.throwCooldown <= 0;
+    const length = SPEAR.range * 0.42;
+
+    ctx.save();
+    ctx.translate(Math.round(this.x), Math.round(cy));
+    ctx.rotate(this.aim);
+    // Schaft
+    ctx.strokeStyle = ready ? COLORS.bow : COLORS.textDim;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(pull, 0);
+    ctx.lineTo(pull + length, 0);
+    ctx.stroke();
+    // Spitze
+    ctx.fillStyle = ready ? COLORS.arrowTip : COLORS.textDim;
+    ctx.beginPath();
+    ctx.moveTo(pull + length, -4);
+    ctx.lineTo(pull + length + 7, 0);
+    ctx.lineTo(pull + length, 4);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  /**
+   * Erhobenes Schild: Bogen ueber den geschuetzten Winkel, in Blickrichtung.
+   * Der Spieler sieht damit unmittelbar, welche Seite gedeckt ist.
+   */
+  _drawShield(ctx, cy) {
+    const half = degToRad(SHIELD.blockArc) / 2;
+    const radius = 17;
+    const flash = this.blockFlash > 0;
+
+    ctx.save();
+    // Gefuellter Sektor, damit die geschuetzte Seite auf einen Blick klar ist.
+    ctx.globalAlpha = flash ? 0.55 : 0.22;
+    ctx.fillStyle = flash ? COLORS.shieldBlock : COLORS.shield;
+    ctx.beginPath();
+    ctx.moveTo(this.x, cy);
+    ctx.arc(this.x, cy, radius + 4, this.aim - half, this.aim + half);
+    ctx.closePath();
+    ctx.fill();
+
+    // Kraeftige Kante = das eigentliche Schild.
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = flash ? COLORS.shieldBlock : COLORS.shieldRim;
+    ctx.lineWidth = flash ? 5 : 3;
+    ctx.beginPath();
+    ctx.arc(this.x, cy, radius, this.aim - half, this.aim + half);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /**
+   * Marke in Blickrichtung, damit das Zielen ablesbar ist.
+   * Ohne Sprite ist sie die "Nase" der Platzhalterfigur, mit Sprite ein
+   * kleiner Punkt am Rand — dort, wo Schwert und Schild wirken.
+   */
+  _drawAimMarker(ctx, cy) {
+    const withSprite = hasSprite(this.sprite);
+    const radius = withSprite ? 15 : 9;
+    const size = withSprite ? 3 : 6;
+    const nx = this.x + Math.cos(this.aim) * radius;
+    const ny = cy + Math.sin(this.aim) * radius;
+    ctx.save();
+    if (withSprite) ctx.globalAlpha = 0.75;
+    ctx.fillStyle = COLORS.playerAccent;
+    ctx.fillRect(Math.round(nx) - size / 2, Math.round(ny) - size / 2, size, size);
+    ctx.restore();
+  }
+
+  /** Sichtbarer Schwung: heller Bogen, der sich in Blickrichtung dreht. */
+  _drawSwing(ctx) {
+    const t = 1 - this.swingTimer / SWORD.swingTime; // 0 -> 1
+    const halfArc = degToRad(SWORD.arc) / 2;
+    const angle = this.aim - halfArc + halfArc * 2 * t;
+
+    ctx.save();
+    ctx.globalAlpha = 0.85 * (1 - t * 0.6);
+    ctx.strokeStyle = COLORS.swing;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, SWORD.range * 0.82, angle - 0.35, angle + 0.35);
+    ctx.stroke();
+
+    // Klinge als kurzer Strich am Bogenende.
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(this.x + Math.cos(angle) * 12, this.y + Math.sin(angle) * 12);
+    ctx.lineTo(this.x + Math.cos(angle) * SWORD.range, this.y + Math.sin(angle) * SWORD.range);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /** Debug: Hitbox, Reichweite und Trefferkegel. */
+  drawDebug(ctx) {
+    ctx.strokeStyle = COLORS.debug;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(
+      Math.round(this.x - this.hw) + 0.5,
+      Math.round(this.y - this.hh) + 0.5,
+      this.hw * 2 - 1,
+      this.hh * 2 - 1,
+    );
+    const halfArc = degToRad(SWORD.arc) / 2;
+    ctx.strokeStyle = 'rgba(57,208,255,0.5)';
+    ctx.beginPath();
     ctx.moveTo(this.x, this.y);
-    ctx.arc(this.x, this.y, def.range, this.aim - halfArc, this.aim + halfArc);
+    ctx.arc(this.x, this.y, SWORD.range, this.aim - halfArc, this.aim + halfArc);
     ctx.closePath();
     ctx.stroke();
 
-
-
-
-
-
-
-
-
-
-
+    // Blockwinkel (120°) — zeigt, was das Schild gerade deckt.
+    if (this.hasShield) {
+      const halfBlock = degToRad(SHIELD.blockArc) / 2;
+      ctx.strokeStyle = this.blocking ? 'rgba(185,190,201,0.9)' : 'rgba(185,190,201,0.25)';
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.arc(this.x, this.y, 30, this.aim - halfBlock, this.aim + halfBlock);
+      ctx.closePath();
+      ctx.stroke();
+    }
   }
 }
 
@@ -899,13 +1101,13 @@ function randTiny() {
 /** Sucht einen freien Startpunkt, falls die Karte am Startpunkt zugebaut wurde. */
 export function findFreeSpot(level, x, y, hw, hh) {
   if (!level.isBoxBlocked(x, y, hw, hh)) return { x, y };
-
-
-
-
-
-
-
+  for (let radius = 1; radius <= 8; radius++) {
+    for (let dy = -radius; dy <= radius; dy++) {
+      for (let dx = -radius; dx <= radius; dx++) {
+        const nx = x + dx * TILE;
+        const ny = y + dy * TILE;
+        if (!level.isBoxBlocked(nx, ny, hw, hh)) return { x: nx, y: ny };
+      }
     }
   }
   return { x, y };
