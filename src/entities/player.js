@@ -156,7 +156,8 @@ export class Player {
       + armorDefense(this.progress);
   }
 
-  // --- Ruestung (Erweiterung 2, Abschnitt 7) ------------------------------
+  // --- Ruestung (Erweiterung 2, Abschnitt 7) --------
+----------------------
 
   get armorTier() {
     return this.progress.armorTier;
@@ -371,7 +372,8 @@ export class Player {
    * Gefuehrte Waffe: 'sword', 'bow' oder 'spear'.
    *
    * Sie muss nicht nur gekauft, sondern auch MITGENOMMEN sein — sonst stuende
-   * der Spieler nach einem Wechsel auf dem Dashboard mit einer Waffe im Level,
+   * der Spieler nach einem Wechsel auf dem Dashboard mit einer W
+affe im Level,
    * die er zu Hause gelassen hat.
    */
   get weapon() {
@@ -492,7 +494,8 @@ export class Player {
    *
    * Die Obergrenze gilt fuer die Summe aus beidem (Erweiterung 2,
    * Abschnitt 5: 90 % inklusive Schild). Bei 15 Stufen braechte der Skill
-   * allein 150 % — ein geblockter Treffer wuerde sonst heilen.
+   * allein 150 % — ei
+n geblockter Treffer wuerde sonst heilen.
    */
   get blockValue() {
     const fromSkill = this.skillRank('blockMaster') * SKILLS.tree.blockMaster.perRank;
@@ -555,6 +558,7 @@ export class Player {
     // nicht mehr — auch wenn das Gift laengst abgeklungen ist.
     if (game) game.poisonedThisRun = true;
     if (neu) {
+
       this.poisonTick = 0;
       game?.spawnDamageNumber(this.x, this.y - 34, 'Vergiftet', COLORS.poison);
     }
@@ -654,6 +658,7 @@ export class Player {
       dy = mv.y * speed * dt;
 
       // Rueckstoss nach einem Treffer klingt ab.
+
       if (this.knockX !== 0 || this.knockY !== 0) {
         dx += this.knockX * dt;
         dy += this.knockY * dt;
@@ -704,7 +709,8 @@ export class Player {
       // Sichtbare Rueckmeldung statt stillem Nichts.
       if (!this.dead && !this.isRolling) {
         this.staminaFlash = 0.3;
-        game?.spawnDamageNumber(this.x, this.y - 30, 'Ausdauer', COLORS.staminaEmpty);
+        game?.spawnDamageNumber(this.x, 
+this.y - 30, 'Ausdauer', COLORS.staminaEmpty);
       }
       return false;
     }
@@ -765,7 +771,8 @@ export class Player {
     const def = this.meleeDef;
     const halfArc = degToRad(def.arc) / 2;
     for (const enemy of game.enemies) {
-      // Unverwundbare Gegner (springender Frosch, abgetauchtes Krokodil)
+      // Unverwundbare Gegner (springender Frosch, abgetauchtes Krokodi
+l)
       // werden uebersprungen — der Hieb gilt fuer sie nicht als verbraucht.
       if (enemy.dead || enemy.invulnerable || this.swingHits.has(enemy)) continue;
 
@@ -811,7 +818,8 @@ export class Player {
     const afterBlock = blocked ? amount * (1 - this.blockValue) : amount;
 
     // Verteidigung zieht ab, mindestens 1 Schaden bleibt (Abschnitt 4).
-    const damage = Math.max(1, Math.round(afterBlock - this.defense));
+    const damage = Math.max(1, Math.round(afterBlock - 
+this.defense));
     this.hp = clamp(this.hp - damage, 0, this.maxHp);
 
     this.invulnTimer = PLAYER.invulnTime;
@@ -871,7 +879,8 @@ export class Player {
     ctx.fill();
 
     // Treffer-Aufblitzen geht vor; sonst der gruene Puls der Vergiftung
-    // ("Der Spieler blinkt gruen, solange er vergiftet ist", Abschnitt 1).
+    // ("Der Spieler blinkt gruen
+, solange er vergiftet ist", Abschnitt 1).
     //
     // Das Gift faerbt schwaecher ein als ein Treffer: der Blitz dauert 0,12 s
     // und darf die Figur ueberstrahlen, die Vergiftung dauert 2 s. Bei voller
@@ -916,7 +925,8 @@ export class Player {
     this._drawAimMarker(ctx, cy + bob);
     if (this.weapon === 'bow') this._drawBow(ctx, cy + bob);
     if (this.weapon === 'spear') this._drawSpear(ctx, cy + bob);
-    if (this.blocking) this._drawShield(ctx, cy + bob);
+ 
+   if (this.blocking) this._drawShield(ctx, cy + bob);
     if (this.isSwinging) this._drawSwing(ctx);
   }
 
@@ -937,164 +947,25 @@ export class Player {
     ctx.translate(Math.round(this.x), Math.round(cy));
     ctx.rotate(this.aim);
     // Schaft
-    ctx.strokeStyle = COLORS.spear;
+    ctx.strokeStyle = COLORS.spear || '#8b7355';
     ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.moveTo(pull - 6, 3);
-    ctx.lineTo(pull + length, 3);
-    ctx.stroke();
-    // Spitze — stumpf, solange kein Wurf drin ist
-    ctx.fillStyle = ready ? COLORS.spearTip : COLORS.textDim;
-    ctx.beginPath();
-    ctx.moveTo(pull + length + 6, 3);
-    ctx.lineTo(pull + length - 1, 0);
-    ctx.lineTo(pull + length - 1, 6);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-  }
-
-  /**
-   * Bogen in Blickrichtung: gespannter Bogen, der nach dem Schuss kurz
-   * zurueckschnellt. Zeigt zugleich an, welche Waffe gewaehlt ist.
-   */
-  _drawBow(ctx, cy) {
-    const recoil = this.bowRecoil / BOW.recoilTime;   // 1 -> 0
-    const ready = this.attackCooldown <= 0;
-    const radius = 13 - recoil * 3;
-
-    ctx.save();
-    ctx.translate(Math.round(this.x), Math.round(cy));
-    ctx.rotate(this.aim);
-    // Bogenholz
-    ctx.strokeStyle = COLORS.bow;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(4, 0, radius, -1.1, 1.1);
-    ctx.stroke();
-    // Sehne — gespannt, solange nachgeladen wird
-    ctx.strokeStyle = ready ? COLORS.arrow : COLORS.textDim;
-    ctx.lineWidth = 1;
-    const pull = ready ? 0 : 4;
-    ctx.beginPath();
-    ctx.moveTo(4 + Math.cos(-1.1) * radius, Math.sin(-1.1) * radius);
-    ctx.lineTo(4 - pull, 0);
-    ctx.lineTo(4 + Math.cos(1.1) * radius, Math.sin(1.1) * radius);
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  /**
-   * Erhobenes Schild: Bogen ueber den geschuetzten Winkel, in Blickrichtung.
-   * Der Spieler sieht damit unmittelbar, welche Seite gedeckt ist.
-   */
-  _drawShield(ctx, cy) {
-    const half = degToRad(SHIELD.blockArc) / 2;
-    const radius = 17;
-    const flash = this.blockFlash > 0;
-
-    ctx.save();
-    // Gefuellter Sektor, damit die geschuetzte Seite auf einen Blick klar ist.
-    ctx.globalAlpha = flash ? 0.55 : 0.22;
-    ctx.fillStyle = flash ? COLORS.shieldBlock : COLORS.shield;
-    ctx.beginPath();
-    ctx.moveTo(this.x, cy);
-    ctx.arc(this.x, cy, radius + 4, this.aim - half, this.aim + half);
-    ctx.closePath();
-    ctx.fill();
-
-    // Kraeftige Kante = das eigentliche Schild.
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = flash ? COLORS.shieldBlock : COLORS.shieldRim;
-    ctx.lineWidth = flash ? 5 : 3;
-    ctx.beginPath();
-    ctx.arc(this.x, cy, radius, this.aim - half, this.aim + half);
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  /**
-   * Marke in Blickrichtung, damit das Zielen ablesbar ist.
-   * Ohne Sprite ist sie die "Nase" der Platzhalterfigur, mit Sprite ein
-   * kleiner Punkt am Rand — dort, wo Schwert und Schild wirken.
-   */
-  _drawAimMarker(ctx, cy) {
-    const withSprite = hasSprite(this.sprite);
-    const radius = withSprite ? 15 : 9;
-    const size = withSprite ? 3 : 6;
-    const nx = this.x + Math.cos(this.aim) * radius;
-    const ny = cy + Math.sin(this.aim) * radius;
-    ctx.save();
-    if (withSprite) ctx.globalAlpha = 0.75;
-    ctx.fillStyle = COLORS.playerAccent;
-    ctx.fillRect(Math.round(nx) - size / 2, Math.round(ny) - size / 2, size, size);
-    ctx.restore();
-  }
-
-  /**
-   * Sichtbarer Angriff. Das Schwert schwingt als Bogen durch den Kegel, der
-   * Speer stoesst geradeaus vor und wieder zurueck — die Bewegung erklaert
-   * dem Spieler den Unterschied zwischen den beiden Waffen ohne ein Wort.
-   */
-  _drawSwing(ctx) {
-    if (this.weapon === 'spear') {
-      this._drawThrust(ctx);
-      return;
-    }
-    const t = 1 - this.swingTimer / SWORD.swingTime; // 0 -> 1
-    const halfArc = degToRad(SWORD.arc) / 2;
-    const angle = this.aim - halfArc + halfArc * 2 * t;
-
-    ctx.save();
-    ctx.globalAlpha = 0.85 * (1 - t * 0.6);
-    ctx.strokeStyle = COLORS.swing;
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, SWORD.range * 0.82, angle - 0.35, angle + 0.35);
-    ctx.stroke();
-
-    // Klinge als kurzer Strich am Bogenende.
-    ctx.lineWidth = 4;
-    ctx.beginPath();
-    ctx.moveTo(this.x + Math.cos(angle) * 12, this.y + Math.sin(angle) * 12);
-    ctx.lineTo(this.x + Math.cos(angle) * SWORD.range, this.y + Math.sin(angle) * SWORD.range);
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  /**
-   * Speerstoss: der Schaft faehrt bis zur vollen Reichweite aus und kommt
-   * zurueck. Die Spitze markiert genau die Reichweite, die auch trifft —
-   * was man sieht, ist was zaehlt.
-   */
-  _drawThrust(ctx) {
-    const t = 1 - this.swingTimer / SPEAR.thrustTime;   // 0 -> 1
-    // Hin und zurueck in einer Bewegung: bei t = 0,5 ist der Speer ganz vorn.
-    const reach = Math.sin(t * Math.PI);
-    const tip = SPEAR.range * (0.42 + 0.58 * reach);
-    const cos = Math.cos(this.aim);
-    const sin = Math.sin(this.aim);
-
-    ctx.save();
-    ctx.globalAlpha = 0.9;
-    // Schaft
-    ctx.strokeStyle = COLORS.spear;
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(this.x + cos * (tip - SPEAR.range * 0.55), this.y + sin * (tip - SPEAR.range * 0.55));
-    ctx.lineTo(this.x + cos * tip, this.y + sin * tip);
+    ctx.moveTo(pull, 0);
+    ctx.lineTo(length + pull, 0);
     ctx.stroke();
     // Spitze
-    ctx.strokeStyle = COLORS.spearTip;
-    ctx.lineWidth = 4;
-    ctx.beginPath();
-    ctx.moveTo(this.x + cos * (tip - 7), this.y + sin * (tip - 7));
-    ctx.lineTo(this.x + cos * (tip + 3), this.y + sin * (tip + 3));
-    ctx.stroke();
+    if (ready) {
+      ctx.fillStyle = COLORS.spearTip || '#ccc';
+      ctx.beginPath();
+      ctx.moveTo(length + pull, 0);
+      ctx.lineTo(length + pull - 6, -4);
+      ctx.lineTo(length + pull - 6, 4);
+      ctx.closePath();
+      ctx.fill();
+    }
     ctx.restore();
   }
 
-  /** Debug: Hitbox, Reichweite und Trefferkegel. */
   drawDebug(ctx) {
     ctx.strokeStyle = COLORS.debug;
     ctx.lineWidth = 1;
@@ -1104,14 +975,11 @@ export class Player {
       this.hw * 2 - 1,
       this.hh * 2 - 1,
     );
-    // Trefferkegel der aktuell gefuehrten Nahkampfwaffe — beim Speer weit und
-    // schmal, beim Schwert kurz und breit.
-    const def = this.meleeDef;
-    const halfArc = degToRad(def.arc) / 2;
+    const halfArc = degToRad(SWORD.arc) / 2;
     ctx.strokeStyle = 'rgba(57,208,255,0.5)';
     ctx.beginPath();
     ctx.moveTo(this.x, this.y);
-    ctx.arc(this.x, this.y, def.range, this.aim - halfArc, this.aim + halfArc);
+    ctx.arc(this.x, this.y, SWORD.range, this.aim - halfArc, this.aim + halfArc);
     ctx.closePath();
     ctx.stroke();
 
@@ -1126,11 +994,6 @@ export class Player {
       ctx.stroke();
     }
   }
-}
-
-/** Kleine Streuung, damit aufeinanderfolgende Giftzahlen nicht uebereinander liegen. */
-function randTiny() {
-  return (Math.random() - 0.5) * 14;
 }
 
 /** Sucht einen freien Startpunkt, falls die Karte am Startpunkt zugebaut wurde. */

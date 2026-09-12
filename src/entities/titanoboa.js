@@ -225,8 +225,7 @@ export class Titanoboa extends Enemy {
       return;
     }
     if (this.state === 'warn') {
-      if (this.stateTime >= this.def.lu
-ngeWarning) {
+      if (this.stateTime >= this.def.lungeWarning) {
         this.swallow(game);
         this.setState('lunge');
       }
@@ -354,8 +353,7 @@ ngeWarning) {
     this.currentAttack = null;
     // In Phase 1 taucht sie wieder ab, sobald ihr Zeitfenster abgelaufen ist —
     // waehrend Phase 2 bleibt sie oben und macht nur eine Pause.
-    if (this.phas
-e === 1 && !this.hasShed) {
+    if (this.phase === 1 && !this.hasShed) {
       // In P1: kurze Pause und dann wieder abtauchen.
       this.attackPause = this.pauseTime;
       this.setState('afterAttackP1');

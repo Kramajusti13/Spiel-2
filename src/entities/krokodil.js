@@ -98,7 +98,8 @@ function swimView(level) {
     const r0 = Math.floor((y - hh) / level.tileSize);
     const r1 = Math.floor((y + hh - 0.001) / level.tileSize);
     for (let r = r0; r <= r1; r++) {
-      for (let c = c0; c <= c1; c++) if (isSolidTile(c, r)) return true;
+      for (let c = c0; c <= c1; c++) if (isSolidTile(c, r)) return true
+;
     }
     return false;
   };
@@ -162,6 +163,7 @@ export class Krokodil extends Enemy {
 
     this.facing = Math.atan2(player.y - this.y, player.x - this.x);
 
+
     // --- Abgetaucht: schnell hinterher, Schatten wandert mit ---
     if (this.state === 'submerged') {
       const heading = this.steer(player, game.level, dt);
@@ -217,7 +219,8 @@ export class Krokodil extends Enemy {
   }
 
   /**
-   * Der Schatten am Boden. Waehrend des Tauchens wandert er mit, beim
+   * Der Schatten am Boden. Waehrend des Tauche
+ns wandert er mit, beim
    * Ausholen steht er still und waechst — das ist die Ausholphase, die man
    * sehen MUSS, bevor der Biss kommt.
    */
@@ -267,7 +270,8 @@ export class Krokodil extends Enemy {
    */
   draw(ctx) {
     if (this.dead) {
-      super.draw(ctx);
+      super.draw(
+ctx);
       return;
     }
     if (this.isSubmerged) {
