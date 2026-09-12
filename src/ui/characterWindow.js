@@ -48,8 +48,7 @@ export class CharacterWindow {
     });
 
     // TAB und Esc schliessen. Solange das Fenster offen ist, hoert das Spiel
-    // nicht auf die Tastatur (siehe input.js), als
-o braucht es das hier.
+    // nicht auf die Tastatur (siehe input.js), also braucht es das hier.
     window.addEventListener('keydown', (e) => {
       if (this.game.state !== 'character') return;
       if (e.code === 'Escape' || e.code === 'Tab') {

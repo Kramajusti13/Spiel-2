@@ -238,8 +238,7 @@ stars, marker);
       // ★☆☆ Normal, ★★☆ Schwer, ★★★ Alptraum — leer, solange nie geschafft.
       const stars = starsFor(game.bestDifficulty[i]);
       setText(el.stars, stars > 0 ? '★'.repeat(stars) + '☆'.repeat(3 - stars) : '');
-      // Ein Zu
-stand pro Knoten — alte Klassen muessen weg.
+      // Ein Zustand pro Knoten — alte Klassen muessen weg.
       el.node.className = `route-node is-${state}${i === this.selected ? ' is-selected' : ''}`;
       // Auch gesperrte Knoten sind anklickbar: das Fenster erklaert dann,
       // was noch fehlt. Nur Starten geht nicht.

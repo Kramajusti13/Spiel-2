@@ -183,8 +183,7 @@ export class Paladin extends Enemy {
     ctx.ellipse(Math.round(this.x), Math.round(this.y + this.hh), this.hw * 0.8, 5, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    if (this.state 
-=== 'windup') this.drawTelegraph(ctx);
+    if (this.state === 'windup') this.drawTelegraph(ctx);
     if (this.state === 'chargeWindup') this.drawChargeTelegraph(ctx);
     if (this.state === 'healWindup') this.drawHealTelegraph(ctx);
     this.drawBody(ctx);
@@ -241,8 +240,7 @@ export class Paladin extends Enemy {
     ctx.strokeStyle = 'rgba(0,0,0,0.5)';
     ctx.lineWidth = 2;
     ctx.strokeRect(Math.round(this.x - w / 2) + 1, Math.round(cy - h / 2 + 1),
-      Math.
-round(w) - 2, Math.round(h) - 2);
+      Math.round(w) - 2, Math.round(h) - 2);
     // Hammer beim Ausholen.
     if (this.state === 'windup') {
       const lift = 4 + 8 * this.windupProgress;

@@ -171,8 +171,7 @@ export class Frog extends Enemy {
     ctx.fill();
 
     // Aussenkante: zeigt die volle Reichweite von Anfang an. Ohne sie wuesste
-    // man erst kurz vor dem E
-inschlag, wie gross die Flaeche wirklich wird.
+    // man erst kurz vor dem Einschlag, wie gross die Flaeche wirklich wird.
     ctx.globalAlpha = 0.45 + 0.45 * t;
     ctx.strokeStyle = COLORS.impactRing;
     ctx.lineWidth = 2;
@@ -226,8 +225,7 @@ inschlag, wie gross die Flaeche wirklich wird.
     // Zwei Augen oben — macht aus dem Rechteck erkennbar einen Frosch.
     ctx.fillStyle = COLORS.frogAccent;
     const ey = Math.round(cy - h / 2 - 1);
-    ctx.fillRect(Math.round(this.x - w / 2 + 3)
-, ey, 4, 4);
+    ctx.fillRect(Math.round(this.x - w / 2 + 3), ey, 4, 4);
     ctx.fillRect(Math.round(this.x + w / 2 - 7), ey, 4, 4);
     ctx.restore();
   }

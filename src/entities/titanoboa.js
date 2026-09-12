@@ -284,8 +284,7 @@ export class Titanoboa extends Enemy {
     const s = this.state;
     return s === 'tailWindup' || s === 'tailStrike'
       || s === 'biteWindup' || s === 'biteStrike'
-      || s === 'spitWindup' || s 
-=== 'spitStrike';
+      || s === 'spitWindup' || s === 'spitStrike';
   }
 
   chooseAttack(game, player) {

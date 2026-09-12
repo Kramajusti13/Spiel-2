@@ -351,8 +351,7 @@ ufliegen, und ein Hieb gaelte als
     if (player.dead) return false;
 
     const radius = opt.radius ?? this.def.strikeRadius;
-    const damage = opt.
-damage ?? this.def.damage;
+    const damage = opt.damage ?? this.def.damage;
     const arc = opt.arc ?? this.def.strikeArc;
     const angleToPlayer = Math.atan2(player.y - this.y, player.x - this.x);
 
