@@ -52,7 +52,6 @@ export class OrcChieftain extends Enemy {
   }
 
   /** Doppelschlag: nur in Phase 3 nach abg
-
 eschlossenem Bruellen. */
   get wutmodusActive() {
     return this.phase === 3 && this.wutIntroDone;
@@ -111,8 +110,7 @@ eschlossenem Bruellen. */
       if (d <= this.def.attackRange + player.hw) {
         this.setState('windup');
         this.struck = false;
-       
- 
+        
 this.hitsInCombo = 0;
         return;
       }
@@ -168,8 +166,7 @@ this.hitsInCombo = 0;
       }
       return true;
     }
-    if (this.state === 'recover
-')
+    if (this.state === 'recover')
  {
       if (this.stateTime >= this.def.recoverTime) {
         this.hitsInCombo = 0;
@@ -237,8 +234,7 @@ this.hitsInCombo = 0;
         this.spawnGoblins(game);
         this.kriegsrufCooldown = k.cooldown;
         game.shake(6, 0.3);
-        game.spawnDamage
-Number(this.x, this.y - this.hh - 20, 'Kriegsruf!',
+        game.spawnDamageNumber(this.x, this.y - this.hh - 20, 'Kriegsruf!',
           COLORS.bossAccent, true);
         this.setState('kriegsrufRecover');
       }
@@ -358,8 +354,7 @@ Number(this.x, this.y - this.hh - 20, 'Kriegsruf!',
 
     let fill = this.baseColor;
     if (attacking) fill = COLORS.enemyWindup;
-    if (this.state ==
-= 'stunned') fill = '#5a4a44';
+    if (this.state === 'stunned') fill = '#5a4a44';
     if (this.wutmodusActive) fill = COLORS.blood;
     if (this.hitFlash > 0) fill = COLORS.enemyHit;
 
