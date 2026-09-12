@@ -1,5 +1,5 @@
 /**
- * config.js â ALLE Zahlenwerte des Spiels.
+ * config.js — ALLE Zahlenwerte des Spiels.
  *
  * Balance-Aenderungen gehoeren ausschliesslich hierher; im uebrigen Code stehen
  * keine "magischen Zahlen". Werte, die noch nicht benutzt werden (Shop, Skills,
@@ -36,7 +36,7 @@ export const PLAYER = {
   attack: 10,
   defense: 0,
   speed: 120,          // px/s
-  critChance: 0.05,    // 5 % â doppelter Schaden
+  critChance: 0.05,    // 5 % — doppelter Schaden
   critMultiplier: 2,
 
   maxStamina: 100,         // ab Schritt 8
@@ -60,12 +60,12 @@ export const PLAYER = {
 /**
  * Wie Angriffskraft und Waffenschaden zusammengerechnet werden.
  *
- * Abschnitt 4 sagt nur "wird mit Waffenschaden verrechnet" â beides ist denkbar:
+ * Abschnitt 4 sagt nur "wird mit Waffenschaden verrechnet" — beides ist denkbar:
  *   'add'   Schaden = Angriffskraft + Waffenschaden      (10 + 10 = 20)
  *   'scale' Schaden = Waffenschaden * (1 + Angriffskraft/100)   (10 * 1,1 = 11)
  *
  * Mit 'add' toetet der erste H
-ieb einen Slime (20 HP) sofort â Level 1 ist dann
+ieb einen Slime (20 HP) sofort — Level 1 ist dann
  * reines Tutorial. Mit 'scale' braucht ein Slime zwei Hiebe, die Ausholphase der
  * Gegner kommt oefter zum Tragen und das Spiel wird spuerbar fordernder.
  */
@@ -75,7 +75,7 @@ export const COMBAT = {
 
 /** Schwert: Stufen aus dem Shop (Abschnitt 5) + Kampfgefuehl. */
 export const SWORD = {
-  /** Cooldown zwischen zwei Hieben â 1 Hieb / 0,5 s. */
+  /** Cooldown zwischen zwei Hieben — 1 Hieb / 0,5 s. */
   cooldown: 0.5,
   /** Dauer der sichtbaren Schwungbewegung. */
   swingTime: 0.18,
@@ -95,10 +95,10 @@ export const SWORD = {
 };
 
 /**
- * Schild (Abschnitt 3 und 5) â Rechtsklick halten.
+ * Schild (Abschnitt 3 und 5) — Rechtsklick halten.
  *
  * Geblockt wird nur, was von vorne kommt: der Angreifer muss im Blickwinkel
- * liegen (blockArc, gesamt 120Â°). Von hinten trifft voller Schaden â dadurch
+ * liegen (blockArc, gesamt 120°). Von hinten trifft voller Schaden — dadurch
  * ist die Maus-Blickrichtung spielrelevant und nicht nur Deko.
  */
 export const SHIELD = {
@@ -109,7 +109,7 @@ export const SHIELD = {
   /**
    * Obergrenze der GESAMTEN Schadensreduktion beim Blocken, Schild und Skill
    * "Blockmeister" zusammengerechnet (Erweiterung 2, Abschnitt 5: Deckel bei
-   * 90 %). Vorher 0,95 â mit Max-Stufe 15 braeuchte der Blockmeister allein
+   * 90 %). Vorher 0,95 — mit Max-Stufe 15 braeuchte der Blockmeister allein
    * schon 150 %, deshalb ist diese Zeile jetzt eine harte Grenze und keine
    * Vorsichtsmassnahme mehr.
    */
@@ -117,9 +117,10 @@ export const SHIELD = {
   /** Rueckstoss eines geblockten Treffers im Vergleich zum ungeblockten. */
   blockedKnockbackFactor: 0.35,
   /**
-   * Darf man mit erhobenem Schild
+   * Darf man mit erhobenem Schil
+d zuschlagen?
    * false = Schild senken (Rechtsklick loslassen), dann erst hauen.
-   * Steht im Dokument nicht â auf false fuehlt sich der Block wie eine
+   * Steht im Dokument nicht — auf false fuehlt sich der Block wie eine
    * echte Entscheidung an statt wie ein Dauerbonus.
    */
   canAttackWhileBlocking: false,
@@ -133,13 +134,13 @@ export const SHIELD = {
 };
 
 /**
- * Ruestung â vierter Ausruestungsslot (Erweiterung 2, Abschnitt 7).
+ * Ruestung — vierter Ausruestungsslot (Erweiterung 2, Abschnitt 7).
  *
  * Passive Verteidigung: sie wirkt immer, unabhaengig vom Schild und davon, aus
  * welcher Richtung der Treffer kommt. Damit ist sie das ruhige Gegenstueck zum
  * Schild, das nur nach vorne schuetzt und Tempo kostet.
  *
- * Stufe 0 heisst "keine Ruestung" â genauso wie beim Schild, damit beide Slots
+ * Stufe 0 heisst "keine Ruestung" — genauso wie beim Schild, damit beide Slots
  * dieselbe Kauf-Logik benutzen koennen (das Dokument: "kein neues System
  * noetig").
  */
@@ -154,7 +155,7 @@ export const ARMOR = {
 };
 
 /**
- * Trankguertel â wie viele Heiltraenke gleichzeitig ins Gepaeck passen
+ * Trankguertel — wie viele Heiltraenke gleichzeitig ins Gepaeck passen
  * (Erweiterung 2, Abschnitt 7).
  *
  * Der Startwert 3 ist der bisherige CONSUMABLES.potion.maxCarried; ab hier
@@ -170,13 +171,15 @@ export const POTION_BELT = {
 };
 
 /**
- * Schmied â permanente Waffenschaerfung (Erweiterung 2, Abschnitt 7).
+ * Schmied — permanente Waf
+fenschaerfung (Erweiterung 2, Abschnitt 7).
+ *
  * Erhoeht den Schaden der GERADE GEFUEHRTEN Waffe dauerhaft, bis zu viermal
  * pro Waffe. Der Preis verdoppelt sich mit jedem Kauf: die ersten +5 sind
  * billig, die letzten kosten so viel wie eine ganze Waffe.
  *
  * Gezaehlt wird pro Waffe getrennt. Wer alle drei schaerfen will, zahlt
- * dreimal â und genau das ist der Sinn: Gold soll auch dann noch ein Ziel
+ * dreimal — und genau das ist der Sinn: Gold soll auch dann noch ein Ziel
  * haben, wenn alle Ausruestung gekauft ist.
  */
 export const SMITH = {
@@ -190,13 +193,13 @@ export const SMITH = {
 
 /**
  * Pfeil und Bogen (Abschnitt 3 und 5).
- * Pfeile sind unbegrenzt, aber mit Cooldown â keine Munitionsverwaltung.
+ * Pfeile sind unbegrenzt, aber mit Cooldown — keine Munitionsverwaltung.
  */
 export const BOW = {
   /** 1 Schuss / 0,8 s. Der Kompositbogen halbiert das ueber fireRateFactor. */
   cooldown: 0.8,
   arrowSpeed: 420,
-  /** Flugzeit in Sekunden â daraus ergibt sich die Reichweite (420 * 1,4 = 588 px). */
+  /** Flugzeit in Sekunden — daraus ergibt sich die Reichweite (420 * 1,4 = 588 px). */
   arrowLife: 1.4,
   /** Startpunkt des Pfeils vor der Figur, damit er nicht in ihr steckt. */
   muzzleOffset: 12,
@@ -214,24 +217,24 @@ export const BOW = {
 };
 
 /**
- * Speer (Erweiterung 2, Abschnitt 3) â Nah- UND Fernkampfwaffe.
+ * Speer (Erweiterung 2, Abschnitt 3) — Nah- UND Fernkampfwaffe.
  *
  * Linksklick stoesst mit groesserer Reichweite als das Schwert, Taste F wirft
  * ihn ueber die volle Distanz. Das Dokument laesst "Rechtsklick oder eigene
- * Taste" offen â Rechtsklick ist hier seit Schritt 7 das Schild, und ein
+ * Taste" offen — Rechtsklick ist hier seit Schritt 7 das Schild, und ein
  * Speerkaempfer soll nicht auf den Block verzichten muessen. Also eine eigene
  * Taste.
  *
  * DAS ANGRIFFSTEMPO IST DER KERN DER BALANCE (Abschnitt
  3):
  * Mit dem Takt des Schwerts (0,5 s) macht der Speer auf Hoechststufe
- * 90 / 0,5 = 180 Schaden pro Sekunde gegen 100 des Schwerts â bei GROESSERER
+ * 90 / 0,5 = 180 Schaden pro Sekunde gegen 100 des Schwerts — bei GROESSERER
  * Reichweite und mit Wurf obendrauf. Niemand wuerde je wieder ein Schwert
  * anfassen. Mit 0,8 s sind es 112 gegen 100: nah genug beieinander, dass die
  * Wahl von der Situation abhaengt und nicht von der Tabelle.
  */
 export const SPEAR = {
-  /** 1 Stoss / 0,8 s â langsamer als das Schwert (0,5 s). Siehe oben. */
+  /** 1 Stoss / 0,8 s — langsamer als das Schwert (0,5 s). Siehe oben. */
   cooldown: 0.8,
   /** Dauer der sichtbaren Stossbewegung. */
   thrustTime: 0.2,
@@ -243,11 +246,11 @@ export const SPEAR = {
   /**
    * Oeffnungswinkel des Treffer-Kegels in Grad. Deutlich enger als der
    * Schwertschwung (100 Grad): ein Stoss geht geradeaus. Damit hat jede Waffe
-   * ihre eigene Staerke â das Schwert raeumt Gruppen, der Speer trifft weit,
+   * ihre eigene Staerke — das Schwert raeumt Gruppen, der Speer trifft weit,
    * aber nur, was direkt vor einem steht.
    */
   arc: 40,
-  /** Rueckstoss auf getroffene Gegner â schwerer als das Schwert. */
+  /** Rueckstoss auf getroffene Gegner — schwerer als das Schwert. */
   knockback: 210,
 
   /** Wurf (Rechtsklick-Alternative: Taste F). */
@@ -272,14 +275,15 @@ export const SPEAR = {
     { name: 'Holzspeer', damage: 20, price: 100 },
     { name: 'Rostiger Speer', damage: 40, price: 200 },
     { name: 'Stahlspeer', damage: 60, price: 400 },
-    { name: 'Speer der Vernichtung', damage: 90, price: 700 },
+    { name: 'Speer der Vernichtung', dama
+ge: 90, price: 700 },
   ],
 };
 
 /**
  * Giftwolke und Vergiftung (Erweiterung 2, Abschnitt 1).
  *
- * Die Wolke ist kein Flugkoerper, sondern eine Flaeche, die liegen bleibt â
+ * Die Wolke ist kein Flugkoerper, sondern eine Flaeche, die liegen bleibt —
  * der einzige Angriff im Spiel, der den Angreifer ueberdauert. Wer sie
  * beruehrt, ist danach vergiftet.
  *
@@ -311,7 +315,7 @@ export const POISON = {
  * Stein des Gorillas (Erweiterung 2, Abschnitt 1).
  *
  * Eigener Block statt Mitbenutzung von BOW: der Stein soll ausdruecklich
- * anders fliegen als ein Pfeil â langsamer, dicker, sichtbar trudelnd. Genau
+ * anders fliegen als ein Pfeil — langsamer, dicker, sichtbar trudelnd. Genau
  * das ist seine Daseinsberechtigung als Angriff, dem man ausweichen kann.
  */
 export const STONE = {
@@ -321,7 +325,7 @@ export const STONE = {
   hitRadius: 7,
   /** Sichtbarer Radius des Steins. */
   radius: 7,
-  /** Umdrehungen pro Sekunde â das Trudeln macht ihn im Flug lesbar. */
+  /** Umdrehungen pro Sekunde — das Trudeln macht ihn im Flug lesbar. */
   spin: 2.5,
   /** Wie lange die Bruchstuecke nach dem Aufschlag liegen bleiben. */
   debrisTime: 0.35,
@@ -332,7 +336,7 @@ export const STONE = {
  *
  * Der Spieler besitzt bis zu drei Waffen, nimmt aber nur zwei mit ins Level.
  * Gewechs
-elt wird ausschliesslich auf dem Dashboard â im Level liegen die
+elt wird ausschliesslich auf dem Dashboard — im Level liegen die
  * beiden mitgenommenen Waffen auf den Tasten 1 und 2 wie eh und je, die
  * Steuerung aendert sich also nicht.
  *
@@ -345,40 +349,40 @@ export const LOADOUT = {
   slots: 2,
   /**
    * Ab wie vielen besessenen Waffen das Fenster ueberhaupt erscheint. Mit nur
-   * einer Waffe gaebe es nichts zu waehlen â dann waere der Knopf eine
+   * einer Waffe gaebe es nichts zu waehlen — dann waere der Knopf eine
    * Enttaeuschung (Abschnitt 4: "erscheint erst, sobald der Spieler
    * mindestens zwei Waffen besitzt").
    */
   minWeapons: 2,
   /** Anzeigereihenfolge und Symbol im Fenster. */
   symbols: {
-    sword: 'â',
-    spear: 'â¤',
-    bow: 'â¹',
+    sword: '⚔',
+    spear: '➤',
+    bow: '➹',
   },
 };
 
 /**
- * Ausweichrolle (Abschnitt 3 und 4) â Leertaste.
+ * Ausweichrolle (Abschnitt 3 und 4) — Leertaste.
  *
  * Kostet Ausdauer (PLAYER.rollCost) und macht kurz unverwundbar. Gerollt wird
  * in Laufrichtung; steht man still, in Blickrichtung.
  */
 export const ROLL = {
   distance: 94,       // px pro Rolle (eine halbe Kachel kuerzer als die urspruenglichen 110)
-  duration: 0.28,     // s â daraus ergibt sich das Tempo
+  duration: 0.28,     // s — daraus ergibt sich das Tempo
   invulnTime: 0.24,   // s unverwundbar, etwas kuerzer als die Rolle selbst
   /** Nachbilder waehrend der Rolle (nur Platzhaltergrafik). */
   trailInterval: 0.045,
   trailLife: 0.22,
 };
 
-/** Verbrauchsgueter â ab Schritt 9. */
+/** Verbrauchsgueter — ab Schritt 9. */
 export const CONSUMABLES = {
   /**
    * `maxCarried` ist nur noch der STARTWERT; die tatsaechliche Obergrenze
    * liefert der Trankguertel (POTION_BELT). Wer sie braucht, fragt
-   * maxPotions() in shop.js â nicht diesen Wert.
+   * maxPotions() in shop.js — nicht diesen Wert.
    */
   potion: { name: 'Heiltrank', price: 25, heal: 40, maxCarried: 3 },
   respec: { name: 'Skill-Reset', price: 100 },
@@ -389,7 +393,7 @@ export const CONSUMABLES = {
  *
  * Zwei Waehrungen, sonst nichts: Gold kauft Ausruestung, XP macht Stufen.
  * Skillp
-unkte kommen ausschliesslich aus Stufenaufstiegen â die alte Regel
+unkte kommen ausschliesslich aus Stufenaufstiegen — die alte Regel
  * "1 Punkt pro 15 Kills" ist damit ersetzt.
  */
 export const XP = {
@@ -397,12 +401,12 @@ export const XP = {
   baseCost: 100,
   /**
    * Jede weitere Stufe kostet das 1,25-fache der vorigen
-   * (Erweiterung 2, Abschnitt 6 â ersetzt die fruehere 1,4).
+   * (Erweiterung 2, Abschnitt 6 — ersetzt die fruehere 1,4).
    *
    * Der Grund ist rein rechnerisch: mit 7 Skills a 15 Stufen gibt es 105
    * Slots. Bei x1,4 waere Stufe 20 rund 90.000 XP entfernt und die neuen
    * Skillstufen blosse Dekoration. Mit x1,25 kostet Stufe 20 noch 5.551 XP,
-   * gesamt 27.354 â ein Durchlauf aller 10 Level auf Normal bringt rund
+   * gesamt 27.354 — ein Durchlauf aller 10 Level auf Normal bringt rund
    * 5.500 XP (etwa Stufe 13), Alptraum (x3 XP) noch einmal rund 16.400 dazu.
    */
   growth: 1.25,
@@ -415,7 +419,7 @@ export const XP = {
   // --- Belohnung pro Stufenaufstieg ---
   skillPointsPerLevel: 1,
   hpPerLevel: 5,
-  /** Volle Heilung â macht einen Aufstieg mitten im Kampf zum Moment. */
+  /** Volle Heilung — macht einen Aufstieg mitten im Kampf zum Moment. */
   fullHealOnLevelUp: true,
 
   // --- Darstellung ---
@@ -429,12 +433,12 @@ export const XP = {
 };
 
 /**
- * Skillbaum (Erweiterung 2, Abschnitt 5 â ersetzt die Tabelle mit Max-Stufe 5).
+ * Skillbaum (Erweiterung 2, Abschnitt 5 — ersetzt die Tabelle mit Max-Stufe 5).
  *
  * Max-Stufe ueberall 15, dazu der Speermeister als siebter Skill. Das sind
  * 7 x 15 = 105 Slots; ein durchgespieltes Spiel bringt gut ein Fuenftel davon.
  * Genau das ist der Zweck: man kann nicht alles haben, sondern entscheidet
- * sich fuer eine Bauweise â Panzer, Bogenschuetze oder Speerkaempfer.
+ * sich fuer eine Bauweise — Panzer, Bogenschuetze oder Speerkaempfer.
  */
 export const SKILLS = {
   tree: {
@@ -450,7 +454,7 @@ export const SKILLS = {
 
   /**
    * Zwei Deckelungen (Erweiterung 2, Abschnitt 5). Ohne sie bricht das Spiel
-   * bei voll ausgebautem Skill â beides ist Pflicht, nicht Feinschliff:
+   * bei voll ausgebautem Skill — beides ist Pflicht, nicht Feinschliff:
    *
    *   Geschwindigkeit  15 x 8 %  = +120 % Tempo. Der Spieler rennt schneller,
    *                    als die Kamera folgen kann, und laeuft an Gegnern
@@ -459,7 +463,7 @@ export const SKILLS = {
    *                    ein geblockter Treffer eine Heilung.
    *
    * Der Block-Deckel gilt fuer die GESAMTE Reduktion inklusive Schild und
-   * steht deshalb weiter unter SHIELD.maxBlock â es gibt nur eine Obergrenze,
+   * steht deshalb weiter unter SHIELD.maxBlock — es gibt nur eine Obergrenze,
    * nicht zwei, die sich widersprechen koennen.
    */
   caps: {
@@ -470,7 +474,7 @@ export const SKILLS = {
 
 /**
  * Gemeinsames Verhalten aller Gegner beim Laufen.
- * Kein Pathfinding â der Gegner tastet nur, ob der Weg frei ist, und weicht
+ * Kein Pathfinding — der Gegner tastet nur, ob der Weg frei ist, und weicht
  * sonst um einen der Winkel aus. Reicht fuer offene Level und ist billig.
  */
 export const AI = {
@@ -480,40 +484,9 @@ export const AI = {
   avoidAngles: [40, 75, 110, 145],
 };
 
-  /**
-   * Verhalten auf Schwer/Alptraum (VERBESSERUNGEN_1 Abschnitt 5).
-   * surround: Gegner laufen zunaechst auf einen Ringplatz um den Spieler zu,
-   * bevor sie zuschlagen — sie kommen aus verschiedenen Richtungen statt als
-   * Traube von vorn. Ring-Radius ist relativ zur Angriffsreichweite, damit
-   * kleine Gegner naeher am Spieler warten als grosse.
-   */
-  hardBehavior: {
-    /** Radius des Anlaufrings, addiert zur eigenen attackRange. */
-    ringPadding: 24,
-    /** Ab dieser Naehe zum Ring wird direkt der Spieler angelaufen. */
-    ringSnap: 10,
-    /** Max. Gegner gleichzeitig in der Ausholphase (staggerAttacks). */
-    maxConcurrentWindups: 2,
-    /** Wartezeit fuer die Ueberzaehligen, zufaellig zwischen min und max (s). */
-    staggerDelayMin: 0.5,
-    staggerDelayMax: 1.0,
-    /**
-     * Wenn der Spieler blockt, weichen Gegner um mindestens diesen Winkel
-     * (Grad) vom Blockzentrum ab — sie kommen bevorzugt von der Seite/hinten.
-     * Muss > SHIELD.blockArc / 2 sein (60°), sonst laufen sie in den Block.
-     */
-    shieldSidestepDeg: 80,
-    /**
-     * Alptraum-Verhalten (punishDodge, VERBESSERUNGEN_1 Abschnitt 5):
-     * Ausweichrolle abwarten und 0,3 s nach dem Rollen-Ende zuschlagen —
-     * genau der Moment, in dem der Spieler noch nicht wieder blocken kann.
-     */
-    dodgePunishDelay: 0.3,
-  },
-
 /**
  * Gegner (Abschnitt 6).
- * Jeder Angriff hat eine sichtbare Ausholphase von mind. 0,4 s â Fairness-Regel.
+ * Jeder Angriff hat eine sichtbare Ausholphase von mind. 0,4 s — Fairness-Regel.
  */
 export const ENEMIES = {
   slime: {
@@ -521,7 +494,7 @@ export const ENEMIES = {
     maxHp: 20,
     damage: 5,
     defense: 0,
-    speed: 45,             // px/s â "laeuft langsam direkt auf den Spieler zu"
+    speed: 45,             // px/s — "laeuft langsam direkt auf den Spieler zu"
     aggroRadius: 260,      // ab hier verfolgt er
     loseAggroRadius: 420,  // ab hier verliert er den Spieler wieder
     attackRange: 30,       // Distanz, 
@@ -542,7 +515,7 @@ ab der er ausholt
     name: 'Goblin', maxHp: 35, damage: 10, defense: 0, speed: 95,
     aggroRadius: 300, loseAggroRadius: 460, attackRange: 34, strikeRadius: 44,
     windupTime: 0.4, strikeTime: 0.12, recoverTime: 0.7,
-    /** Nach dem Schlag zurueckweichen â das macht ihn schwer zu treffen. */
+    /** Nach dem Schlag zurueckweichen — das macht ihn schwer zu treffen. */
     retreatDistance: 90, retreatTime: 0.5, retreatSpeedFactor: 1.15,
     hitbox: { w: 20, h: 24 }, sprite: { w: 22, h: 26, offsetY: -2 },
     knockbackResist: 0.1, gold: { min: 8, max: 15 }, xp: 20,
@@ -575,21 +548,21 @@ ab der er ausholt
   },
 
   /**
-   * Gorilla â Werfer (Erweiterung 2, Abschnitt 1). Erster Gegner des Urwalds.
+   * Gorilla — Werfer (Erweiterung 2, Abschnitt 1). Erster Gegner des Urwalds.
    *
    * Funktioniert wie der Bogenschuetze: Abstand halten, aus der Distanz
    * werfen. Zwei Unterschiede machen ihn zu einem eigenen Gegner statt zu
    * einem Bogenschuetzen mit mehr Leben:
    *
    *   1. Der Stein ist mit 250 px/s deutlich langsamer als ein Pfeil (300).
-   *      Man KANN ihm ausweichen, wenn man ihn kommen sieht â deshalb muss er
+   *      Man KANN ihm ausweichen, wenn man ihn kommen sieht — deshalb muss er
    *      sichtbar und langsam sein, nicht nur ein Schadensereignis.
    *   2. Ein Nahkampftreffer draengt ihn ein Stueck zurueck, statt ihn stehen
    *      zu lassen. Wer ihn stellt, wird nicht sofort belohnt: er weicht aus
    *      und wirft weiter.
    *
    * Werte gelten fuer Normal; die Schwierigkeitsstufen multiplizieren wie
-   * gehabt (100 HP, 30 Schaden, 55 XP, 60â80 Gold).
+   * gehabt (100 HP, 30 Schaden, 55 XP, 60–80 Gold).
    */
   gorilla: {
     name: 'Gorilla', maxHp: 100, damage: 30, defense: 0, speed: 60,
@@ -600,9 +573,9 @@ ab der er ausholt
     strafeSpeedFactor: 0.5, strafeChangeTime: 1.6,
     /** "wirft alle 2 s einen Stein". */
     throwInterval: 2.0,
-    /** >= 0,4 s sichtbare Ausholphase â Fairness-Regel, auf allen Stufen gleich. */
+    /** >= 0,4 s sichtbare Ausholphase — Fairness-Regel, auf allen Stufen gleich. */
     windupTime: 0.5, strikeTime: 0.1, recoverTime: 0.4,
-    /** "ca. 250 px/s" â langsam genug zum Ausweichen. */
+    /** "ca. 250 px/s" — langsam genug zum Ausweichen. */
     projectileSpeed: 250,
     stoneKnockback: 90,
     /**
@@ -611,22 +584,22 @@ ab der er ausholt
      * Speer aus 400 px ist kein Nahkampf, ein Speerstoss aus 70 px schon.
      */
     retreatTriggerRange: 90,
-    retreatDistance: 120, retreatTime: 0.45, retreatSpeedFactor: 1.3,
+    retreatDistance nce: 120, retreatTime: 0.45, retreatSpeedFactor: 1.3,
     hitbox: { w: 28, h: 28 }, sprite: { w: 30, h: 32, offsetY: -2 },
     knockbackResist: 0.5, gold: { min: 60, max: 80 }, xp: 55,
   },
 
   /**
-   * Frosch â Sprung-Angreifer (Erweiterung 2, Abschnitt 1).
+   * Frosch — Sprung-Angreifer (Erweiterung 2, Abschnitt 1).
    *
    * "Laeuft mittelschnell auf den Spieler zu. In Reichweite springt er hoch
    * und landet mit einem Flaechenschaden."
    *
    * Er ist der erste Gegner, dessen Angriff eine FLAECHE trifft statt eines
-   * Punktes â ausweichen heisst hier weglaufen, nicht danebenstehen. Damit das
+   * Punktes — ausweichen heisst hier weglaufen, nicht danebenstehen. Damit das
    * fair bleibt, liegt waehrend des ganzen Fluges ein Zielkreis auf dem Boden:
    * er zeigt genau den Fleck, der gleich Schaden nimmt. Der Kreis ist die
-   * Ausholphase, und mit 1,2 s ist sie die laengste im Spiel â die Flaeche ist
+   * Ausholphase, und mit 1,2 s ist sie die laengste im Spiel — die Flaeche ist
    * gross, also braucht man Zeit, sie zu verlassen.
    *
    * Waehrend des Sprungs ist er nicht angreifbar (Abschnitt 1). Das ist der
@@ -645,11 +618,11 @@ ab der er ausholt
      * lang ein Zielkreis auf dem Boden".
      */
     airTime: 1.2,
-    /** Scheitelhoehe des Sprungs in Pixeln â reine Darstellung. */
+    /** Scheitelhoehe des Sprungs in Pixeln — reine Darstellung. */
     jumpHeight: 46,
     /** "Einschlagsradius: 96 px (3 Kacheln)". */
     impactRadius: 96,
-    /** Nach der Landung steht er offen da â das ist das Zeitfenster zum Zuschlagen. */
+    /** Nach der Landung steht er offen da — das ist das Zeitfenster zum Zuschlagen. */
     recoverTime: 0.8,
     /** Mindestpause zwischen zwei Spruengen. */
     jumpCooldown: 2.2,
@@ -665,12 +638,12 @@ gress und die
   },
 
   /**
-   * Giftpilz â Debuff-Gegner (Erweiterung 2, Abschnitt 1).
+   * Giftpilz — Debuff-Gegner (Erweiterung 2, Abschnitt 1).
    *
    * "Rennt auf den Spieler zu und versprueht in Reichweite eine Giftwolke."
    *
    * Viel Leben, wenig direkter Schaden: er ist ein AUSDAUER-Gegner, kein
-   * Bedrohungs-Gegner. Einer allein ist kaum gefaehrlich â mehrere zusammen
+   * Bedrohungs-Gegner. Einer allein ist kaum gefaehrlich — mehrere zusammen
    * verwandeln den Boden in Flaechen, die man nicht betreten darf, und genau
    * deshalb funktioniert er in Gruppen.
    *
@@ -681,7 +654,7 @@ gress und die
   giftpilz: {
     name: 'Giftpilz', maxHp: 140, damage: 20, defense: 0, speed: 70,
     aggroRadius: 320, loseAggroRadius: 480,
-    /** Ab dieser Distanz verspruecht er â knapp ausserhalb des Wolkenradius. */
+    /** Ab dieser Distanz verspruecht er — knapp ausserhalb des Wolkenradius. */
     attackRange: 110,
     /** >= 0,4 s sichtbare Ausholphase (Fairness-Regel, auf allen Stufen gleich). */
     windupTime: 0.55, strikeTime: 0.15, recoverTime: 1.0,
@@ -692,13 +665,13 @@ gress und die
   },
 
   /**
-   * Krokodil â Hinterhalt (Erweiterung 2, Abschnitt 1).
+   * Krokodil — Hinterhalt (Erweiterung 2, Abschnitt 1).
    *
    * Der interessanteste neue Gegner und der, bei dem am meisten schiefgehen
    * kann. Sein Kreislauf hat drei Teile:
    *
    *   1. 3 s abgetaucht. Nicht angreifbar, dafuer schnell (180 px/s).
-   *   2. Herausspringen und beissen â 0,5 s Ausholphase, dann 45 Schaden.
+   *   2. Herausspringen und beissen — 0,5 s Ausholphase, dann 45 Schaden.
    *   3. 4 s an der Oberflaeche. NUR hier kann es Schaden nehmen.
    *
    * ZWEI DINGE SIND PFLICHT, KEIN DETAIL (so steht es im Dokument):
@@ -706,7 +679,7 @@ gress und die
    *   Der Schatten. Waehrend es abgetaucht ist, zeigt ein sichtbarer Sch
 atten
    *   die ganze Zeit, wo es gerade ist. Ohne ihn waere das Krokodil ein
-   *   unfairer Zufallsgenerator â 45 Schaden aus dem Nichts, ohne Chance.
+   *   unfairer Zufallsgenerator — 45 Schaden aus dem Nichts, ohne Chance.
    *
    *   Das 4-Sekunden-Fenster. Ohne es waere es unbesiegbar: abgetaucht nimmt
    *   es keinen Schaden, und wenn es nie lange genug oben bliebe, koennte man
@@ -714,9 +687,9 @@ atten
    */
   krokodil: {
     name: 'Krokodil', maxHp: 160, damage: 45, defense: 0,
-    /** Grundtempo an der Oberflaeche â dort ist es traege und verwundbar. */
+    /** Grundtempo an der Oberflaeche — dort ist es traege und verwundbar. */
     speed: 55,
-    /** "bewegt sich schneller (180 px/s)" â abgetaucht. */
+    /** "bewegt sich schneller (180 px/s)" — abgetaucht. */
     submergedSpeed: 180,
     aggroRadius: 340, loseAggroRadius: 620,
     /** "Taucht 3 s im Boden ab." */
@@ -764,7 +737,7 @@ atten
   },
 
   /**
-   * Titanoboa â Endboss des Urwalds, zwei Phasen (Erweiterung 2, Abschnitt 1).
+   * Titanoboa — Endboss des Urwalds, zwei Phasen (Erweiterung 2, Abschnitt 1).
    *
    * PHASE 1 (100 % - 50 % HP): abgetaucht, versucht den Helden zu verschlingen.
    *   Ein Schatten wandert sichtbar ueber den Boden auf den Spieler zu. 1,5 s
@@ -772,7 +745,7 @@ atten
    *   dann noch darauf steht, wird verschlungen: 100 Schaden. Danach bleibt
    *   sie 3 s ueber der Erde und ist angreifbar.
    *
-   * PHASE 2 (unter 50 % HP): sie haeutet sich â kurze Pause, in der sie
+   * PHASE 2 (unter 50 % HP): sie haeutet sich — kurze Pause, in der sie
    *   verwundbar ist und der Spieler frei Schaden macht. Danach taucht sie
    *   nicht mehr ab, kaempft offen, macht +20 Schaden auf alle Angriffe,
    *   ist 30 % schneller und groesser.
@@ -791,20 +764,20 @@ atten
     phases: 2,
     /**
      * Unter diesem Lebensanteil beginnt Phase 2. Als Liste wie beim
-     * Ork-Haeuptling â der Lebensbalken des Bosses zeichnet daraus die Marken,
+     * Ork-Haeuptling — der Lebensbalken des Bosses zeichnet daraus die Marken,
      * an denen die naechste Phase beginnt.
      */
  
    phaseThresholds: [0.5],
 
     // --- Phase 1: abtauchen und verschlingen ---
-    /** Tempo unter der Erde â sie holt auf, ohne angreifbar zu sein. */
+    /** Tempo unter der Erde — sie holt auf, ohne angreifbar zu sein. */
     submergedSpeed: 150,
     /** Wie lange der Schatten wandert, bevor er sich festsetzt. */
     stalkTime: 2.2,
     /** "1,5 s bevor sie hochschiesst, bleibt der Schatten stehen und pulsiert". */
     lungeWarning: 1.5,
-    /** Radius, in dem das Verschlingen trifft â die Flaeche des Schattens. */
+    /** Radius, in dem das Verschlingen trifft — die Flaeche des Schattens. */
     swallowRadius: 62,
     /** Schaden des Verschlingens in Phase 1; Phase 2 rechnet phase2DamageBonus dazu. */
     swallowDamage: 100,
@@ -820,7 +793,7 @@ atten
     phase2DamageBonus: 20,
     /** "30 % schneller". */
     phase2SpeedFactor: 1.3,
-    /** "Groesser" â auch leichter zu treffen, das ist Absicht. */
+    /** "Groesser" — auch leichter zu treffen, das ist Absicht. */
     phase2SizeFactor: 1.35,
     /** Nahkampfbiss, nur in Phase 2. Grundschaden 50, mit Bonus 70. */
     biteRange: 62, biteRadius: 78,
@@ -830,95 +803,71 @@ atten
     knockbackResist: 0.95, gold: { min: 300, max: 300 }, xp: 500,
   },
 };
+
 /**
- * Questliste (Erweiterung, Abschnitt 3 / VERBESSERUNGEN_1 Abschnitt 8).
+ * Questliste (Erweiterung, Abschnitt 3).
  *
- * Drei Klassen: leicht, mittel, schwer. Pro Klasse ist immer genau eine Quest
- * aktiv (die naechste noch nicht abgeholte). Neue Quests sind nur eine Zeile
- * hier, kein Programmieraufwand.
+ * Absichtlich reine Daten: es gibt keinen Code pro Quest. Jeder Eintrag nennt
+ * nur einen Zaehler und einen Zielwert — neue Quests brauchen deshalb nichts
+ * als eine weitere Zeile hier, kein Programmieren.
  *
- * `counter` verweist auf die Zaehler aus stats.js:
+ * `counter` verweist auf die Zaehler aus stats.js (Schritt 7):
  *   kills:<typ>          Kills nach Monstertyp        z. B. kills:goblin
  *   weapon:<waffe>       Kills nach benutzter Waffe   z. B. weapon:bow
- *   level:<index>        wie oft dieses Level geschafft (0 = Waldlichtung)
+ *   level:<index>        wie oft dieses Level geschafft 
+(0 = Waldlichtung)
  *   difficulty:<stufe>   Level-Abschluesse auf dieser Stufe oder hoeher
  *   stat:<feld>          jedes Zahlenfeld aus stats.js
  *   heroLevel            die Stufe des Helden
  *   nightmareNoDeath     Level, die auf Alptraum ohne Tod geschafft sind
+ *
  *   stat:poisonFreeRuns   Level ohne eine einzige Vergiftung abgeschlossen
  *
  * `reward` kennt gold, xp, potions und skillPoints. Skillpunkte vergibt
- * ausschliesslich Quest 306 — sie ist die Kroenung des Spiels.
+ * ausschliesslich Quest 13 — sie ist die Kroenung des Spiels.
+ *
+ * Die Reihenfolge ist die Nachrueck-Reihenfolge: es sind immer die ersten drei
+ * noch nicht abgeholten Quests aktiv.
  */
 export const QUESTS = [
-  // --- Leichte Quests ---
-  { id: 101, text: 'Besiege 20 Schleims', counter: 'kills:slime', target: 20,
-    tier: 'leicht', reward: { gold: 60, xp: 100 } },
-  { id: 102, text: 'Besiege 15 Goblins', counter: 'kills:goblin', target: 15,
-    tier: 'leicht', reward: { gold: 80, xp: 120 } },
-  { id: 103, text: 'Sammle 300 Gold', counter: 'stat:goldEarned', target: 300,
-    tier: 'leicht', reward: { gold: 80, xp: 100 } },
-  { id: 104, text: 'Blocke 15 Angriffe', counter: 'stat:blocks', target: 15,
-    tier: 'leicht', reward: { gold: 70, xp: 120 } },
-  { id: 105, text: 'Besiege 10 Gegner mit dem Bogen', counter: 'weapon:bow', target: 10,
-    tier: 'leicht', reward: { gold: 90, xp: 150 } },
-  { id: 106, text: 'Spiele einen der Abschnitte 1-5 noch einmal durch',
-    shortText: 'Abschnitt 1-5 wiederholen', counter: 'replay1to5', target: 1,
-    tier: 'leicht', reward: { gold: 100, xp: 150 } },
-  { id: 107, text: 'Kaufe ein beliebiges Upgrade', counter: 'stat:purchases', target: 1,
-    tier: 'leicht', reward: { gold: 50, xp: 100 } },
-
-  // --- Mittlere Quests ---
-  { id: 201, text: 'Besiege 15 Gorillas', counter: 'kills:gorilla', target: 15,
-    tier: 'mittel', reward: { gold: 300, xp: 500 } },
-  { id: 202, text: 'Schaffe den Teich', counter: 'level:6', target: 1,
-    tier: 'mittel', reward: { gold: 350, xp: 600 } },
-  { id: 203, text: 'Besiege 20 Froesche', counter: 'kills:frog', target: 20,
-    tier: 'mittel', reward: { gold: 400, xp: 700 } },
-  { id: 204, text: 'Sammle 2.000 Gold', counter: 'stat:goldEarned', target: 2000,
-    tier: 'mittel', reward: { gold: 500, xp: 400 } },
-  { id: 205, text: 'Besiege 25 Giftpilze', counter: 'kills:giftpilz', target: 25,
-    tier: 'mittel', reward: { gold: 500, xp: 800 } },
-  { id: 206, text: 'Schaffe ein Level, ohne vergiftet zu werden',
-    shortText: 'Level ohne Vergiftung', counter: 'stat:poisonFreeRuns', target: 1,
-    tier: 'mittel', reward: { gold: 600, xp: 900 } },
-  { id: 207, text: 'Besiege 20 Gegner mit dem Speer', counter: 'weapon:spear', target: 20,
-    tier: 'mittel', reward: { gold: 600, xp: 800 } },
-  { id: 208, text: 'Erreiche Stufe 12', counter: 'heroLevel', target: 12,
-    tier: 'mittel', reward: { gold: 700, potions: 1 } },
-
-  // --- Schwere Quests ---
-  { id: 301, text: 'Besiege 15 Krokodile', counter: 'kills:krokodil', target: 15,
-    tier: 'schwer', reward: { gold: 1500, xp: 2000 } },
-  { id: 302, text: 'Schaffe ein Level auf Alptraum', counter: 'difficulty:nightmare',
-    target: 1, tier: 'schwer', reward: { gold: 1800, xp: 2500 } },
-  { id: 303, text: 'Besiege den Ork-Haeuptling auf Schwer',
-    counter: 'killDiff:orcChieftain:hard', target: 1,
-    tier: 'schwer', reward: { gold: 2000, xp: 3000 } },
-  { id: 304, text: 'Besiege die Titanoboa', counter: 'kills:titanoboa', target: 1,
-    tier: 'schwer', reward: { gold: 2500, xp: 3500 } },
-  { id: 305, text: 'Besiege die Titanoboa auf Alptraum',
-    counter: 'killDiff:titanoboa:nightmare', target: 1,
-    tier: 'schwer', reward: { gold: 3000, xp: 4000 } },
+  { id: 1, text: 'Besiege 10 Slimes', counter: 'kills:slime', target: 10,
+    reward: { gold: 50, xp: 50 } },
+  { id: 2, text: 'Schaffe die Waldlichtung', counter: 'level:0', target: 1,
+    reward: { gold: 75, xp: 100 } },
+  { id: 3, text: 'Sammle 200 Gold', counter: 'stat:goldEarned', target: 200,
+    reward: { gold: 100 } },
+  { id: 4, text: 'Besiege 20 Goblins', counter: 'kills:goblin', target: 20,
+    reward: { gold: 120, xp: 150 } },
+  { id: 5, text: 'Schaffe ein Level ohne zu sterben', counter: 'stat:cleanRuns', target: 1,
+    reward: { gold: 150, xp: 200 } },
+  { id: 6, text: 'Erreiche Stufe 5', counter: 'heroLevel', target: 5,
+    reward: { gold: 200, potions: 1 } },
+  { id: 7, text: 'Besiege 10 Gegner mit dem Bogen', counter: 'weapon:bow', target: 10,
+    reward: { gold: 150, xp: 150 } },
+  { id: 8, text: 'Blocke 15 Angriffe', counter: 'stat:blocks', target: 15,
+    reward: { gold: 100, xp: 100 } },
+  { id: 9, text: 'Schaffe ein Level auf Schwer', counter: 'difficulty:hard', target: 1,
+    reward: { gold: 250, xp: 300 } },
+  { id: 10, text: 'Besiege den Ork-Haeuptling', counter: 'kills:orcChieftain', target: 1,
+    reward: { gold: 500, xp: 500 } },
   {
-    id: 306,
+    id: 11,
     text: 'Schaffe alle Level auf Alptraum, jedes ohne zu sterben',
+    // Kurzform fuer die Fortschrittszeile: "Alptraum ohne Tod  3/5".
     shortText: 'Alptraum ohne Tod',
     counter: 'nightmareNoDeath',
-    target: 10,
-    tier: 'schwer', reward: { gold: 3000, xp: 5000, skillPoints: 5 },
+    target: 5,
+    reward: { gold: 1000, xp: 2000, skillPoints: 5 },
   },
 ];
 
-/** Ab welchem Level index das Quest-Menue freigeschaltet wird. */
-export const QUESTS_UNLOCK_LEVEL = 5;
-
+/** Wie viele Quests gleichzeitig aktiv sind (Abschnitt 3). */
 export const QUEST_SLOTS = 3;
 
 /**
  * Schwierigkeitsstufen bei Level-Wiederholung (Erweiterung, Abschnitt 4).
  *
- * Erhoeht werden ausschliesslich HP, Schaden und â nur auf Alptraum â das
+ * Erhoeht werden ausschliesslich HP, Schaden und — nur auf Alptraum — das
  * Bewegungstempo der Gegner. Die Ausholphase vor einem Angriff bleibt auf
  * ALLEN Stufen gleich lang: schneller reagieren zu muessen ist kein
  * Schwierigkeitsgrad, sondern fuehlt sich nur unfair an. Deshalb stehen
@@ -963,8 +912,7 @@ export const LOOT = {
   /** Anfangsschwung beim Drop. */
   scatterSpeed: 70,
   friction: 6,
-  
-/** Muenze ist erst nach dieser Zeit einsammelbar. */
+  /** Muenze ist erst nach dieser Zeit einsammelbar. */
   armTime: 0.15,
   bobAmplitude: 2.5,
   bobSpeed: 5,
@@ -975,7 +923,7 @@ export const LOOT = {
  * Tod & Wiederbelebung (Abschnitt 9).
  *
  * Kosten: 50 G beim ersten Tod pro Level, danach je 25 G mehr
- * (50 -> 75 -> 100 -> 125 â¦). Der Zaehler wird zurueckgesetzt, sobald das
+ * (50 -> 75 -> 100 -> 125 …). Der Zaehler wird zurueckgesetzt, sobald das
  * Level abgeschlossen ist.
  */
 export const DEATH = {
@@ -991,7 +939,7 @@ export const DEATH = {
 };
 
 /**
- * Ton (Abschnitt 8). Alle Lautstaerken 0â¦1.
+ * Ton (Abschnitt 8). Alle Lautstaerken 0…1.
  * Stummschalten im Spiel mit M.
  */
 export const AUDIO = {
@@ -1008,7 +956,7 @@ export const AUDIO = {
  * Sprites (Abschnitt 8): alle Assets sind 32x32.
  * Solange kein Bild geladen ist, zeichnet gfx.js Platzhalter in der Groesse
  * `sprite.w` x `sprite.h`. Mit Bild wird quadratisch in `spriteScale * 32`
- * gezeichnet â so passen Kenney-Kacheln ohne Verzerrung.
+ * gezeichnet — so passen Kenney-Kacheln ohne Verzerrung.
  */
 export const SPRITES = {
   /** Kantenlaenge einer Sprite-Quelldatei. */
@@ -1056,12 +1004,12 @@ export const UI = {
 };
 
 /**
- * Farbpalette â duester-mittelalterlich (Abschnitt 8).
+ * Farbpalette — duester-mittelalterlich (Abschnitt 8).
  * Solange keine Sprites geladen sind, zeichnet gfx.js farbige Rechtecke in diesen Farben.
  */
 export const COLORS = {
   background: '#14131a',
-  // Level 1 â Waldlichtung
+  // Level 1 — Waldlichtung
   grass: '#33402f',
   grassDark: '#2b3628',
   path: '#463f33',
@@ -1069,22 +1017,22 @@ export const COLORS = {
   wallTop: '#4a4955',
   tree: '#243021',
   treeTop: '#2e3d29',
-  // Level 2 und 5 â Hoehle
+  // Level 2 und 5 — Hoehle
   caveFloor: '#2e2b31',
   caveFloorDark: '#26242a',
   caveWall: '#3a3640',
   caveWallTop: '#494452',
   rock: '#2b2932',
   rockTop: '#3a3742',
-  // Level 3 â Ruinen
+  // Level 3 — Ruinen
   ruinFloor: '#3a3a3d',
   ruinFloorDark: '#323235',
-  // Level 4 â Orklager
+  // Level 4 — Orklager
   dirt: '#463c30',
   dirtDark: '#3d352b',
   palisade: '#4a3a28',
   palisadeTop: '#5c4a33',
-  // Level 5 â Bosskammer
+  // Level 5 — Bosskammer
   bossFloor: '#312a2c',
   bossFloorDark: '#292325',
 
@@ -1126,10 +1074,9 @@ export const COLORS = {
   text: '#d8d3c4',
   textDim: '#8b8577',
   swing: '#e8e2d4',
-  poison: '#6b9a4a',
   debug: '#39d0ff',
 
-  // XP und Stufe (Erweiterung, Abschnitt 1) â bewusst kein Gold-Ton,
+  // XP und Stufe (Erweiterung, Abschnitt 1) — bewusst kein Gold-Ton,
   // damit man die beiden Waehrungen nie verwechselt.
   xpFill: '#5a7fb0',
   xpFillBright: '#8fbdea',
@@ -1167,7 +1114,7 @@ export const LEVELS = [
     name: 'Hoehleneingang',
     url: './assets/levels/level2.json',
     built: true,
-    description: 'Goblins im Halbdunkel â sie schlagen zu und weichen sofort zurueck.',
+    description: 'Goblins im Halbdunkel — sie schlagen zu und weichen sofort zurueck.',
   },
   {
     name: 'Ruinen',
@@ -1209,7 +1156,7 @@ export const SAVE = {
   enabled: true,
   /** Schluessel im localStorage. Aendern = alte Staende werden ignoriert. */
   key: 'lootAndBlade.save.v1',
-  /** Hochzaehlen, wenn sich das Format aendert â alte Staende werden dann verworfen. */
+  /** Hochzaehlen, wenn sich das Format aendert — alte Staende werden dann verworfen. */
   version: 1,
   /** Wie lange "Gespeichert" eingeblendet wird. */
   noticeTime: 1.2,
@@ -1217,4 +1164,3 @@ export const SAVE = {
 
 /** Welches Level beim Start geladen wird. */
 export const START_LEVEL = LEVELS[0].url;
-

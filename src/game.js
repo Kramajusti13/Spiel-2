@@ -395,11 +395,7 @@ export class Game {
     // Vor der Freischaltung gibt es keine aktiven Quests — die Kachel zeigt
     // stattdessen den Hinweis (Abschnitt 8).
     if (!this.questsUnlocked) return [];
-    // activeQuests liefert genau drei Eintraege (leicht/mittel/schwer);
-    // leere Klassen erscheinen als null und werden hier ausgefiltert.
-    return activeQuests(this.claimedQuests)
-      .filter((q) => q != null)
-      .map((q) => questProgress(q, this));
+    return activeQuests(this.claimedQuests).map((q) => questProgress(q, this));
   }
 
   /**
@@ -460,9 +456,6 @@ export class Game {
     if (ok) {
       if (WEAPON_ORDER.includes(id)) this.takeNewWeapon(id, dabeiVorher);
       this.stats.goldSpent += goldBefore - this.gold;
-      // Kaufzaehler fuer Quest "Kaufe ein beliebiges Upgrade" (Abschnitt 8).
-      // Der Skill-Reset ist kein Upgrade — er zaehlt nicht mit.
-      if (id !== 'respec') this.stats.purchases += 1;
       playSound('buy');
       // Nach jedem Kauf speichern (Abschnitt 9).
       saveGame(this);
@@ -541,7 +534,6 @@ export class Game {
     if (this.characterReturnState === 'dashboard') this.openDashboard(this.dashboard.message);
     else this.state = 'playing';
     this.syncScreen();
-
   }
 
   /** Steht der Spieler nah genug am Ausgang? */
@@ -750,11 +742,6 @@ export class Game {
 
   updateEffects(dt) {
     for (const fx of this.effects) {
-      if (typeof fx.update === 'function') {
-        if (typeof fx.growthTime === 'number') fx.growthTime += dt;
-        fx.update(dt);
-        continue;
-      }
       fx.age += dt;
       if (fx.type === 'spark') {
         fx.x += fx.vx * dt;
@@ -763,10 +750,7 @@ export class Game {
         fx.vy *= Math.exp(-8 * dt);
       }
     }
-    this.effects = this.effects.filter((fx) => {
-      if (typeof fx.update === 'function') return !fx.dead && !fx.exploded;
-      return fx.age < fx.life;
-    });
+    this.effects = this.effects.filter((fx) => fx.age < fx.life);
   }
 
   // --- XP und Stufen (Erweiterung, Abschnitt 1) ---------------------------
@@ -787,7 +771,6 @@ export class Game {
   /** Wie viel XP bis zur naechsten Stufe fehlt. */
   get xpNeeded() {
     return xpToNext(this.progress.level);
-
   }
 
   /** Fuellstand der XP-Leiste, 0…1 — der echte Wert, nicht der animierte. */
@@ -874,7 +857,7 @@ export class Game {
   // --- Ereignisse ---------------------------------------------------------
 
   onEnemyKilled(enemy) {
-    recordKill(this.stats, enemy.type, enemy.lastHitBy, enemy.difficulty ?? this.difficulty);
+    recordKill(this.stats, enemy.type, enemy.lastHitBy);
 
     // Hoehere Schwierigkeit bringt deutlich mehr Beute — genau das macht das
     // Wiederholen zur Entscheidung statt zur Pflicht (Abschnitt 4).
@@ -917,7 +900,7 @@ export class Game {
     this.deathsThisRun += 1;
     this.shake(9, 0.4);
     this.state = 'dead';
-        this.deathScreen.open();
+    this.deathScreen.open();
   }
 
   spawnDamageNumber(x, y, value, color, big = false) {
@@ -925,15 +908,6 @@ export class Game {
       type: 'number', x, y, value: String(value), color, big,
       age: 0, life: UI.damageNumbers.duration,
     });
-  }
-
-  /**
-   * Objekt-Effekt hinzufuegen (z. B. Heiligenschein, Schockwelle).
-   * Erwartet ein Objekt mit eigenen update(dt)/draw(ctx)-Methoden,
-   * das sich selbst per this.dead = true als fertig markiert.
-   */
-  addEffect(fx) {
-    this.effects.push(fx);
   }
 
   /**
@@ -953,31 +927,28 @@ export class Game {
   }
 
   /**
-   * Wurfstein des Gorillas (Erweiterung 2, Abschnitt 3). Liegt wie Pfeil
-   * und Speer in der arrows-Liste — selbe update/draw/spent-Schnittstelle.
+   * Wurfstein des Gorillas (Erweiterung 2, Abschnitt 3). Liegt in derselben
+   * Liste wie die Pfeile: Flugkoerper mit update/draw/spent.
    */
   spawnStone(x, y, angle, damage, opt = {}) {
     this.arrows.push(new Stone(x, y, angle, damage, opt));
   }
 
   /**
-   * Giftwolke (Erweiterung 2, Abschnitt 1). Eigene clouds-Liste, weil sie
-   * stilliegt und mehr als einmal zuschlagen kann.
+   * Giftwolke des Giftpilzes (Erweiterung 2, Abschnitt 3).
    */
   spawnPoisonCloud(x, y) {
     this.clouds.push(new PoisonCloud(x, y));
   }
 
   /**
-   * Giftspucke der Titanoboa (Erweiterung 2, Abschnitt 6). Flugkoerper wie
-   * Pfeil und Stein, zerplatzt an Wand, Ziel oder Reichweitenende.
+   * Giftspucken der Titanoboa (Erweiterung 2, Abschnitt 3).
    */
   spawnPoisonSpit(x, y, angle, damage, opt = {}) {
     this.arrows.push(new PoisonSpit(x, y, angle, damage, opt));
   }
 
-  /** Nachbild waehrend der Ausweichrolle. */
-  spawnRollTrail(x, y) {
+spawnRollTrail(x, y) {
     this.effects.push({ type: 'trail', x, y, age: 0, life: ROLL.trailLife });
   }
 
@@ -1041,6 +1012,7 @@ export class Game {
     this.level.draw(ctx, this.camera);
     this.drawExit(ctx);
     for (const coin of this.coins) coin.draw(ctx);
+    for (const cloud of this.clouds) cloud.draw(ctx);
     this.drawRollTrails(ctx);   // vor den Figuren, damit die Spur dahinter liegt
 
     // Alles, was auf dem Boden steht, nach y sortieren: was weiter unten ist,
@@ -1048,11 +1020,8 @@ export class Game {
     const actors = [...this.enemies, this.player].sort((a, b) => a.y - b.y);
     for (const actor of actors) actor.draw(ctx);
 
-    // Pfeile fliegen ueber allem, damit man sie nicht hinter Gegnern verlieren.
+    // Pfeile fliegen ueber allem, damit man sie nicht hinter Gegnern verliert.
     for (const arrow of this.arrows) arrow.draw(ctx);
-
-    // Giftwolken liegen auf dem Boden — ueber den Figuren, unter dem HUD.
-    for (const cloud of this.clouds) cloud.draw(ctx);
 
     this.drawEffects(ctx);
 
@@ -1076,91 +1045,86 @@ export class Game {
     }
   }
 
-  /**
-   * Level-Ausgang: geschlossen, solange noch Monster leben; danach leuchtet er.
-   * Der Spieler sieht damit ohne Text, wann und wo es weitergeht.
-   */
   drawExit(ctx) {
     const exit = this.level.exit;
     if (!exit) return;
+    const size = LEVEL.exitSize;
     const open = this.levelCleared;
-    ctx.save();
-    const r = LEVEL.exitRadius;
-    if (open) {
-      ctx.globalAlpha = 0.5 + 0.3 * Math.sin(performance.now() / 200);
-      ctx.fillStyle = COLORS.exit || '#4f4';
-      ctx.beginPath();
-      ctx.arc(exit.x, exit.y, r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.globalAlpha = 1;
-      drawText(ctx, 'E', exit.x, exit.y, COLORS.text || '#fff',
-        UI.hud.font, 'center', 'middle');
-    } else {
-      ctx.globalAlpha = 0.2;
-      ctx.strokeStyle = COLORS.exitClosed || '#888';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.arc(exit.x, exit.y, r, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-    ctx.restore();
-  }
 
-  drawEffects(ctx) {
-    for (const fx of this.effects) {
-      if (typeof fx.draw === 'function') {
-        fx.draw(ctx);
-        continue;
-      }
-      if (fx.type === 'trail') continue;   // liegt schon hinter den Figuren
-      const t = fx.age / fx.life;
-      if (fx.type === 'number') {
-        const alpha = Math.max(0, 1 - t);
-        ctx.save();
-        ctx.globalAlpha = alpha;
-        ctx.font = fx.big ? UI.damageNumbers.bigFont : UI.damageNumbers.font;
-        ctx.fillStyle = fx.color;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(fx.value, fx.x, fx.y - t * 30);
-        ctx.restore();
-      } else if (fx.type === 'spark') {
-        const alpha = Math.max(0, 1 - t);
-        ctx.save();
-        ctx.globalAlpha = alpha;
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 2;
+    if (open) {
+      // Pulsierender Schein, damit der offene Ausgang auffaellt.
+      const pulse = 0.75 + 0.25 * Math.sin(performance.now() / 260);
+      ctx.save();
+      ctx.fillStyle = COLORS.exitGlow;
+      ctx.beginPath();
+      ctx.arc(exit.x, exit.y, LEVEL.exitRadius * pulse, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    fillRect(ctx, exit.x - size / 2, exit.y - size / 2, size, size,
+      open ? COLORS.exitOpen : COLORS.exitClosed);
+    strokeRect(ctx, exit.x - size / 2, exit.y - size / 2, size, size, COLORS.hpBorder, 1);
+
+    // Geschlossen: Gitterstaebe. Offen: freier Durchgang.
+    if (!open) {
+      ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+      ctx.lineWidth = 2;
+      for (let i = 1; i < 4; i++) {
+        const bx = Math.round(exit.x - size / 2 + (size / 4) * i);
         ctx.beginPath();
-        ctx.moveTo(fx.x, fx.y);
-        ctx.lineTo(fx.x - fx.vx * 0.03, fx.y - fx.vy * 0.03);
+        ctx.moveTo(bx + 0.5, exit.y - size / 2 + 3);
+        ctx.lineTo(bx + 0.5, exit.y + size / 2 - 3);
         ctx.stroke();
-        ctx.restore();
       }
+    } else {
+      fillRect(ctx, exit.x - size / 2 + 5, exit.y - size / 2 + 5, size - 10, size - 10,
+        COLORS.background);
     }
   }
 
   drawRollTrails(ctx) {
+    const s = PLAYER.sprite;
     for (const fx of this.effects) {
       if (fx.type !== 'trail') continue;
-      const alpha = Math.max(0, 1 - fx.age / fx.life);
+      const t = fx.age / fx.life;
       ctx.save();
-      ctx.globalAlpha = alpha * 0.3;
-      ctx.fillStyle = '#fff';
-      ctx.beginPath();
-      ctx.arc(fx.x, fx.y, 12, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.globalAlpha = 0.35 * (1 - t);
+      ctx.fillStyle = COLORS.rollTrail;
+      ctx.fillRect(
+        Math.round(fx.x - s.w / 2),
+        Math.round(fx.y + s.offsetY - s.h / 2),
+        s.w, s.h,
+      );
       ctx.restore();
     }
   }
 
+  drawEffects(ctx) {
+    for (const fx of this.effects) {
+      if (fx.type === 'trail') continue;   // liegt schon hinter den Figuren
+      const t = fx.age / fx.life;
+      if (fx.type === 'number') {
+        ctx.save();
+        ctx.globalAlpha = 1 - t * t;
+        drawText(ctx, fx.value, fx.x, fx.y - t * UI.damageNumbers.rise, fx.color,
+          fx.big ? '15px "Segoe UI", system-ui, sans-serif' : UI.hud.fontSmall, 'center', 'middle');
+        ctx.restore();
+      } else {
+        ctx.save();
+        ctx.globalAlpha = 1 - t;
+        ctx.fillStyle = COLORS.enemyHit;
+        ctx.fillRect(Math.round(fx.x), Math.round(fx.y), 2, 2);
+        ctx.restore();
+      }
+    }
+  }
+
   drawDebugPickupRadius(ctx) {
-    if (!this.player) return;
-    ctx.save();
-    ctx.strokeStyle = 'rgba(0,255,0,0.3)';
+    ctx.strokeStyle = 'rgba(217,176,74,0.4)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.arc(this.player.x, this.player.y, LOOT.pickupRadius, 0, Math.PI * 2);
     ctx.stroke();
-    ctx.restore();
   }
 }
