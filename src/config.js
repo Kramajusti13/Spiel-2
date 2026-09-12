@@ -1096,6 +1096,30 @@ export const COLORS = {
   menuButtonDisabled: '#1a1820',
   menuTextDisabled: '#565062',
   menuAccent: '#cbb87a',
+  // Erweiterung 2 — Urwald-Feinde
+  frog: '#5a7a3a',
+  frogAccent: '#7a9c5a',
+  giftpilz: '#6a3a5a',
+  giftpilzAccent: '#8a5a7a',
+  gorilla: '#5a4a3a',
+  gorillaAccent: '#7a6a5a',
+  krokodil: '#3a5a3a',
+  krokodilAccent: '#5a7a5a',
+  titanoboa: '#4a3a2a',
+  titanoboaAccent: '#6a5a4a',
+
+  // Erweiterung 2 — Angriffe und Effekte
+  poison: '#6aaa44',
+  poisonDark: '#4a8a22',
+  stone: '#6a6a6a',
+  stoneDark: '#4a4a4a',
+  spear: '#8a6f47',
+  spearTip: '#b9bec9',
+  impactRing: '#ff6600',
+  boaShadow: 'rgba(0,0,0,0.4)',
+  boaShadowWarn: 'rgba(255,100,0,0.3)',
+  lurkShadow: 'rgba(0,0,0,0.3)',
+  lurkShadowEdge: 'rgba(0,0,0,0.15)',
 };
 
 /**
