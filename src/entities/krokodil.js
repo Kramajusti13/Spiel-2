@@ -223,8 +223,7 @@ export class Krokodil extends Enemy {
   }
 
   /**
-   * Der Schatten am Boden. Waehrend des Ta
-uchens wandert er mit, beim
+   * Der Schatten am Boden. Waehrend des Tauchens wandert er mit, beim
    * Ausholen steht er still und waechst — das ist die Ausholphase, die man
    * sehen MUSS, bevor der Biss kommt.
    */

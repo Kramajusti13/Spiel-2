@@ -229,8 +229,7 @@ utet!',
       return;
     }
     if (this.state === 'warn') {
-      if (this.stateTime >= this.def
-.lungeWarning) {
+      if (this.stateTime >= this.def.lungeWarning) {
         this.swallow(game);
         this.setState('lunge');
       }
@@ -484,8 +483,7 @@ this.targetX : this.x;
   }
 
   
-drawB
-ody(ctx) {
+drawBody(ctx) {
     const s = this.def.sprite;
     const gross = this.sizeFactor;
     const cy = this.y + s.offsetY;
@@ -541,7 +539,7 @@ ody(ctx) {
     ctx.strokeStyle = 'rgba(217,86,63,0.5)';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.arc(this.isSubmerged ? this.targetX : this.x, this.isSubmerged ? this.targetY
+    ctx.arc(this.isSubmerged ? this.targetX : this.x, this.isSubmerged ? this.targetY 
 : this.y,
       this.def.swallowRadius, 0, Math.PI * 2);
     ctx.stroke();

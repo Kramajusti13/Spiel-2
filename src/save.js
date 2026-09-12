@@ -34,8 +34,7 @@
  *   localStorage ein Stand, den das Hauptmenue nicht anbietet, die
  *   Sicherheitsabfrage von "Neues Spiel" aber trotzdem beklagen wuerde.
  *
- * Alle
-s hier ist gegen Fehler abgesichert: localStorage kann im privaten Modus
+ * Alles hier ist gegen Fehler abgesichert: localStorage kann im privaten Modus
  * werfen, und ein von Hand veraenderter Spielstand darf das Spiel nicht
  * zerlegen. Im Zweifel wird wie bei einem neuen Spiel gestartet.
  */
@@ -84,7 +83,8 @@ function readStats(data) {
   return stats;
 }
 
-/** Liest den Rohtext; gibt null zurueck, wenn nichts da oder nichts lesbar ist. */
+/** Liest den Rohtext; gibt null zurueck, we
+nn nichts da oder nichts lesbar ist. */
 function readRaw() {
   try {
     return window.localStorage.getItem(SAVE.key);
@@ -169,8 +169,7 @@ let questResetPending = false;
 
 /**
  * Den Quest-Hinweis abholen — danach ist er weg.
- * @returns {null | {text: string, reason: string}} Hinweis, oder nul
-l
+ * @returns {null | {text: string, reason: string}} Hinweis, oder null
  */
 export function takeQuestResetNotice() {
   if (!questResetPending) return null;
@@ -286,8 +285,7 @@ export function saveGame(game) {
     progress: { ...game.progress },
   };
   try {
-    window.localStorage
-.setItem(SAVE.key, JSON.stringify(data));
+    window.localStorage.setItem(SAVE.key, JSON.stringify(data));
     return true;
   } catch (err) {
     console.warn('Spielstand konnte nicht gespeichert werden:', err.message);

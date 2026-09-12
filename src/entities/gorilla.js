@@ -162,8 +162,7 @@ export class Gorilla extends Enemy {
     if (dist(this.x, this.y, player.x, player.y) > this.def.retreatTriggerRange) return;
 
     // Mitten im Ausholen bricht er nicht ab — sonst liesse er sich mit
-    // schnellen Hieben endlos am Werfen hinder
-n 
+    // schnellen Hieben endlos am Werfen hindern 
 (dieselbe Ueberlegung wie
     // beim Stunlock in enemy.takeDamage).
     if (this.state === 'windup' || this.state === 'strike') return;
@@ -219,8 +218,7 @@ n
 
     // Der erhobene Stein waehrend der Ausholphase.
     if (this.state === 'windup') {
-      const lift = 4 + 6 * this.windupP
-rogress;
+      const lift = 4 + 6 * this.windupProgress;
       ctx.fillStyle = COLORS.stone;
       ctx.beginPath();
       ctx.arc(Math.round(this.x), Math.round(cy - s.h / 2 - lift), 5, 0, Math.PI * 2);

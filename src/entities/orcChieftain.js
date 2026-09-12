@@ -239,9 +239,7 @@ this.hitsInCombo = 0;
         this.spawnGoblins(game);
         this.kriegsrufCooldown = k.cooldown;
         game.shake(6, 0.3);
-        game.spawn
-Damage
-Number(this.x, this.y - this.hh - 20, 'Kriegsruf!',
+        game.spawnDamageNumber(this.x, this.y - this.hh - 20, 'Kriegsruf!',
           COLORS.bossAccent, true);
         this.setState('kriegsrufRecover');
       }

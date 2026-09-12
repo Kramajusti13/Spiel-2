@@ -158,8 +158,8 @@ function drawXpBar(ctx, game) {
   drawBar(ctx, x, y, w, cfg.height, game.xpBarRatio,
     flash ? COLORS.xpFillBright : COLORS.xpFill, COLORS.xpBack, COLORS.hpBorder);
 
-  // Stufe links neben der Leiste — die Zahl, die den Fortschritt traegt.
-  drawText(ctx, `Stufe ${game.xpBarLevel}`, x - 10, y + cfg.height / 2,
+  // Stufe links ne
+ben der Leiste — die Zahl, die den Fortschritt traegt.drawText(ctx, `Stufe ${game.xpBarLevel}`, x - 10, y + cfg.height / 2,
     flash ? COLORS.xpFillBright : COLORS.text, UI.hud.fontSmall, 'right', 'middle');
 
   // Rechts der Rohwert, damit man das Ziel sieht statt nur einen Balken.

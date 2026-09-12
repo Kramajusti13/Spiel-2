@@ -61,7 +61,8 @@ export class ThrownSpear {
       return;
     }
 
-    const stepX = (Math.cos(this.angle) * this.speed * dt) / SUBSTEPS;
+    const stepX = (Math.cos(this.angle
+) * this.speed * dt) / SUBSTEPS;
     const stepY = (Math.sin(this.angle) * this.speed * dt) / SUBSTEPS;
 
     const stepLen = Math.hypot(stepX, stepY);
@@ -118,8 +119,8 @@ export class ThrownSpear {
     }
 
     // Platzhalter: laengerer, dickerer Schaft als beim Pfeil, mit heller
-    // Spitze — man soll im Flug sehen, dass da etwas Schweres unterwegs ist.
-    ctx.save();
+    // Spitze — man soll im Flug sehen, dass da etwas Schweres unterwegs
+ ist.ctx.save();
     ctx.globalAlpha = alpha;
     ctx.translate(this.x, this.y);
     ctx.rotate(this.angle);

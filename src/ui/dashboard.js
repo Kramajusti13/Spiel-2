@@ -149,8 +149,7 @@ const DASHBOARD_CSS = `
     z-index: 1000;
     background: #14131a;
     border: 2px solid #3a3640;
-    border-radius: 12
-px
+    border-radius: 12px
 ;
     box-shadow: 0 0 60px #000a;
     max-width: 700px;
@@ -321,7 +320,8 @@ export class Dashboard {
   restructureLayout() {
     const grid = document.getElementById('dash-grid');
     if (!grid) return;
-    if (grid.dataset.restructured) return; // nur einmalgrid.dataset.restructured = '1';
+    if (grid.dataset.restructured) return; // nur einmal
+    grid.dataset.restructured = '1';
 
     const portraitEl = document.getElementById('dash-portrait');
 
@@ -384,8 +384,7 @@ lement umleiten.this.portrait.level = portraitCompact.querySelector('[data-role=
     routeExpand.id = 'dash-route-expand';
 
     // Die Route-Kachel (tile-route) in den Ausklappbereich verschieben.
-    const routeTile = document.getElementB
-yId(
+    const routeTile = document.getElementById(
 'tile-route');
     if (routeTile) {
       routeTile.style.display = '';

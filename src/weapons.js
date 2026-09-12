@@ -46,8 +46,7 @@ export function owns(progress, id) {
 
 /** Alle Waffen, die der Spieler besitzt — in Anzeigereihenfolge. */
 export function ownedWeapons(progress) {
-  return 
-WEAPON_ORDER.filter((id) => owns(progress, id));
+  return WEAPON_ORDER.filter((id) => owns(progress, id));
 }
 
 /**
@@ -208,8 +207,8 @@ export function weaponInfo(progress, id) {
   }
 
   // Schaden pro Sekunde als Vergleichszahl. Sie steht nicht in der Zeile,
-  // sondern im Tooltip: fuenf Zahlen nebeneinander liest niemand mehr.
-  info.dps = Math.round(info.damage / info.cooldown);
+  // sonde
+rn im Tooltip: fuenf Zahlen nebeneinander liest niemand mehr.info.dps = Math.round(info.damage / info.cooldown);
   return info;
 }
 

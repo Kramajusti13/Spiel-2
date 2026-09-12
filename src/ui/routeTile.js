@@ -189,8 +189,7 @@ stars, marker);
    * Vorgewaehlt wird das Level, das gerade dran ist.
    */
   preselect() {
-    const next = LEVELS.findIndex((_, i) => this.game.level
-State(i) === 'current');
+    const next = LEVELS.findIndex((_, i) => this.game.levelState(i) === 'current');
     this.selected = next >= 0 ? next : Math.min(this.game.unlockedLevel, LEVELS.length - 1);
   }
 
@@ -243,7 +242,7 @@ State(i) === 'current');
       // ★☆☆ Normal, ★★☆ Schwer, ★★★ Alptraum — leer, solange nie geschafft.
       const stars = starsFor(game.bestDifficulty[i]);
       setText(el.stars, stars > 0 ? '★'.repeat(stars) + '☆'.repeat(3 - stars) : '');
-      // Ein
+      // Ein 
 Zustand pro Knoten — alte Klassen muessen weg.el.node.className = `route-node is-${state}${i === this.selected ? ' is-selected' : ''}`;
       // Auch gesperrte Knoten sind anklickbar: das Fenster erklaert dann,
       // was noch fehlt. Nur Starten geht nicht.

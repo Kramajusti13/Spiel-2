@@ -112,8 +112,7 @@ export function nextBowOffer(progress) {
  * Naechste Speerstufe (Erweiterung 2, Abschnitt 3). Wie beim Bogen ist
  * spearTier vor dem ersten Kauf -1, das erste Angebot ist also der Holzspeer.
  */
-export
- function nextSpearOffer(progress) {
+export function nextSpearOffer(progress) {
   const tier = progress.spearTier + 1;
   const now = progress.spearTier >= 0 ? SPEAR.tiers[progress.spearTier] : null;
   const current = now ? `Stufe ${progress.spearTier + 1}` : '—';
@@ -170,8 +169,7 @@ export function nextArmorOffer(progress) {
     current,
     name: next.name,
     detail: tier > 0
-      ? `+${now.defense} → +${next
-.defense} Verteidigung`
+      ? `+${now.defense} → +${next.defense} Verteidigung`
       : `+${next.defense} Verteidigung — wirkt immer, auch ohne Schild`,
     price: next.price,
     sold: false,

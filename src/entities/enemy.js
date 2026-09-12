@@ -118,8 +118,7 @@ die Kill-Statistik (Schritt 7). */
    * Krokodil waehrend es abgetaucht ist. Getroffen wird gar nicht erst —
    * Schwerthieb, Pfeil und Speer pruefen diesen Wert VOR dem Treffer und
    * gehen sonst durch. Ohne das wuerde ein Pfeil an einem abgetauchten
-   * Krokodil verpuffen, statt weite
-rzufliegen, und ein Hieb gaelte als
+   * Krokodil verpuffen, statt weiterzufliegen, und ein Hieb gaelte als
    * verbraucht, obwohl er nichts getroffen hat.
    */
   get invulnerable() {
@@ -250,8 +249,7 @@ rzufliegen, und ein Hieb gaelte als
   }
 
   /**
-   * Anlaufziel fuer die Bewegung (VER
-BE
+   * Anlaufziel fuer die Bewegung (VERBE
 SSERUNGEN_1 Abschnitt 5 "Umzingeln").
    *
    * Auf Normal: einfach der Spieler — direkt drauf zu.
@@ -359,7 +357,7 @@ s.
     if (player.dead) return false;
 
     const radius = opt.radius ?? this.def.strikeRadius;
-    const damage =
+    const damage = 
 opt.damage ?? this.def.damage;
     const arc = opt.arc ?? this.def.strikeArc;
     const angleToPlayer = Math.atan2(player.y - this.y, player.x - this.x);
@@ -478,8 +476,7 @@ opt.damage ?? this.def.damage;
     const tint = this.hitFlash > 0
       ? COLORS.enemyHit
       : this.state === 'windup' || this.state === 'strike'
-        ? C
-OLORS.enemyWindup
+        ? COLORS.enemyWindup
         : null;
     // Beim Ausholen wird der Gegner sichtbar groesser.
     const grow = 1 + this.windupProgress * 0.25 + (this.state === 'strike' ? 0.3 : 0);

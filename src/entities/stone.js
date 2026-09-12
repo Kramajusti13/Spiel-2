@@ -57,7 +57,8 @@ export class Stone {
     if (this.debrisTimer > 0) {
       this.debrisTimer -= dt;
       if (this.debrisTimer <= 0) this.spent = true;
-      return;
+    
+  return;
     }
 
     if (this.age >= STONE.life) {
@@ -129,8 +130,8 @@ export class Stone {
     const r = STONE.radius;
     for (let i = 0; i < 6; i++) {
       const a = (i / 6) * Math.PI * 2;
-      // Leicht unregelmaessig, damit es nach Stein aussieht und nicht nach Mutter.
-      const rr = r * (i % 2 === 0 ? 1 : 0.82);
+      // Leicht unregelmaessig, damit es nach Ste
+in aussieht und nicht nach Mutter.const rr = r * (i % 2 === 0 ? 1 : 0.82);
       const px = Math.cos(a) * rr;
       const py = Math.sin(a) * rr;
       if (i === 0) ctx.moveTo(px, py);

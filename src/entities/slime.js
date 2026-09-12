@@ -53,8 +53,8 @@ export class Slime extends Enemy {
 
     const s = this.def.sprite;
     const grow = 1 + this.windupProgress * 0.3 + (this.state === 'strike' ? 0.35 : 0);
-    // Huepfen: breit und flach am Boden, schmal und hoch in der Luft.
-    const hop = this.state === 'chase' ? Math.max(0, Math.sin(this.animTime * 6)) : 0;
+    // Huepfen: breit und flach am Boden, schmal und hoch in der 
+Luft.const hop = this.state === 'chase' ? Math.max(0, Math.sin(this.animTime * 6)) : 0;
     const w = s.w * grow * (1.1 - hop * 0.2);
     const h = s.h * grow * (0.9 + hop * 0.35);
     const cy = this.y + s.offsetY + (h - s.h) / 2 - hop * 4;

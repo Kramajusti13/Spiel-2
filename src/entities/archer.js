@@ -18,7 +18,8 @@ export class Archer extends Enemy {
   constructor(x, y) {
     super('archer', x, y);
     this.animTime = Math.random() * 3;
-    this.shootTimer = randRange(0, this.def.shootInterval);  // nicht alle im Gleichtaktthis.strafeDir = Math.random() < 0.5 ? -1 : 1;
+    this.shootTimer = randRange(0, this.def.shootInterval);  // nicht alle im Gleichtakt
+    this.strafeDir = Math.random() < 0.5 ? -1 : 1;
     this.strafeTimer = 0;
     this.hasLineOfSight = false;
   }
@@ -108,7 +109,7 @@ export class Archer extends Enemy {
     }
 
     const hit = game.level.moveEntity(this, vx * dt, vy * dt);
-    // An einer Wand die Ausweichrichtung wec
+    // An einer Wand die Ausweichrichtungwec
 hseln, statt dagegen zu schieben.if (hit.hitX || hit.hitY) this.strafeDir = -this.strafeDir;
   }
 
@@ -164,8 +165,7 @@ hseln, statt dagegen zu schieben.if (hit.hitX || hit.hitY) this.strafeDir = -thi
     const pull = this.state === 'windup' ? 3 * this.windupProgress : 0;
     ctx.translate(Math.round(this.x), Math.round(cy));
     ctx.rotate(this.facing);
-    ctx.strokeStyle = COLORS.archer
-Accent;
+    ctx.strokeStyle = COLORS.archerAccent;
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(6, 0, 9, -1.2, 1.2);

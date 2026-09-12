@@ -53,7 +53,8 @@ export class Giftpilz extends Enemy {
       if (this.stateTime >= this.def.strikeTime) this.setState('recover');
       return;
     }
-    if (this.state === 'recover') {
+    if (this.state
+ === 'recover') {
       if (this.stateTime >= this.def.recoverTime) this.setState('chase');
       return;
     }
