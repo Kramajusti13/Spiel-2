@@ -59,7 +59,8 @@ export class PauseMenu {
         make({ label: 'Level aufgeben', hint: 'zurueck aufs Dashboard — Gold dieses Durchgangs ist weg',
           onActivate: () => game.giveUpLevel() }),
         make({ label: 'Level neu starten', hint: 'alle Monster leben wieder',
-          keys: ['KeyR'], keyLabel: 'R',
+    
+      keys: ['KeyR'], keyLabel: 'R',
           // Dieselbe Stufe wie im laufenden Durchgang — ein Neustart darf
           // nicht heimlich auf Normal zurueckfallen.
           // Dieselbe Stufe wie im laufenden Durchgang — ein Neustart darf

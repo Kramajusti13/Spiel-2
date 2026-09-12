@@ -50,7 +50,8 @@ export class LoadoutWindow {
   }
 
   bind() {
-    this.el.headerButton.addEventListener('click', () => this.open());
+    this.el.headerBut
+ton.addEventListener('click', () => this.open());
     this.el.shopButton.addEventListener('click', () => this.open());
     this.el.close.addEventListener('click', () => this.close());
 
@@ -106,7 +107,8 @@ export class LoadoutWindow {
       stats.className = 'weapon-stats';
 
       const note = document.createElement('span');
-      note.className = 'weapon-note';
+      note.class
+Name = 'weapon-note';
       main.append(nameRow, stats, note);
 
       const side = document.createElement('span');
@@ -163,7 +165,8 @@ export class LoadoutWindow {
 
     const dabei = loadout(progress);
     this.set('count', this.el.count,
-      `${dabei.length} von ${LOADOUT.slots} Plaetzen belegt`);
+      `${dabei.length} von ${LOADOU
+T.slots} Plaetzen belegt`);
     this.el.count.classList.toggle('is-full', dabei.length >= LOADOUT.slots);
 
     for (const info of allWeaponInfos(progress)) {

@@ -58,7 +58,8 @@ const DASHBOARD_CSS = `
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    border: 2px solid #3a3640;
+    border: 
+2px solid #3a3640;
     border-radius: 8px;
     background: #1a1820;
     color: #c9c3b4;
@@ -146,7 +147,8 @@ const DASHBOARD_CSS = `
     z-index: 1000;
     background: #14131a;
     border: 2px solid #3a3640;
-    border-radius: 12px;
+    border-radius: 12px
+;
     box-shadow: 0 0 60px #000a;
     max-width: 700px;
     max-height: 80vh;
@@ -234,7 +236,8 @@ const DASHBOARD_CSS = `
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-c
+ontent: center;
     gap: 2px;
     margin-bottom: 8px;
   }
@@ -340,7 +343,8 @@ export class Dashboard {
         <span class="portrait-sp" data-role="portrait-sp">0 SP</span>
       </div>
     `;
-    // Die Portrait-Referenzen auf das kompakte Element umleiten.
+    // Die Portrait-Referenzen auf das kompakte Ele
+ment umleiten.
     this.portrait.level = portraitCompact.querySelector('[data-role="portrait-level"]');
     this.portrait.xpFill = portraitCompact.querySelector('[data-role="portrait-xp-fill"]');
     this.portrait.gold = portraitCompact.querySelector('[data-role="portrait-gold"]');
@@ -435,7 +439,8 @@ export class Dashboard {
       this.closePanel();
       return;
     }
-    this.closePanel();
+    this.closePanel(
+);
 
     const overlay = document.getElementById('dash-panel-overlay');
     const backdrop = document.getElementById('dash-panel-backdrop');

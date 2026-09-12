@@ -48,7 +48,8 @@ export class CharacterWindow {
     });
 
     // TAB und Esc schliessen. Solange das Fenster offen ist, hoert das Spiel
-    // nicht auf die Tastatur (siehe input.js), also braucht es das hier.
+    // nicht auf die Tastatur (siehe input.js), als
+o braucht es das hier.
     window.addEventListener('keydown', (e) => {
       if (this.game.state !== 'character') return;
       if (e.code === 'Escape' || e.code === 'Tab') {
@@ -163,7 +164,8 @@ export class CharacterWindow {
       ['Verteidigung', `${p.defense}`, plus(PLAYER.defense, p.defense)],
       ['Bewegungstempo', `${Math.round(p.speed)} px/s`, plus(PLAYER.speed, p.speed)],
       ['Ausdauer', `${Math.round(p.stamina)} / ${p.maxStamina}`, ''],
-      ['Kritische Chance', `${Math.round(PLAYER.critChance * 100)} %`, ''],
+      ['Kritische Chance', `${Math.round(PLAYE
+R.critChance * 100)} %`, ''],
       [null],
       // Reihenfolge wie im Ausruestungsfenster. Der Vermerk "dabei" sagt, was
       // mit ins Level kommt — sonst waere unerklaerlich, warum sich eine
@@ -207,7 +209,8 @@ export class CharacterWindow {
   buildStats(count) {
     this.el.stats.replaceChildren();
     this.statRows = [];
-    for (let i = 0; i < count; i++) {
+    
+for (let i = 0; i < count; i++) {
       const row = document.createElement('div');
       row.className = 'stat-row';
       const label = document.createElement('span');
