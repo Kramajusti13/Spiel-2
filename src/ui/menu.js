@@ -56,6 +56,7 @@ export class Button {
     fillRect(ctx, this.x, this.y, this.w, this.h,
       !enabled ? COLORS.menuButtonDisabled : active ? COLORS.menuButtonHover : COLORS.menuButton);
     strokeRect(ctx, this.x, this
+
 .y, this.w, this.h,
       active ? COLORS.menuAccent : COLORS.menuBorder, 1);
 

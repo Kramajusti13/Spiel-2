@@ -220,7 +220,8 @@ export class Drache extends Enemy {
     const ex = Math.cos(this.facing) * 5;
     const ey = Math.sin(this.facing) * 3;
     ctx.fillStyle = '#1a0a0a';
-    ctx.fillRect(Math.round(this.x - 8 + ex), Math.round(cy - 6 + ey), 5, 4);
+    ctx.fillRect(Math.round(this.x - 8 + ex), Math.round(cy - 6 + ey),
+ 5, 4);
     ctx.fillRect(Math.round(this.x + 3 + ex), Math.round(cy - 6 + ey), 5, 4);
     ctx.restore();
   }

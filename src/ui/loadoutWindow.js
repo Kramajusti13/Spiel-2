@@ -108,6 +108,7 @@ export class LoadoutWindow {
       const note = document.createElement('span');
       note.class
 
+
 Name = 'weapon-note';
       main.append(nameRow, stats, note);
 
@@ -165,7 +166,8 @@ Name = 'weapon-note';
 
     const dabei = loadout(progress);
     this.set('count', this.el.count,
-      `${dabei.length} von ${LOADO
+      `${dabei.length} von ${LOAD
+O
 U
 T.slots} Plaetzen belegt`);
     this.el.count.classList.toggle('is-full', dabei.length >= LOADOUT.slots);

@@ -58,8 +58,7 @@ export class SmithyTile {
       row.className = 'buy-row';
 
       const text = document.createElement('span');
-      text.innerHTML = `<b>${escape(offer.slot)}</b> — ${escape
-(offer.name)}<br>`
+      text.innerHTML = `<b>${escape(offer.slot)}</b> — ${escape(offer.name)}<br>`
         + `<span style="color:#8b8577; font-size:12px">${escape(offer.detail)}</span>`;
 
       const btn = document.createElement('button');

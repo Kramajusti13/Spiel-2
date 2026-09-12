@@ -100,6 +100,7 @@ function swimView(level) {
     for (let r = r0; r <= r1; r++) {
       for (let c = c0; c <= c1; c++) if (isSolidTile(c, r)) return true
 
+
 ;
     }
     return false;
@@ -162,7 +163,8 @@ export class Krokodil extends Enemy {
       return;
     }
 
-    this.facing = Math.atan2(player.y - this.y, player.x - this.x);
+    this.facing = Math.atan2(player.y - this.y, player.x - this.x)
+;
 
 
 
@@ -221,8 +223,8 @@ export class Krokodil extends Enemy {
   }
 
   /**
-   * Der Schatten am Boden. Waehrend des Tauc
-hens wandert er mit, beim
+   * Der Schatten am Boden. Waehrend des Ta
+uchens wandert er mit, beim
    * Ausholen steht er still und waechst — das ist die Ausholphase, die man
    * sehen MUSS, bevor der Biss kommt.
    */

@@ -53,6 +53,7 @@ export class OrcChieftain extends Enemy {
 
   /** Doppelschlag: nur in Phase 3 nach abg
 
+
 eschlossenem Bruellen. */
   get wutmodusActive() {
     return this.phase === 3 && this.wutIntroDone;
@@ -111,7 +112,8 @@ eschlossenem Bruellen. */
       if (d <= this.def.attackRange + player.hw) {
         this.setState('windup');
         this.struck = false;
-       
+      
+ 
  
 this.hitsInCombo = 0;
         return;
@@ -237,7 +239,8 @@ this.hitsInCombo = 0;
         this.spawnGoblins(game);
         this.kriegsrufCooldown = k.cooldown;
         game.shake(6, 0.3);
-        game.spawnDamage
+        game.spawn
+Damage
 Number(this.x, this.y - this.hh - 20, 'Kriegsruf!',
           COLORS.bossAccent, true);
         this.setState('kriegsrufRecover');
@@ -293,7 +296,8 @@ Number(this.x, this.y - this.hh - 20, 'Kriegsruf!',
     if (this.state === 'windup' || this.state === 'doppelschlagWindup') this.drawTelegraph(ctx);
     if (this.state === 'chargeWindup') this.drawChargeTelegraph(ctx);
     if (this.state === 'kriegsrufWindup') this.drawKriegsrufTelegraph(ctx);
-    if (this.state === 'wutIntro') this.drawWutIntro(ctx);
+    if (this.state === 
+'wutIntro') this.drawWutIntro(ctx);
 
     this.drawBody(ctx);
   }
@@ -358,7 +362,8 @@ Number(this.x, this.y - this.hh - 20, 'Kriegsruf!',
 
     let fill = this.baseColor;
     if (attacking) fill = COLORS.enemyWindup;
-    if (this.state ==
+    if (this.state
+ ==
 = 'stunned') fill = '#5a4a44';
     if (this.wutmodusActive) fill = COLORS.blood;
     if (this.hitFlash > 0) fill = COLORS.enemyHit;

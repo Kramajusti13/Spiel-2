@@ -55,6 +55,7 @@ export class Frog extends Enemy {
     const d = dist(this.x, this.y, player.x, player.y);
 
     if (this.state === 'idle' && d <= this.def.aggroR
+
 adius && !player.dead) {
       this.setState('chase');
     } else if (this.state !== 'idle' && this.state !== 'jump'
@@ -173,8 +174,7 @@ adius && !player.dead) {
 
     // Aussenkante: zeigt die volle Reichweite von Anfang an. Ohne sie wuesste
     // man erst kurz vor dem E
-inschlag, wie gross die Flaeche wirklich wird.
-    ctx.globalAlpha = 0.45 + 0.45 * t;
+inschlag, wie gross die Flaeche wirklich wird.ctx.globalAlpha = 0.45 + 0.45 * t;
     ctx.strokeStyle = COLORS.impactRing;
     ctx.lineWidth = 2;
     ctx.setLineDash([6, 5]);
@@ -227,7 +227,8 @@ inschlag, wie gross die Flaeche wirklich wird.
     // Zwei Augen oben — macht aus dem Rechteck erkennbar einen Frosch.
     ctx.fillStyle = COLORS.frogAccent;
     const ey = Math.round(cy - h / 2 - 1);
-    ctx.fillRect(Math.round(this.x - w / 2 + 3)
+    ctx.fillRect(Math.round(this.x - w / 2 + 
+3)
 , ey, 4, 4);
     ctx.fillRect(Math.round(this.x + w / 2 - 7), ey, 4, 4);
     ctx.restore();

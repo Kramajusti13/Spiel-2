@@ -46,7 +46,8 @@ export function owns(progress, id) {
 
 /** Alle Waffen, die der Spieler besitzt — in Anzeigereihenfolge. */
 export function ownedWeapons(progress) {
-  return WEAPON_ORDER.filter((id) => owns(progress, id));
+  return 
+WEAPON_ORDER.filter((id) => owns(progress, id));
 }
 
 /**
@@ -100,7 +101,8 @@ export function carries(progress, id) {
 }
 
 /**
- * Eine Waffe an- oder abwaehlen.
+ * Eine Waffe 
+an- oder abwaehlen.
  *
  * Sind schon beide Plaetze belegt, faellt die AELTERE Wahl heraus — so wird
  * ein Klick nie abgewiesen. Der Spieler muss nicht erst etwas abwaehlen, um
@@ -160,7 +162,8 @@ export function weaponInfo(progress, id) {
   const info = {
     id,
     name: def.name,
-    slot: def.slot,
+ 
+   slot: def.slot,
     symbol: LOADOUT.symbols[id],
     owned: besitzt,
     carried: besitzt && carries(progress, id),

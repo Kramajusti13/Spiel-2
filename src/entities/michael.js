@@ -138,6 +138,7 @@ export class Michael extends Enemy {
         const player = game.player;
         const d = 
 
+
 dist(this.x, this.y, player.x, player.y);
         if (d <= this.radius + player.hw) {
           player.takeDamage(this.damage, angle, game);

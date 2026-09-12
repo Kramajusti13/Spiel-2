@@ -65,6 +65,7 @@ export class Enemy {
     this.deathTimer = 0;   // kurze Auflös-Animation nach dem Tod
     /** Waffe des letzten Treffers — fuer 
 
+
 die Kill-Statistik (Schritt 7). */
     this.lastHitBy = null;
 
@@ -117,8 +118,8 @@ die Kill-Statistik (Schritt 7). */
    * Krokodil waehrend es abgetaucht ist. Getroffen wird gar nicht erst —
    * Schwerthieb, Pfeil und Speer pruefen diesen Wert VOR dem Treffer und
    * gehen sonst durch. Ohne das wuerde ein Pfeil an einem abgetauchten
-   * Krokodil verpuffen, statt weiter
-zufliegen, und ein Hieb gaelte als
+   * Krokodil verpuffen, statt weite
+rzufliegen, und ein Hieb gaelte als
    * verbraucht, obwohl er nichts getroffen hat.
    */
   get invulnerable() {
@@ -191,7 +192,8 @@ zufliegen, und ein Hieb gaelte als
       default:
         // In Reichweite? Dann ausholen.
         if (d <= this.def.attackRange + player.hw) {
-     
+    
+ 
   
    const beh = difficultyBehavior(this.difficulty);
 
@@ -248,7 +250,8 @@ zufliegen, und ein Hieb gaelte als
   }
 
   /**
-   * Anlaufziel fuer die Bewegung (VERBE
+   * Anlaufziel fuer die Bewegung (VER
+BE
 SSERUNGEN_1 Abschnitt 5 "Umzingeln").
    *
    * Auf Normal: einfach der Spieler — direkt drauf zu.
@@ -293,7 +296,8 @@ SSERUNGEN_1 Abschnitt 5 "Umzingeln").
    * Ist die Luftlinie frei, wird direkt gelaufen. Sonst laeuft der Gegner um das
    * Hindernis herum und bleibt dabei bei EINER Seite, bis die Luftlinie wieder
    * frei ist — sonst zappelt er vor jeder Mauerkante hin und her.
-   * Das ist bewusst kein Pathfinding: es genuegt fuer offene Level und kostet fast nichts.
+   * Das ist bewusst kein Pathfinding: es genuegt fuer offene Level und kostet fast nicht
+s.
 
    
 *
@@ -355,7 +359,7 @@ SSERUNGEN_1 Abschnitt 5 "Umzingeln").
     if (player.dead) return false;
 
     const radius = opt.radius ?? this.def.strikeRadius;
-    const damage = 
+    const damage =
 opt.damage ?? this.def.damage;
     const arc = opt.arc ?? this.def.strikeArc;
     const angleToPlayer = Math.atan2(player.y - this.y, player.x - this.x);
@@ -474,8 +478,8 @@ opt.damage ?? this.def.damage;
     const tint = this.hitFlash > 0
       ? COLORS.enemyHit
       : this.state === 'windup' || this.state === 'strike'
-        ? COLORS.
-enemyWindup
+        ? C
+OLORS.enemyWindup
         : null;
     // Beim Ausholen wird der Gegner sichtbar groesser.
     const grow = 1 + this.windupProgress * 0.25 + (this.state === 'strike' ? 0.3 : 0);
@@ -528,7 +532,8 @@ enemyWindup
     ctx.fillStyle = COLORS.debug;
     ctx.font = '10px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText(this.state, this.x, this.y - this.hh - 16);
+    ctx.fillText(this.state, this.x, this.y - this.hh - 16
+);
   }
 
 }

@@ -102,7 +102,8 @@ export function drawHud(ctx, game) {
   // Beim Einsammeln kurz aufleuchten und groesser werden.
   const pop = Math.max(0, game.goldPop);
   drawText(ctx, String(game.gold), gx - 52, m + 2,
-    pop > 0 ? '#f4d67a' : COLORS.gold,
+    pop > 0 ? '#f4d67a' : COLORS.gold
+,
     pop > 0 ? '16px "Segoe UI", system-ui, sans-serif' : UI.hud.font);
 
   // --- Fortschritt im Level ---
@@ -253,7 +254,8 @@ function drawDebugPanel(ctx, game) {
     `Tode hier ${game.deathsThisLevel}  Wiederbelebung ${game.reviveCost} G`,
     `Level ${game.level.name} (${game.level.width}x${game.level.height}) — ${game.difficulty}`,
     `Ausgang ${game.levelCleared ? 'offen' : 'zu'}${game.playerAtExit() ? ' — in Reichweite' : ''}`,
-    // Quest-Zaehler (Schritt 7) — bis die Quest-Kachel sie zeigt (Schritt 8).
+    // Quest-Zaehler (Schritt 7) — bis die Quest-Kachel sie z
+eigt (Schritt 8).
     `Kills ${statLine(game.stats.killsByType)}`,
     `Waffe ${statLine(game.stats.killsByWeapon)}  Blocks ${game.stats.blocks}`,
     `Gold gesamt ${game.stats.goldEarned}  Tode ${game.stats.deaths} (Versuch ${game.deathsThisRun})`,

@@ -39,8 +39,7 @@ export function createEffect(type, x, y, options = {}) {
         ctx.save();
         ctx.globalAlpha = Math.min(1, (this.lifetime - this.age) / (this.lifetime * 0.3));
         ctx.drawImage(
-          // Sprite würde hier gezeichnet werden
-          null, // Platzhalter
+          // Sprite würde hier gezeichnet werdennull, // Platzhalter
           this.x - 16,
           this.y - 16,
           32,

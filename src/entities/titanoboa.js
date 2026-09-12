@@ -102,6 +102,7 @@ export class Titanoboa extends Enemy {
     return this.hp / this.maxHp > this.def.phaseThresholds[0] ? 1 
 
 
+
 : 2;
   }
 
@@ -160,7 +161,8 @@ export class Titanoboa extends Enemy {
         this.hh = (this.def.hitbox.h / 2) * this.def.phase2SizeFactor;
         playSound('bossPhase');
         game.shake(8, 0.4);
-        game.spawnDamageNumber(this.x, this.y - this.hh - 22, 'Gehä
+        game.spawnDamageNumber(this.x, this.y - this.hh - 22, 'Geh
+ä
 utet!',
           COLORS.titanoboaAccent, true);
         this.setState('chase');
@@ -227,7 +229,8 @@ utet!',
       return;
     }
     if (this.state === 'warn') {
-      if (this.stateTime >= this.def.lungeWarning) {
+      if (this.stateTime >= this.def
+.lungeWarning) {
         this.swallow(game);
         this.setState('lunge');
       }
@@ -286,7 +289,8 @@ utet!',
     const s = this.state;
     return s === 'tailWindup' || s === 'tailStrike'
       || s === 'biteWindup' || s === 'biteStrike'
-      || s === 'spitWindup' || s
+      || s === 'spitWindup' ||
+ s
  === 'spitStrike';
   }
 
@@ -412,7 +416,8 @@ utet!',
   drawShadow(ctx) {
     const warnt = this.state === 'warn';
     const t = warnt ? this.stateTime / this.def.lungeWarning : 0;
-    const cx = warnt ? 
+    const cx = warnt
+ ? 
 this.targetX : this.x;
     const cy = warnt ? this.targetY : this.y;
     const puls = warnt ? 1 + 0.16 * Math.sin(this.stateTime * (7 + 10 * t)) : 1;
@@ -478,7 +483,8 @@ this.targetX : this.x;
     super.draw(ctx);
   }
 
-  drawB
+  
+drawB
 ody(ctx) {
     const s = this.def.sprite;
     const gross = this.sizeFactor;
@@ -535,7 +541,7 @@ ody(ctx) {
     ctx.strokeStyle = 'rgba(217,86,63,0.5)';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.arc(this.isSubmerged ? this.targetX : this.x, this.isSubmerged ? this.targetY 
+    ctx.arc(this.isSubmerged ? this.targetX : this.x, this.isSubmerged ? this.targetY
 : this.y,
       this.def.swallowRadius, 0, Math.PI * 2);
     ctx.stroke();

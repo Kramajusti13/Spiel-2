@@ -120,6 +120,7 @@ export class Paladin extends Enemy {
       return true;
    
 
+
  }
 
     if (this.state === 'charging') {

@@ -50,6 +50,7 @@ export class Gorilla extends Enemy {
       const speed = this.def.speed * this.def.retreatSpeedFactor;
      
 
+
  level.moveEntity(this,
         Math.cos(this.retreatAngle) * speed * dt,
         Math.sin(this.retreatAngle) * speed * dt);
@@ -109,7 +110,8 @@ export class Gorilla extends Enemy {
       const away = Math.atan2(this.y - player.y, this.x - player.x);
       vx = Math.cos(away) * speed;
       vy = Math.sin(away) * speed;
-    } else if (d > want 
+    } else if (d > want
+ 
 +
  tol || !this.hasLineOfSight) {
       const heading = this.steer(player, game.level, dt);
@@ -217,7 +219,8 @@ n
 
     // Der erhobene Stein waehrend der Ausholphase.
     if (this.state === 'windup') {
-      const lift = 4 + 6 * this.windupProgress;
+      const lift = 4 + 6 * this.windupP
+rogress;
       ctx.fillStyle = COLORS.stone;
       ctx.beginPath();
       ctx.arc(Math.round(this.x), Math.round(cy - s.h / 2 - lift), 5, 0, Math.PI * 2);

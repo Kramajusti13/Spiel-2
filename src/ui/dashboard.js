@@ -60,6 +60,7 @@ const DASHBOARD_CSS = `
     padding: 8px 16px;
     border: 
 
+
 2px solid #3a3640;
     border-radius: 8px;
     background: #1a1820;
@@ -148,7 +149,8 @@ const DASHBOARD_CSS = `
     z-index: 1000;
     background: #14131a;
     border: 2px solid #3a3640;
-    border-radius: 12px
+    border-radius: 12
+px
 ;
     box-shadow: 0 0 60px #000a;
     max-width: 700px;
@@ -319,8 +321,7 @@ export class Dashboard {
   restructureLayout() {
     const grid = document.getElementById('dash-grid');
     if (!grid) return;
-    if (grid.dataset.restructured) return; // nur einmal
-    grid.dataset.restructured = '1';
+    if (grid.dataset.restructured) return; // nur einmalgrid.dataset.restructured = '1';
 
     const portraitEl = document.getElementById('dash-portrait');
 
@@ -346,8 +347,7 @@ export class Dashboard {
       </div>
     `;
     // Die Portrait-Referenzen auf das kompakte E
-lement umleiten.
-    this.portrait.level = portraitCompact.querySelector('[data-role="portrait-level"]');
+lement umleiten.this.portrait.level = portraitCompact.querySelector('[data-role="portrait-level"]');
     this.portrait.xpFill = portraitCompact.querySelector('[data-role="portrait-xp-fill"]');
     this.portrait.gold = portraitCompact.querySelector('[data-role="portrait-gold"]');
     this.portrait.sp = portraitCompact.querySelector('[data-role="portrait-sp"]');
@@ -384,7 +384,8 @@ lement umleiten.
     routeExpand.id = 'dash-route-expand';
 
     // Die Route-Kachel (tile-route) in den Ausklappbereich verschieben.
-    const routeTile = document.getElementById(
+    const routeTile = document.getElementB
+yId(
 'tile-route');
     if (routeTile) {
       routeTile.style.display = '';
@@ -565,7 +566,8 @@ Spielstand gespeichert' : '')
 
     // Kompaktes Portrait.
     if (this.portrait.level) {
-      this.set('portraitLevel', this.portrait.level, 'textContent', 'Stufe 
+      this.set('portraitLevel', this.portrait.level, 'textContent
+', 'Stufe 
 ' + level);
     }
     if (this.portrait.xpFill) {

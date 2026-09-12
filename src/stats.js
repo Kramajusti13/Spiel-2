@@ -44,6 +44,7 @@ export function createStats() {
     killsByTypeAndDifficulty: Object.fromEntries(Object.keys(ENEMIES).map((k) =>
  
 
+
      [k, Object.fromEntries(DIFFICULTY_ORDER.map((d) => [d, 0]))])),
 
     // --- Gold ---
@@ -105,7 +106,8 @@ export function createStats() {
  * @param {string} [difficulty] Schwierigkeitsstufe des Durchgangs
  */
 export function recordKill(stats, type, weapon, difficulty = null) {
-  stats.killsTotal += 1;
+  stats.killsTotal += 
+1;
 
   if (type in stats.killsByType) stats.killsByType[type] += 1;
   if (weapon && weapon in stats.killsByWeapon) stats.killsByWeapon[weapon] += 1;

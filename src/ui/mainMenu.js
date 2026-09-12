@@ -59,6 +59,7 @@ export class MainMenu {
         onActivate: () => { this.confirming = false; this.build(); this.layout(); this.menu.selected = 0; },
       }));
       buttons.push(this.
+
 makeButton({
         label: 'Ja, alles loeschen',
         hint: this.summary ? `weg waere: ${this.summary}` : '',
