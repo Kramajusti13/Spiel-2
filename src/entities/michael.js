@@ -136,7 +136,8 @@ export class Michael extends Enemy {
         this.traveled += Math.abs(this.vx) * dt;
         
         const player = game.player;
-        const d = dist(this.x, this.y, player.x, player.y);
+        const d = 
+dist(this.x, this.y, player.x, player.y);
         if (d <= this.radius + player.hw) {
           player.takeDamage(this.damage, angle, game);
           this.returned = true;
@@ -202,7 +203,8 @@ export class Michael extends Enemy {
         }
         
         const player = game.player;
-        const d = dist(this.x, this
+        const 
+d = dist(this.x, this
 .y, player.x, player.y);
         if (d <= this.radius + player.hw && !this.hit) {
           player.takeDamage(this.damage, 0, game);
