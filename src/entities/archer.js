@@ -18,8 +18,7 @@ export class Archer extends Enemy {
   constructor(x, y) {
     super('archer', x, y);
     this.animTime = Math.random() * 3;
-    this.shootTimer = randRange(0, this.def.shootInterval);  // nicht alle im Gleichtakt
-    this.strafeDir = Math.random() < 0.5 ? -1 : 1;
+    this.shootTimer = randRange(0, this.def.shootInterval);  // nicht alle im Gleichtaktthis.strafeDir = Math.random() < 0.5 ? -1 : 1;
     this.strafeTimer = 0;
     this.hasLineOfSight = false;
   }
@@ -53,7 +52,8 @@ export class Archer extends Enemy {
         this.setState('strike');
       }
       return;   // beim Zielen steht er still, das macht ihn angreifbar
-    }
+  
+  }
     if (this.state === 'strike') {
       if (this.stateTime >= this.def.strikeTime) this.setState('recover');
       return;
@@ -107,7 +107,8 @@ export class Archer extends Enemy {
     }
 
     const hit = game.level.moveEntity(this, vx * dt, vy * dt);
-    // An einer Wand die Ausweichrichtung wechseln, statt dagegen zu schieben.
+    // An einer Wand die Ausweichrichtung 
+wechseln, statt dagegen zu schieben.
     if (hit.hitX || hit.hitY) this.strafeDir = -this.strafeDir;
   }
 
