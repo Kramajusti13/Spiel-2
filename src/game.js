@@ -16,8 +16,8 @@ import { Coin } from './entities/coin.js';
 import { Arrow } from './entities/arrow.js';
 import { ThrownSpear } from './entities/thrownSpear.js';
 import { Stone } from './entities/stone.js';
-import { PoisonSpit } from './entities/poisonSpit.js';
 import { PoisonCloud } from './entities/poisonCloud.js';
+import { PoisonSpit } from './entities/poisonSpit.js';
 import { drawHud, drawLevelIntro } from './hud.js';
 import { DeathScreen } from './ui/deathScreen.js';
 import { CharacterWindow } from './ui/characterWindow.js';
@@ -88,8 +88,7 @@ export class Game {
      */
     this.stats = createStats();
     /**
-     * IDs der 
-Quests, deren Belohnung schon abgeholt ist (Abschnitt 3).
+     * IDs der Quests, deren Belohnung schon abgeholt ist (Abschnitt 3).
      * Daraus ergeben sich die drei aktiven Quests — es ruecken immer die
      * ersten drei noch offenen aus der Liste nach.
      */
@@ -150,8 +149,7 @@ Quests, deren Belohnung schon abgeholt ist (Abschnitt 3).
     this.mainMenu.open();
   }
 
-  /** Neues Spiel:
- Spielstand loeschen und auf dem Dashboard anfangen. */
+  /** Neues Spiel: Spielstand loeschen und auf dem Dashboard anfangen. */
   newGame() {
     clearSave();
     this.gold = 0;
@@ -223,8 +221,7 @@ Quests, deren Belohnung schon abgeholt ist (Abschnitt 3).
   /** Level laden und betreten. Wird beim Programmstart benutzt (main.js). */
   async loadLevelByIndex(index) {
     const entry = LEVELS[index];
-    if (!entry) throw new Err
-or(`Level ${index} steht nicht in LEVELS (config.js).`);
+    if (!entry) throw new Error(`Level ${index} steht nicht in LEVELS (config.js).`);
     this.level = await loadLevel(entry.url);
     this.levelIndex = index;
     this.resetLevel();
@@ -285,8 +282,7 @@ or(`Level ${index} steht nicht in LEVELS (config.js).`);
     // Hoechste dort geschaffte Stufe merken — sie schaltet die naechste frei
     // und bestimmt die Sterne am Levelknoten (Abschnitt 4).
     const i = this.levelIndex;
-    this.bestDifficulty[
-i] = Math.max(this.bestDifficulty[i], difficultyIndex(this.difficulty));
+    this.bestDifficulty[i] = Math.max(this.bestDifficulty[i], difficultyIndex(this.difficulty));
 
     // --- Zaehler fuer die Quests (Schritt 7) ---
     const clean = this.deathsThisRun === 0;
@@ -325,8 +321,7 @@ i] = Math.max(this.bestDifficulty[i], difficultyIndex(this.difficulty));
   }
 
   /** Level aufgeben (Pause-Menue): zurueck aufs Dashboard, ohne Abschluss. */
-  giveUpLe
-vel() {
+  giveUpLevel() {
     // Das im Durchgang gesammelte Gold ist weg — wie beim Neustart nach einem
     // Tod. Sonst waere Aufgeben ein kostenloser Weg, Beute zu sichern.
     this.gold = Math.max(0, this.gold - this.runGold);
@@ -380,8 +375,7 @@ vel() {
     const screen = onDashboard ? 'dashboard' : 'game';
     if (document.body.dataset.screen !== screen) document.body.dataset.screen = screen;
 
-    // Das Charakterfenster geht vor:
- es kann auch ueber dem Levelfenster
+    // Das Charakterfenster geht vor: es kann auch ueber dem Levelfenster
     // liegen, wenn beide angefordert waeren.
     const modal = overCharacter
       ? 'character'
@@ -441,8 +435,7 @@ vel() {
   get hero() {
     if (this.player) return this.player;
     if (!this.previewHero || this.previewHero.progress !== this.progress) {
-      this.previewHero = new Player(
-0, 0, this.progress);
+      this.previewHero = new Player(0, 0, this.progress);
     }
     // Ausserhalb eines Levels ist der Held immer heil — jedes Level beginnt
     // mit vollem Leben. Sonst stuende hier "115 / 135", sobald ein Punkt in
@@ -489,8 +482,7 @@ vel() {
    * @param {string[]} dabeiVorher Wahl vor dem Kauf
    */
   takeNewWeapon(id, dabeiVorher) {
-    if (dabeiVorher.inclu
-des(id)) return;   // nur eine Stufe aufgeruestet
+    if (dabeiVorher.includes(id)) return;   // nur eine Stufe aufgeruestet
     this.progress.loadout = dabeiVorher.length < LOADOUT.slots
       ? [...dabeiVorher, id]
       : dabeiVorher;
@@ -549,7 +541,6 @@ des(id)) return;   // nur eine Stufe aufgeruestet
     if (this.characterReturnState === 'dashboard') this.openDashboard(this.dashboard.message);
     else this.state = 'playing';
     this.syncScreen();
-
   }
 
   /** Steht der Spieler nah genug am Ausgang? */
@@ -609,8 +600,7 @@ des(id)) return;   // nur eine Stufe aufgeruestet
    */
   revive() {
     const cost = this.reviveCost;
-    if (this.g
-old < cost) return false;
+    if (this.gold < cost) return false;
 
     this.gold -= cost;
     this.stats.revives += 1;
@@ -672,8 +662,7 @@ old < cost) return false;
 
     // Laeuft in jedem Zustand: die Leiste soll auch auf dem Dashboard
     // fertig nachlaufen, wenn der letzte Kill sie noch gefuellt hat.
-    this.upd
-ateXpBar(dt);
+    this.updateXpBar(dt);
 
     if (input.wasPressed('F1')) this.debug = !this.debug;
     // Ton an/aus (Abschnitt 8).
@@ -734,8 +723,7 @@ ateXpBar(dt);
     this.player.update(dt, input, this.camera, this.level, this);
 
     for (const enemy of this.enemies) enemy.update(dt, this);
-    // 
-Tote Gegner erst nach ihrer kurzen Sterbe-Animation entfernen.
+    // Tote Gegner erst nach ihrer kurzen Sterbe-Animation entfernen.
     this.enemies = this.enemies.filter((e) => !e.dead || e.deathTimer < 0.35);
 
     for (const arrow of this.arrows) arrow.update(dt, this);
@@ -798,7 +786,6 @@ Tote Gegner erst nach ihrer kurzen Sterbe-Animation entfernen.
   /** Wie viel XP bis zur naechsten Stufe fehlt. */
   get xpNeeded() {
     return xpToNext(this.progress.level);
-
   }
 
   /** Fuellstand der XP-Leiste, 0…1 — der echte Wert, nicht der animierte. */
@@ -856,8 +843,7 @@ Tote Gegner erst nach ihrer kurzen Sterbe-Animation entfernen.
   }
 
   /**
-   * Laesst die gezeichne
-te Leiste dem echten Wert nachlaufen. Bei einem
+   * Laesst die gezeichnete Leiste dem echten Wert nachlaufen. Bei einem
    * Aufstieg laeuft sie erst voll und faengt dann bei 0 wieder an — sonst
    * saehe man den Aufstieg als Rueckwaertssprung.
    */
@@ -909,8 +895,7 @@ te Leiste dem echten Wert nachlaufen. Bei einem
     this.shake(3, 0.12);
 
     if (!this.levelCleared && !this.enemies.some((e) => !e.dead)) this.onLevelCleared();
-  
-}
+  }
 
   collectGold(coin) {
     playSound('coin', { volume: 0.7 });
@@ -933,25 +918,247 @@ te Leiste dem echten Wert nachlaufen. Bei einem
     this.deathScreen.open();
   }
 
-  /** Schadenszahl ueber dem Gegner anzeigen (Stub - vollstaendige Implementierung fehlt). */
-  spawnDamageNumber(x, y, value, color, crit) {
-    // Stub
+  spawnDamageNumber(x, y, value, color, big = false) {
+    this.effects.push({
+      type: 'number', x, y, value: String(value), color, big,
+      age: 0, life: UI.damageNumbers.duration,
+    });
   }
 
-  /** Trefferfunke (Stub). */
+  /**
+   * Objekt-Effekt hinzufuegen (z. B. Heiligenschein, Schockwelle).
+   * Erwartet ein Objekt mit eigenen update(dt)/draw(ctx)-Methoden,
+   * das sich selbst per this.dead = true als fertig markiert.
+   */
+  addEffect(fx) {
+    this.effects.push(fx);
+  }
+
+  /**
+   * Pfeil abfeuern. `friendly: false` waere ein Gegnerpfeil (Schritt 12).
+   */
+  spawnArrow(x, y, angle, damage, opt = {}) {
+    this.arrows.push(new Arrow(x, y, angle, damage, opt));
+  }
+
+  /**
+   * Geworfener Speer (Erweiterung 2, Abschnitt 3). Liegt in derselben Liste
+   * wie die Pfeile: beide sind Flugkoerper mit update/draw/spent, und eine
+   * zweite Liste haette nur eine zweite Stelle zum Vergessen geschaffen.
+   */
+  spawnThrownSpear(x, y, angle, damage) {
+    this.arrows.push(new ThrownSpear(x, y, angle, damage));
+  }
+
+  /**
+   * Wurfstein des Gorillas (Erweiterung 2, Abschnitt 3). Liegt wie Pfeil
+   * und Speer in der arrows-Liste — selbe update/draw/spent-Schnittstelle.
+   */
+  spawnStone(x, y, angle, damage, opt = {}) {
+    this.arrows.push(new Stone(x, y, angle, damage, opt));
+  }
+
+  /**
+   * Giftwolke (Erweiterung 2, Abschnitt 1). Eigene clouds-Liste, weil sie
+   * stilliegt und mehr als einmal zuschlagen kann.
+   */
+  spawnPoisonCloud(x, y) {
+    this.clouds.push(new PoisonCloud(x, y));
+  }
+
+  /**
+   * Giftspucke der Titanoboa (Erweiterung 2, Abschnitt 6). Flugkoerper wie
+   * Pfeil und Stein, zerplatzt an Wand, Ziel oder Reichweitenende.
+   */
+  spawnPoisonSpit(x, y, angle, damage, opt = {}) {
+    this.arrows.push(new PoisonSpit(x, y, angle, damage, opt));
+  }
+
+  /** Nachbild waehrend der Ausweichrolle. */
+  spawnRollTrail(x, y) {
+    this.effects.push({ type: 'trail', x, y, age: 0, life: ROLL.trailLife });
+  }
+
   spawnHitSpark(x, y, angle) {
-    // Stub
+    for (let i = 0; i < 5; i++) {
+      const a = angle + (Math.random() - 0.5) * 1.6;
+      const speed = 60 + Math.random() * 120;
+      this.effects.push({
+        type: 'spark', x, y,
+        vx: Math.cos(a) * speed, vy: Math.sin(a) * speed,
+        age: 0, life: 0.25,
+      });
+    }
   }
 
-  /** Effekt hinzufuegen (Stub fuer Himmelsthema-Effekte). */
-  addEffect(effect) {
-    if (!this.effects) this.effects = [];
-    this.effects.push(effect);
+  shake(amount, time) {
+    this.shakeAmount = Math.max(this.shakeAmount, amount);
+    this.shakeTime = Math.max(this.shakeTime, time);
   }
 
-  /** Wurfstein erzeugen (Stub). */
-  spawnStone(x, y, angle, damage) {
-    // Stub
+  // --- Zeichnen -----------------------------------------------------------
+
+  draw() {
+    // Zuerst die sichtbare Ansicht angleichen — Canvas oder Dashboard.
+    this.syncScreen();
+
+    const ctx = this.ctx;
+    ctx.fillStyle = COLORS.background;
+    ctx.fillRect(0, 0, VIEW.width, VIEW.height);
+
+    // Das Dashboard ist HTML und liegt vor dem Canvas — nichts zu zeichnen.
+    if (this.state === 'dashboard') return;
+
+    if (this.state === 'menu') {
+      this.mainMenu.draw(ctx);
+      return;
+    }
+    if (this.state === 'loading') {
+      drawText(ctx, 'Lade Level …', VIEW.width / 2, VIEW.height / 2,
+        COLORS.textDim, UI.hud.font, 'center', 'middle');
+      return;
+    }
+    // Vom Dashboard aus geoeffnet liegt das Charakterfenster ueber dem
+    // Dashboard — dann gibt es auf dem Canvas nichts zu zeichnen.
+    if (this.state === 'character' && this.characterReturnState === 'dashboard') return;
+    // Ohne geladenes Level gibt es nichts weiter zu zeichnen.
+    if (!this.level || !this.player) return;
+    // Das Charakterfenster liegt ueber der eingefrorenen Welt — siehe unten.
+
+    // Bildschirmzittern bei Treffern.
+    let sx = 0;
+    let sy = 0;
+    if (this.shakeTime > 0) {
+      sx = (Math.random() - 0.5) * 2 * this.shakeAmount;
+      sy = (Math.random() - 0.5) * 2 * this.shakeAmount;
+    }
+    ctx.save();
+    ctx.translate(Math.round(sx), Math.round(sy));
+
+    this.camera.apply(ctx);
+    this.level.draw(ctx, this.camera);
+    this.drawExit(ctx);
+    for (const coin of this.coins) coin.draw(ctx);
+    this.drawRollTrails(ctx);   // vor den Figuren, damit die Spur dahinter liegt
+
+    // Alles, was auf dem Boden steht, nach y sortieren: was weiter unten ist,
+    // wird spaeter gezeichnet und verdeckt korrekt.
+    const actors = [...this.enemies, this.player].sort((a, b) => a.y - b.y);
+    for (const actor of actors) actor.draw(ctx);
+
+    // Pfeile fliegen ueber allem, damit man sie nicht hinter Gegnern verlieren.
+    for (const arrow of this.arrows) arrow.draw(ctx);
+
+    // Giftwolken liegen auf dem Boden — ueber den Figuren, unter dem HUD.
+    for (const cloud of this.clouds) cloud.draw(ctx);
+
+    this.drawEffects(ctx);
+
+    if (this.debug) {
+      this.player.drawDebug(ctx);
+      for (const enemy of this.enemies) if (!enemy.dead) enemy.drawDebug(ctx);
+      this.drawDebugPickupRadius(ctx);
+    }
+
+    this.camera.restore(ctx);
+    ctx.restore();
+
+    drawHud(ctx, this);
+    if (this.state === 'playing') {
+      drawLevelIntro(ctx, this.level, Math.min(1, this.introTimer / 0.8),
+        difficultyName(this.difficulty));
+    } else if (this.state === 'dead') {
+      this.deathScreen.draw(ctx);
+    } else if (this.state === 'paused') {
+      this.pauseMenu.draw(ctx);
+    }
   }
 
+  /**
+   * Level-Ausgang: geschlossen, solange noch Monster leben; danach leuchtet er.
+   * Der Spieler sieht damit ohne Text, wann und wo es weitergeht.
+   */
+  drawExit(ctx) {
+    const exit = this.level.exit;
+    if (!exit) return;
+    const open = this.levelCleared;
+    ctx.save();
+    const r = LEVEL.exitRadius;
+    if (open) {
+      ctx.globalAlpha = 0.5 + 0.3 * Math.sin(performance.now() / 200);
+      ctx.fillStyle = COLORS.exit || '#4f4';
+      ctx.beginPath();
+      ctx.arc(exit.x, exit.y, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      drawText(ctx, 'E', exit.x, exit.y, COLORS.text || '#fff',
+        UI.hud.font, 'center', 'middle');
+    } else {
+      ctx.globalAlpha = 0.2;
+      ctx.strokeStyle = COLORS.exitClosed || '#888';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(exit.x, exit.y, r, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  drawEffects(ctx) {
+    for (const fx of this.effects) {
+      if (typeof fx.draw === 'function') {
+        fx.draw(ctx);
+        continue;
+      }
+      if (fx.type === 'trail') continue;   // liegt schon hinter den Figuren
+      const t = fx.age / fx.life;
+      if (fx.type === 'number') {
+        const alpha = Math.max(0, 1 - t);
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.font = fx.big ? UI.damageNumbers.bigFont : UI.damageNumbers.font;
+        ctx.fillStyle = fx.color;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(fx.value, fx.x, fx.y - t * 30);
+        ctx.restore();
+      } else if (fx.type === 'spark') {
+        const alpha = Math.max(0, 1 - t);
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(fx.x, fx.y);
+        ctx.lineTo(fx.x - fx.vx * 0.03, fx.y - fx.vy * 0.03);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+  }
+
+  drawRollTrails(ctx) {
+    for (const fx of this.effects) {
+      if (fx.type !== 'trail') continue;
+      const alpha = Math.max(0, 1 - fx.age / fx.life);
+      ctx.save();
+      ctx.globalAlpha = alpha * 0.3;
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(fx.x, fx.y, 12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  drawDebugPickupRadius(ctx) {
+    if (!this.player) return;
+    ctx.save();
+    ctx.strokeStyle = 'rgba(0,255,0,0.3)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(this.player.x, this.player.y, LOOT.pickupRadius, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
 }
