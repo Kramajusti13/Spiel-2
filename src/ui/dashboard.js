@@ -60,8 +60,6 @@ const DASHBOARD_CSS = `
     padding: 8px 16px;
     border: 
 
-
-
 2px solid #3a3640;
     border-radius: 8px;
     background: #1a1820;
@@ -150,8 +148,7 @@ const DASHBOARD_CSS = `
     z-index: 1000;
     background: #14131a;
     border: 2px solid #3a3640;
-    border-radius: 1
-2px
+    border-radius: 12px
 ;
     box-shadow: 0 0 60px #000a;
     max-width: 700px;
@@ -293,8 +290,7 @@ export class Dashboard {
       level: document.querySelector('[data-role="portrait-level"]'),
       xpFill: document.querySelector('[data-role="portrait-xp-fill"]'),
       gold: document.querySelector('[data-role="portrait-gold"]'),
-      sp: document.querySelector('[data-role="portrait
--sp"]'),
+      sp: document.querySelector('[data-role="portrait-sp"]'),
     };
     this.injectCSS();
     this.restructureLayout();
@@ -348,9 +344,9 @@ export class Dashboard {
         <span class="portrait-sp" data-role="portrait-sp">0 SP</span>
       </div>
     `;
-    // Die Portrait-Referenzen auf das kompak
-te E
-lement umleiten.this.portrait.level = portraitCompact.querySelector('[data-role="portrait-level"]');
+    // Die Portrait-Referenzen auf das kompakte E
+lement umleiten.
+    this.portrait.level = portraitCompact.querySelector('[data-role="portrait-level"]');
     this.portrait.xpFill = portraitCompact.querySelector('[data-role="portrait-xp-fill"]');
     this.portrait.gold = portraitCompact.querySelector('[data-role="portrait-gold"]');
     this.portrait.sp = portraitCompact.querySelector('[data-role="portrait-sp"]');
@@ -388,7 +384,6 @@ lement umleiten.this.portrait.level = portraitCompact.querySelector('[data-role=
 
     // Die Route-Kachel (tile-route) in den Ausklappbereich verschieben.
     const routeTile = document.getElementById(
-
 'tile-route');
     if (routeTile) {
       routeTile.style.display = '';
@@ -505,11 +500,8 @@ lement umleiten.this.portrait.level = portraitCompact.querySelector('[data-role=
     const gespeichert = game.save();
     this.setMessage(
       'Ton ' + (muted ? 'aus' : 'an') + ' (nur fuer diese Sitzung)' +
-      (gespeichert ? 
-'
- · 
-Spielstand gespeichert' : '')
-    );
+      (gespeichert ? '· 
+Spielstand gespeichert' : ''));
   }
 
   bind() {
@@ -570,9 +562,7 @@ Spielstand gespeichert' : '')
 
     // Kompaktes Portrait.
     if (this.portrait.level) {
-      this.set('portraitLevel', this.portrait.level, 'textContent
-', 
-'Stufe 
+      this.set('portraitLevel', this.portrait.level, 'textContent', 'Stufe 
 ' + level);
     }
     if (this.portrait.xpFill) {

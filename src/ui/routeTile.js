@@ -57,8 +57,6 @@ export class RouteTile {
     this.difficulty = DIFFICULTY_ORDER[0];
     /**
 
-
-
  Zuletzt geschriebene Werte, damit nicht jedes Bild ins DOM schreibt. */
     this.last = {};
     this.nodes = [];
@@ -123,8 +121,7 @@ export class RouteTile {
       marker.className = 'route-marker';
       marker.textContent = '▲';
 
-      node.append(symbol, name
-,
+      node.append(symbol, name,
  
 stars, marker);
       node.addEventListener('click', () => this.select(i));
@@ -243,9 +240,9 @@ stars, marker);
       // ★☆☆ Normal, ★★☆ Schwer, ★★★ Alptraum — leer, solange nie geschafft.
       const stars = starsFor(game.bestDifficulty[i]);
       setText(el.stars, stars > 0 ? '★'.repeat(stars) + '☆'.repeat(3 - stars) : '');
-      // 
-Ein 
-Zustand pro Knoten — alte Klassen muessen weg.el.node.className = `route-node is-${state}${i === this.selected ? ' is-selected' : ''}`;
+      // Ein 
+Zustand pro Knoten — alte Klassen muessen weg.
+      el.node.className = `route-node is-${state}${i === this.selected ? ' is-selected' : ''}`;
       // Auch gesperrte Knoten sind anklickbar: das Fenster erklaert dann,
       // was noch fehlt. Nur Starten geht nicht.
       el.node.title = playable

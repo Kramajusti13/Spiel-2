@@ -62,6 +62,7 @@ export function difficultyBehavior(id) {
   return {
     surround: !
 
+
 !d.surround,
     staggerAttacks: !!d.staggerAttacks,
     punishDodge: !!d.punishDodge,
@@ -119,8 +120,8 @@ export function scaleEnemyDef(def, id) {
       speed: def.firebreath.speed * d.speed,
     };
   }
-  // Etappe 1: S
-elbstheilung des Paladins (skaliert mit HP-Multiplikator).if (def.heal) {
+  // Etappe 1: 
+Selbstheilung des Paladins (skaliert mit HP-Multiplikator).if (def.heal) {
     scaled.heal = { ...def.heal, amount: Math.round(def.heal.amount * d.hp) };
   }
   return scaled;

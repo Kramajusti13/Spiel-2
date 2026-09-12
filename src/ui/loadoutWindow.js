@@ -108,8 +108,6 @@ export class LoadoutWindow {
       const note = document.createElement('span');
       note.class
 
-
-
 Name = 'weapon-note';
       main.append(nameRow, stats, note);
 
@@ -167,8 +165,8 @@ Name = 'weapon-note';
 
     const dabei = loadout(progress);
     this.set('count', this.el.count,
-      `${dabei.length} von ${LOA
-DOUT.slots} Plaetzen belegt`);
+      `${dabei.length} von ${LOADOU
+T.slots} Plaetzen belegt`);
     this.el.count.classList.toggle('is-full', dabei.length >= LOADOUT.slots);
 
     for (const info of allWeaponInfos(progress)) {
@@ -216,8 +214,8 @@ DOUT.slots} Plaetzen belegt`);
     // Was passiert, wenn beide Plaetze voll sind — das ist die einzige Regel,
     // die man beim ersten Mal nicht errät.
     this.set('hint', this.el.hint, dabei.length >= LOADOUT.slots
-      ? 'Beide Plaetze belegt — ein Klickauf eine dritte Waffe ersetzt die zuerst gewaehlte.'
-      : 'Waehle eine zweite Waffe.');
+      ? 'Beide Plaetze belegt — ein Klicka
+uf eine dritte Waffe ersetzt die zuerst gewaehlte.': 'Waehle eine zweite Waffe.');
   }
 
   /** Schreibt nur, wenn sich der Wert geaendert hat. */

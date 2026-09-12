@@ -119,8 +119,5 @@ export function perRankText(id) {
 
 /** Wie viele Punkte man insgesamt schon verdient hat (nur zur Anzeige). */
 export function earnedPoints(progress) {
-  return progress.skillPo
-
-
-ints + spentPoints(progress);
+  return progress.skillPoints + spentPoints(progress);
 }

@@ -117,7 +117,8 @@ export function drawSprite(ctx, key, x, y, w, h, color, opt = {}) {
  * Mit Sprite: quadratisch, weil alle Assets 32x32 sind (Abschnitt 8) — sonst
  * wuerde ein quadratisches Bild in ein hochkantiges Rechteck gequetscht.
  *
- * @param {string} key Sprite-Schluessel
+ * @param {string} ke
+ySprite-Schluessel
  * @param {{w:number,h:number}} placeholder  Masse aus config
  * @param {number} [scale] Vergroesserung, 1 = 32 px
  */

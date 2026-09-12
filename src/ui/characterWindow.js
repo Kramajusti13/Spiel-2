@@ -49,8 +49,8 @@ export class CharacterWindow {
 
     // TAB und Esc schliessen. Solange das Fenster offen ist, hoert das Spiel
     // nicht auf die Tastatur (siehe input.js), als
-
-o braucht es das hier.window.addEventListener('keydown', (e) => {
+o braucht es das hier.
+    window.addEventListener('keydown', (e) => {
       if (this.game.state !== 'character') return;
       if (e.code === 'Escape' || e.code === 'Tab') {
         e.preventDefault();
@@ -110,8 +110,7 @@ o braucht es das hier.window.addEventListener('keydown', (e) => {
   spend(id) {
     if (!this.game.spendSkillPoint(id)) return;
     this.flashId = id;
-    this.flash = 
-0.4;
+    this.flash = 0.4;
     this.refresh();
   }
 
@@ -211,8 +210,7 @@ R.critChance * 100)} %`, ''],
   buildStats(count) {
     this.el.stats.replaceChildren();
     this.statRows = [];
- 
-  
+   
  
 for (let i = 0; i < count; i++) {
       const row = document.createElement('div');
