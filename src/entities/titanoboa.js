@@ -100,6 +100,7 @@ export class Titanoboa extends Enemy {
   /** 1 oder 2 — haengt am verbleibenden Leben. */
   get phase() {
     return this.hp / this.maxHp > this.def.phaseThresholds[0] ? 1 
+
 : 2;
   }
 
@@ -224,7 +225,8 @@ export class Titanoboa extends Enemy {
       return;
     }
     if (this.state === 'warn') {
-      if (this.stateTime >= this.def.lungeWarning) {
+      if (this.stateTime >= this.def.lu
+ngeWarning) {
         this.swallow(game);
         this.setState('lunge');
       }
@@ -283,7 +285,8 @@ export class Titanoboa extends Enemy {
     const s = this.state;
     return s === 'tailWindup' || s === 'tailStrike'
       || s === 'biteWindup' || s === 'biteStrike'
-      || s === 'spitWindup' || s === 'spitStrike';
+      || s === 'spitWindup' || s 
+=== 'spitStrike';
   }
 
   chooseAttack(game, player) {
@@ -351,7 +354,8 @@ export class Titanoboa extends Enemy {
     this.currentAttack = null;
     // In Phase 1 taucht sie wieder ab, sobald ihr Zeitfenster abgelaufen ist —
     // waehrend Phase 2 bleibt sie oben und macht nur eine Pause.
-    if (this.phase === 1 && !this.hasShed) {
+    if (this.phas
+e === 1 && !this.hasShed) {
       // In P1: kurze Pause und dann wieder abtauchen.
       this.attackPause = this.pauseTime;
       this.setState('afterAttackP1');
@@ -408,7 +412,8 @@ export class Titanoboa extends Enemy {
   drawShadow(ctx) {
     const warnt = this.state === 'warn';
     const t = warnt ? this.stateTime / this.def.lungeWarning : 0;
-    const cx = warnt ? this.targetX : this.x;
+    const cx = warnt ? t
+his.targetX : this.x;
     const cy = warnt ? this.targetY : this.y;
     const puls = warnt ? 1 + 0.16 * Math.sin(this.stateTime * (7 + 10 * t)) : 1;
     const r = this.def.shadowRadius * puls;
@@ -473,7 +478,8 @@ export class Titanoboa extends Enemy {
     super.draw(ctx);
   }
 
-  drawBody(ctx) {
+  drawB
+ody(ctx) {
     const s = this.def.sprite;
     const gross = this.sizeFactor;
     const cy = this.y + s.offsetY;
@@ -529,7 +535,8 @@ export class Titanoboa extends Enemy {
     ctx.strokeStyle = 'rgba(217,86,63,0.5)';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.arc(this.isSubmerged ? this.targetX : this.x, this.isSubmerged ? this.targetY : this.y,
+    ctx.arc(this.isSubmerged ? this.targetX : this.x, this.isSubmerged ? this.targetY 
+: this.y,
       this.def.swallowRadius, 0, Math.PI * 2);
     ctx.stroke();
     ctx.restore();
