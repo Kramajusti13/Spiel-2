@@ -67,7 +67,7 @@ export class Seraphim extends Enemy {
 
   _fireLightBeam(game) {
     const player = game.player;
-    constst angle = Math.atan2(player.y - this.y, player.x - this.x);
+    const angle = Math.atan2(player.y - this.y, player.x - this.x);
     
     this.beam = {
       x: this.x + Math.cos(angle) * this.hw * 2,
