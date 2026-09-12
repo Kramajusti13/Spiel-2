@@ -1098,6 +1098,7 @@ export class Player {
   drawDebug(ctx) {
     ctx.strokeStyle = COLORS.debug;
     ctx.lineWidth = 1;
+    ctx.strokeRect(this.x - this.hw, this.y - this.hh,
       this.hw * 2 - 1,
       this.hh * 2 - 1,
     );
@@ -1112,6 +1113,16 @@ export class Player {
     ctx.closePath();
     ctx.stroke();
 
+    // Blockwinkel (120°) — zeigt, was das Schild gerade deckt.
+    if (this.hasShield) {
+      const halfBlock = degToRad(SHIELD.blockArc) / 2;
+      ctx.strokeStyle = this.blocking ? 'rgba(185,190,201,0.9)' : 'rgba(185,190,201,0.25)';
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.arc(this.x, this.y, 30, this.aim - halfBlock, this.aim + halfBlock);
+      ctx.closePath();
+      ctx.stroke();
+    }
   }
 }
 
@@ -1123,23 +1134,13 @@ function randTiny() {
 /** Sucht einen freien Startpunkt, falls die Karte am Startpunkt zugebaut wurde. */
 export function findFreeSpot(level, x, y, hw, hh) {
   if (!level.isBoxBlocked(x, y, hw, hh)) return { x, y };
+  for (let r = 1; r <= 8; r++) {
+    for (let a = 0; a < 8; a++) {
+      const angle = a * Math.PI / 4;
+      const nx = x + Math.round(Math.cos(angle) * r * TILE);
+      const ny = y + Math.round(Math.sin(angle) * r * TILE);
+      if (!level.isBoxBlocked(nx, ny, hw, hh)) return { x: nx, y: ny };
     }
   }
   return { x, y };
 }
-
-
-
-
-
-
-
-
-
-  for (let radius = 1; radius <= 8; radius++) {
-    for (let dy = -radius; dy <= radius; dy++) {
-      for (let dx = -radius; dx <= radius; dx++) {
-        const nx = x + dx * TILE;
-        const ny = y + dy * TILE;
-        if (!level.isBoxBlocked(nx, ny, hw, hh)) return { x: nx, y: ny };
-      }
