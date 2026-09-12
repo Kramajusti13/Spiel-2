@@ -51,7 +51,8 @@ export class OrcChieftain extends Enemy {
     return this.phase === 3 && this.wutIntroDone ? this.def.wutmodus.speedFactor : 1;
   }
 
-  /** Doppelschlag: nur in Phase 3 nach abgeschlossenem Bruellen. */
+  /** Doppelschlag: nur in Phase 3 nach abg
+eschlossenem Bruellen. */
   get wutmodusActive() {
     return this.phase === 3 && this.wutIntroDone;
   }
@@ -109,7 +110,8 @@ export class OrcChieftain extends Enemy {
       if (d <= this.def.attackRange + player.hw) {
         this.setState('windup');
         this.struck = false;
-        this.hitsInCombo = 0;
+        
+this.hitsInCombo = 0;
         return;
       }
       // 150-400 px: Ansturm
@@ -164,7 +166,8 @@ export class OrcChieftain extends Enemy {
       }
       return true;
     }
-    if (this.state === 'recover') {
+    if (this.state === 'recover')
+ {
       if (this.stateTime >= this.def.recoverTime) {
         this.hitsInCombo = 0;
         this.setState('chase');
@@ -231,7 +234,8 @@ export class OrcChieftain extends Enemy {
         this.spawnGoblins(game);
         this.kriegsrufCooldown = k.cooldown;
         game.shake(6, 0.3);
-        game.spawnDamageNumber(this.x, this.y - this.hh - 20, 'Kriegsruf!',
+        game.spawnDamage
+Number(this.x, this.y - this.hh - 20, 'Kriegsruf!',
           COLORS.bossAccent, true);
         this.setState('kriegsrufRecover');
       }
